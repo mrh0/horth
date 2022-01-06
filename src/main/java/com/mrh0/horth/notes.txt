@@ -1,0 +1,82 @@
+0:RAX, 1:RDX, tmp0:R10, tmp1: R11
+
+//Manipulators
+swap:
+    xchg    rax, rdx
+swap2:
+    xchg    rax, [rsp]
+    xchg    rdx, [rsp-8]
+rot:
+    xchg    rax, [rsp]
+drop:
+    mov     rax, rdx
+    pop     rdx
+drop2:
+    pop     rax
+    pop     rdx
+drop3:
+    pop     rax
+    pop     rax
+    pop     rdx
+dup:
+    push    rdx
+    mov     rdx, rax
+dup2x:                  //duplicates 2 times 'dup dup'
+    push    rdx
+    push    rax
+    mov     rdx, rax
+dup3x:                  //duplicates 3 times 'dup dup dup'
+    push    rdx
+    push    rax
+    push    rax
+    mov     rdx, rax
+dup2s:                  //duplicates first 2 'dup2'
+    push    rdx
+    push    rax
+dup3s:                  //duplicates first 3 'dup3'
+    push    [rsp]
+    push    rdx
+    push    rax
+
+//internal
+put1:
+    push    rdx
+    mov     rdx, rax
+    mov     rax, <i>
+put2:
+    push    rdx
+    push    rax
+    mov     rdx, <i>
+    mov     rax, <i>
+put3:
+    push    rdx
+    push    rax
+    mov     r10, <i>
+    push    r10
+    mov     rdx, <i>
+    mov     rax, <i>
+put4:
+    push    rdx
+    push    rax
+    mov     r10, <i>
+    push    r10
+    mov     r11, <i>
+    push    r11
+    mov     rdx, <i>
+    mov     rax, <i>
+
+//Operands
+add:
+    add     rdx, rax
+    pop     rdx
+add_i:
+    add     <i>, rax
+
+//Keywords
+if:
+    sub     1, rax
+    mov     rax, rdx
+    pop     rdx
+    jl      <label>
+
+local variables defined with let in a func will be put on a 'local stack' (not real rsp stack). Local variable sizes are summed and stored, when a func return it will pop the size from the 'local stack'.
