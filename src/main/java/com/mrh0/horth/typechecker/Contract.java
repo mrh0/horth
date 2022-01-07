@@ -1,11 +1,15 @@
 package com.mrh0.horth.typechecker;
 
+import com.mrh0.horth.typechecker.types.GenericType;
+import com.mrh0.horth.typechecker.types.IType;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Contract {
     private List<IType> pop;
     private List<IType> push;
+    private List<GenericType> generics;
 
     private Contract() {
         pop = new ArrayList<>();

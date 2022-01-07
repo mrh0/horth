@@ -8,7 +8,7 @@ BOOL: 'true' | 'false';
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
-TYPE: 'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'ref(' TYPE ')' | 'arr(' TYPE ')' | 'type(' (TYPE)+ ')'; // | 'byte(' (INT | IDENTIFIER) (INT | '+' | '-' | '*')* ')';
+TYPE: 'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'ref<' TYPE '>' | 'arr<' TYPE '>' | 'type<' (TYPE)+ '>' | 'any<' IDENTIFIER '>'; // | 'byte(' (INT | IDENTIFIER) (INT | '+' | '-' | '*')* ')';
 
 unop:
     'not' | '~' | '-'

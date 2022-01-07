@@ -8,6 +8,14 @@ swap2:
     xchg    rdx, [rsp-8]
 rot:
     xchg    rax, [rsp]
+over:
+    xchg    rax, rdx
+    push    rax
+over2:
+    push    rdx
+    push    rax
+    mov     rax, [rsp-16]
+    mov     rdx, [rsp-24]
 drop:
     mov     rax, rdx
     pop     rdx
