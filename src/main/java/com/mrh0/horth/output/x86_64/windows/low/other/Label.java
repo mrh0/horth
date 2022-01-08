@@ -1,9 +1,9 @@
-package com.mrh0.horth.output.instructions.other;
+package com.mrh0.horth.output.x86_64.windows.low.other;
 
 import com.mrh0.horth.ast.CompileData;
-import com.mrh0.horth.output.instructions.HighInst;
+import com.mrh0.horth.output.x86_64.windows.low.LowInst;
 
-public class Label extends HighInst {
+public class Label implements LowInst {
     private final int i;
 
     public Label(int i) {
