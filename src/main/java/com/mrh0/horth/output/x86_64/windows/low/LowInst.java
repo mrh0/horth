@@ -9,55 +9,48 @@ public interface LowInst {
     public static final String T2 = "r11";  //Temp2
     public static final String LS = "r15";  //Local Stack
 
+    //public static Builder builder = new Builder();
+
     public static class Builder {
         private StringBuilder sb;
-        private int args = 0;
+        private boolean first = true;
         private Builder(StringBuilder sb) {
             this.sb = sb;
         }
-        private static Builder inst(StringBuilder sb, String inst, int args) {
-            sb.append("\t");
+
+        private Builder inst(String inst) {
+            sb.append("\n\t");
             sb.append(inst);
             sb.append("\t");
-            return new Builder(sb);
-        }
-
-        public static Builder zero(StringBuilder sb, String inst) {
-            sb.append("\t");
-            sb.append(inst);
-            sb.append("\n");
-            return new Builder(sb);
-        }
-
-        public static Builder one(StringBuilder sb, String inst) {
-            return inst(sb, inst, 1);
-        }
-
-        public static Builder two(StringBuilder sb, String inst) {
-            return inst(sb, inst, 2);
+            first = true;
+            return this;
         }
 
         public Builder vreg(String reg, int offset) {
+            begin();
             sb.append("[");
             sb.append(reg);
             if(offset != 0)
                 sb.append(offset > 0 ? "+" + offset : offset);
             sb.append("]");
-            end();
             return this;
         }
 
         public Builder reg(String reg) {
+            begin();
             sb.append(reg);
-            end();
             return this;
         }
 
-        private void end() {
-            if(--args > 0)
+        public Builder append(String str) {
+            sb.append(str);
+            return this;
+        }
+
+        private void begin() {
+            if(!first)
                 sb.append(", ");
-            else
-                sb.append("\n");
+            first = false;
         }
     }
 
