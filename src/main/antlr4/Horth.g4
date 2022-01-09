@@ -71,7 +71,7 @@ general:
     ;
 
 block:
-    (ops+=general)*
+    (contents+=general)*
     ;
 
 include:

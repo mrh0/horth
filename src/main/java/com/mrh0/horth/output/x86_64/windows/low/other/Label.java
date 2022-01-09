@@ -12,8 +12,8 @@ public class Label implements LowInst {
 
     @Override
     public void asm(StringBuilder sb, CompileData cd) {
-        sb.append("_");
+        sb.append("\n_");
         sb.append(i);
-        sb.append(":\n");
+        sb.append(":");
     }
 }

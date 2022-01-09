@@ -1,7 +1,9 @@
 package com.mrh0.horth.output;
 
+import com.mrh0.horth.exceptions.compile.CompileException;
+
 public interface IArch {
     String getName();
-    String compile();
+    void compile() throws CompileException;
 
 }

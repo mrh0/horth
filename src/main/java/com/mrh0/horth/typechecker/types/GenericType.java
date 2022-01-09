@@ -2,7 +2,7 @@ package com.mrh0.horth.typechecker.types;
 
 import java.util.Objects;
 
-public class GenericType extends CommonType {
+public class GenericType implements CommonType {
     public final String identifier;
 
     public GenericType(String identifier) {
