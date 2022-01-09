@@ -5,6 +5,7 @@ import com.mrh0.horth.antlr.HorthParser;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.TProgram;
+import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTree;
@@ -28,7 +29,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
 
     @Override
     public ITok visitBlock(HorthParser.BlockContext ctx) {
-        return new TBlock(visit(ctx.ops));
+        return new TBlock(visit(ctx.contents));
     }
 
     @Override
@@ -36,5 +37,8 @@ public class Visitor extends HorthBaseVisitor<ITok> {
         return TBinOp.getBinOp(ctx.getText());
     }
 
-
+    @Override
+    public ITok visitGenInt(HorthParser.GenIntContext ctx) {
+        return new TInt(ctx.getText());
+    }
 }

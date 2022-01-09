@@ -48,26 +48,26 @@ infix:
     ;
 
 general:
-    ATOM
-    | INT
-    | IDENTIFIER
-    | STRING
+    ATOM                                                                                    #genAtom
+    | INT                                                                                   #genInt
+    | IDENTIFIER                                                                            #genIdentifier
+    | STRING                                                                                #genString
 
-    | unop
-    | binop
-    | keywords
+    | unop                                                                                  #genUnop
+    | binop                                                                                 #genBinOp
+    | keywords                                                                              #genKeyword
 
-    | '(' infix ')'
-    | 'assert' block 'end'
-    | ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'in' block 'end'
-    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'in' block 'end'
-    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'end'               //Signature
+    | '(' infix ')'                                                                         #genInfix
+    | 'assert' block 'end'                                                                  #genAssert
+    | ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'in' block 'end'                     #genFuncInfer
+    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'in' block 'end'     #genFunc
+    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'end'                #genFuncSignature
 
-    | 'if' block 'do' block ('elif' block 'do' block)* ('else' block)? 'end'
-    | 'while' block 'do' block ('else' block)? 'end'
+    | 'if' block 'do' block ('elif' block 'do' block)* ('else' block)? 'end'                #genIf
+    | 'while' block 'do' block ('else' block)? 'end'                                        #genWhile
 
-    | 'let' IDENTIFIER (TYPE | 'infer') ('pop')?
-    | intrfunc
+    | 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
+    | intrfunc                                                                              #genIntrfunc
     ;
 
 block:

@@ -1,5 +1,8 @@
 package com.mrh0.horth.ast.nodes;
 
+import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.output.instructions.high.HighInst;
+
 import java.util.List;
 
 public class TBlock extends Tok {
@@ -7,6 +10,12 @@ public class TBlock extends Tok {
 
     public TBlock(List<ITok> list) {
         this.list = list;
+    }
+
+    @Override
+    public void expand(List<HighInst> space, CompileData cd) {
+        for(ITok t : list)
+            t.expand(space, cd);
     }
 
     @Override

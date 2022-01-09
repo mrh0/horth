@@ -487,50 +487,322 @@ public class HorthParser extends Parser {
 	}
 
 	public static class GeneralContext extends ParserRuleContext {
-		public TerminalNode ATOM() { return getToken(HorthParser.ATOM, 0); }
-		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
-		public TerminalNode STRING() { return getToken(HorthParser.STRING, 0); }
-		public UnopContext unop() {
-			return getRuleContext(UnopContext.class,0);
+		public GeneralContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		public BinopContext binop() {
-			return getRuleContext(BinopContext.class,0);
+		@Override public int getRuleIndex() { return RULE_general; }
+	 
+		public GeneralContext() { }
+		public void copyFrom(GeneralContext ctx) {
+			super.copyFrom(ctx);
 		}
+	}
+	public static class GenKeywordContext extends GeneralContext {
 		public KeywordsContext keywords() {
 			return getRuleContext(KeywordsContext.class,0);
 		}
-		public InfixContext infix() {
-			return getRuleContext(InfixContext.class,0);
+		public GenKeywordContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenKeyword(this);
 		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenKeyword(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenKeyword(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenFuncInferContext extends GeneralContext {
+		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
+		}
+		public GenFuncInferContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenFuncInfer(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenFuncInfer(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenFuncInfer(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenStringContext extends GeneralContext {
+		public TerminalNode STRING() { return getToken(HorthParser.STRING, 0); }
+		public GenStringContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenString(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenString(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenString(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenIntrfuncContext extends GeneralContext {
+		public IntrfuncContext intrfunc() {
+			return getRuleContext(IntrfuncContext.class,0);
+		}
+		public GenIntrfuncContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenIntrfunc(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenIntrfunc(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenIntrfunc(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenAtomContext extends GeneralContext {
+		public TerminalNode ATOM() { return getToken(HorthParser.ATOM, 0); }
+		public GenAtomContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenAtom(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenAtom(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenFuncSignatureContext extends GeneralContext {
+		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public List<TerminalNode> TYPE() { return getTokens(HorthParser.TYPE); }
+		public TerminalNode TYPE(int i) {
+			return getToken(HorthParser.TYPE, i);
+		}
+		public GenFuncSignatureContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenFuncSignature(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenFuncSignature(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenFuncSignature(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenBinOpContext extends GeneralContext {
+		public BinopContext binop() {
+			return getRuleContext(BinopContext.class,0);
+		}
+		public GenBinOpContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenBinOp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenBinOp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenBinOp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenLetContext extends GeneralContext {
+		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode TYPE() { return getToken(HorthParser.TYPE, 0); }
+		public GenLetContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenLet(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenLet(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenLet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenIdentifierContext extends GeneralContext {
+		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public GenIdentifierContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenIdentifier(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenIdentifier(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenIdentifier(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenAssertContext extends GeneralContext {
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
+		}
+		public GenAssertContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenAssert(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenAssert(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenAssert(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenIfContext extends GeneralContext {
 		public List<BlockContext> block() {
 			return getRuleContexts(BlockContext.class);
 		}
 		public BlockContext block(int i) {
 			return getRuleContext(BlockContext.class,i);
 		}
+		public GenIfContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenIf(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenIf(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenIf(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenIntContext extends GeneralContext {
+		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
+		public GenIntContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenInt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenUnopContext extends GeneralContext {
+		public UnopContext unop() {
+			return getRuleContext(UnopContext.class,0);
+		}
+		public GenUnopContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenUnop(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenUnop(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenUnop(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenInfixContext extends GeneralContext {
+		public InfixContext infix() {
+			return getRuleContext(InfixContext.class,0);
+		}
+		public GenInfixContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenInfix(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenInfix(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenInfix(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenFuncContext extends GeneralContext {
+		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public BlockContext block() {
+			return getRuleContext(BlockContext.class,0);
+		}
 		public List<TerminalNode> TYPE() { return getTokens(HorthParser.TYPE); }
 		public TerminalNode TYPE(int i) {
 			return getToken(HorthParser.TYPE, i);
 		}
-		public IntrfuncContext intrfunc() {
-			return getRuleContext(IntrfuncContext.class,0);
-		}
-		public GeneralContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_general; }
+		public GenFuncContext(GeneralContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGeneral(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenFunc(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGeneral(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenFunc(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGeneral(this);
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenFunc(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenWhileContext extends GeneralContext {
+		public List<BlockContext> block() {
+			return getRuleContexts(BlockContext.class);
+		}
+		public BlockContext block(int i) {
+			return getRuleContext(BlockContext.class,i);
+		}
+		public GenWhileContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenWhile(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenWhile(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenWhile(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -544,6 +816,7 @@ public class HorthParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,16,_ctx) ) {
 			case 1:
+				_localctx = new GenAtomContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(58);
@@ -551,6 +824,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new GenIntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(59);
@@ -558,6 +832,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 3:
+				_localctx = new GenIdentifierContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(60);
@@ -565,6 +840,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 4:
+				_localctx = new GenStringContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(61);
@@ -572,6 +848,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 5:
+				_localctx = new GenUnopContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(62);
@@ -579,6 +856,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 6:
+				_localctx = new GenBinOpContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(63);
@@ -586,6 +864,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 7:
+				_localctx = new GenKeywordContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(64);
@@ -593,6 +872,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 8:
+				_localctx = new GenInfixContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
 				setState(65);
@@ -604,6 +884,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 9:
+				_localctx = new GenAssertContext(_localctx);
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(69);
@@ -615,6 +896,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 10:
+				_localctx = new GenFuncInferContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
 				setState(74);
@@ -650,6 +932,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 11:
+				_localctx = new GenFuncContext(_localctx);
 				enterOuterAlt(_localctx, 11);
 				{
 				setState(84);
@@ -721,6 +1004,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 12:
+				_localctx = new GenFuncSignatureContext(_localctx);
 				enterOuterAlt(_localctx, 12);
 				{
 				setState(107);
@@ -788,6 +1072,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 13:
+				_localctx = new GenIfContext(_localctx);
 				enterOuterAlt(_localctx, 13);
 				{
 				setState(126);
@@ -835,6 +1120,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 14:
+				_localctx = new GenWhileContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
 				setState(146);
@@ -862,6 +1148,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 15:
+				_localctx = new GenLetContext(_localctx);
 				enterOuterAlt(_localctx, 15);
 				{
 				setState(156);
@@ -891,6 +1178,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 16:
+				_localctx = new GenIntrfuncContext(_localctx);
 				enterOuterAlt(_localctx, 16);
 				{
 				setState(162);
@@ -912,7 +1200,7 @@ public class HorthParser extends Parser {
 
 	public static class BlockContext extends ParserRuleContext {
 		public GeneralContext general;
-		public List<GeneralContext> ops = new ArrayList<GeneralContext>();
+		public List<GeneralContext> contents = new ArrayList<GeneralContext>();
 		public List<GeneralContext> general() {
 			return getRuleContexts(GeneralContext.class);
 		}
@@ -953,7 +1241,7 @@ public class HorthParser extends Parser {
 				{
 				setState(165);
 				((BlockContext)_localctx).general = general();
-				((BlockContext)_localctx).ops.add(((BlockContext)_localctx).general);
+				((BlockContext)_localctx).contents.add(((BlockContext)_localctx).general);
 				}
 				}
 				setState(170);
