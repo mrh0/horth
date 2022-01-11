@@ -1,5 +1,10 @@
 package com.mrh0.horth.ast.nodes;
 
+import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.exceptions.parser.ParserException;
+import com.mrh0.horth.output.instructions.high.HighInst;
+
 import java.util.List;
 
 public class TProgram extends Tok {
@@ -9,6 +14,11 @@ public class TProgram extends Tok {
     public TProgram(List<ITok> includes, ITok main) {
         this.includes = includes;
         this.main = main;
+    }
+
+    @Override
+    public void expand(List<HighInst> space, CompileData cd) throws HorthException {
+        main.expand(space, cd);
     }
 
     @Override

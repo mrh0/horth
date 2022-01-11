@@ -1,5 +1,7 @@
 package com.mrh0.horth.typechecker;
 
+import com.mrh0.horth.ast.nodes.ITok;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
 
@@ -19,7 +21,7 @@ public class Contract {
     public static class Builder {
         private Contract c;
 
-        private Builder() {
+        public Builder() {
             c = new Contract();
         }
 
@@ -39,6 +41,17 @@ public class Contract {
 
         public Contract build() {
             return c;
+        }
+    }
+
+    public void apply(VirtualStack stack, ITok tok) throws BreachOfContractException {
+        for(IType t : pop) {
+            VirtualStack.StackEntry se = stack.pop();
+            if(!IType.equals(t, se.type()))
+                throw new BreachOfContractException();
+        }
+        for(IType t : push) {
+            stack.push(t, tok);
         }
     }
 }

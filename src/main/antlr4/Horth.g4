@@ -28,6 +28,7 @@ keywords:
     | 'drop' | 'drop2' | 'drop3'
     | 'out'
     | 'err'
+    | 'exit'
     ;
 
 intrfunc:

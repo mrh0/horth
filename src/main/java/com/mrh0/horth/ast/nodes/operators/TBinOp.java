@@ -1,28 +1,31 @@
 package com.mrh0.horth.ast.nodes.operators;
 
 import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.stackops.HAdd;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 
 public class TBinOp extends Tok {
-    public static TBinOp ADD = new TBinOp("+", new HAdd());
+    private static TBinOp ADD = new TBinOp("+", t -> new HAdd(t));
 
     private final String op;
-    private final HighInst inst;
+    private final Function<ITok, HighInst> highInst;
 
-    public TBinOp(String op, HighInst inst) {
+    public TBinOp(String op, Function<ITok, HighInst> highInst) {
         this.op = op;
-        this.inst = inst;
+        this.highInst = highInst;
     }
 
     @Override
     public void expand(List<HighInst> space, CompileData cd) {
-
+        space.add(highInst.apply(this));
     }
 
     @Override

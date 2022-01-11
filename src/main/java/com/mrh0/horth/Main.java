@@ -4,7 +4,9 @@ import com.mrh0.horth.antlr.HorthLexer;
 import com.mrh0.horth.antlr.HorthParser;
 import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.ast.Visitor;
+import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.typechecker.TypeChecker;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-    public static void main(String[] args) throws IOException, URISyntaxException {
+    public static void main(String[] args) throws IOException, URISyntaxException, HorthException {
         var inputFile = Paths.get(Main.class.getResource("/test/dev.hth").toURI()).toFile();
 
         InputStream inputStream = (inputFile == null) ? System.in : new FileInputStream(inputFile);
@@ -35,5 +37,9 @@ public class Main {
         t.expand(highLevelIR, new CompileData());
 
         System.out.println(highLevelIR);
+
+        TypeChecker tc = new TypeChecker();
+        tc.check(highLevelIR);
+        tc.end();
     }
 }

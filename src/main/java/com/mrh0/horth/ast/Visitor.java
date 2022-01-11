@@ -4,6 +4,7 @@ import com.mrh0.horth.antlr.HorthBaseVisitor;
 import com.mrh0.horth.antlr.HorthParser;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.TBlock;
+import com.mrh0.horth.ast.nodes.TKeyword;
 import com.mrh0.horth.ast.nodes.TProgram;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
@@ -40,5 +41,10 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitGenInt(HorthParser.GenIntContext ctx) {
         return new TInt(ctx.getText());
+    }
+
+    @Override
+    public ITok visitKeywords(HorthParser.KeywordsContext ctx) {
+        return new TKeyword(ctx.getText());
     }
 }

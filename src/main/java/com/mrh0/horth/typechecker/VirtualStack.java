@@ -1,6 +1,7 @@
 package com.mrh0.horth.typechecker;
 
 import com.mrh0.horth.ast.nodes.ITok;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.TypeStackMismatch;
 import com.mrh0.horth.typechecker.types.IType;
 
@@ -10,7 +11,13 @@ public class VirtualStack {
     public record StackEntry(IType type, ITok token) {}
     public Stack<StackEntry> stack;
 
-    public StackEntry pop() {
+    public VirtualStack() {
+        stack = new Stack<>();
+    }
+
+    public StackEntry pop() throws BreachOfContractException {
+        if(stack.isEmpty())
+            throw new BreachOfContractException();
         return stack.pop();
     }
 

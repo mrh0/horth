@@ -1,4 +1,6 @@
 package com.mrh0.horth.exceptions.typechecker;
 
-public class BreachOfContractException {
+import com.mrh0.horth.exceptions.HorthException;
+
+public class BreachOfContractException extends HorthException {
 }
