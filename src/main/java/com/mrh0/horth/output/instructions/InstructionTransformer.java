@@ -1,7 +1,7 @@
 package com.mrh0.horth.output.instructions;
 
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.x86_64.windows.low.LowInst;
+import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
 
 import java.util.List;
 

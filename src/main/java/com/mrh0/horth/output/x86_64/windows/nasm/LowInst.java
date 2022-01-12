@@ -1,4 +1,4 @@
-package com.mrh0.horth.output.x86_64.windows.low;
+package com.mrh0.horth.output.x86_64.windows.nasm;
 
 import com.mrh0.horth.ast.CompileData;
 
@@ -9,5 +9,5 @@ public interface LowInst {
     String T2 = "r11";  //Temp2
     String LS = "r15";  //Local Stack
 
-    void asm(StringBuilder sb, CompileData cd);
+    void asm(InstructionBuilder ib, CompileData cd);
 }

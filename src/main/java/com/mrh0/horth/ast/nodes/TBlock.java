@@ -14,9 +14,9 @@ public class TBlock extends Tok {
     }
 
     @Override
-    public void expand(List<HighInst> space, CompileData cd) throws HorthException {
+    public void expand(List<HighInst> space) throws HorthException {
         for(ITok t : list)
-            t.expand(space, cd);
+            t.expand(space);
     }
 
     @Override

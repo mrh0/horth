@@ -24,7 +24,7 @@ public class TBinOp extends Tok {
     }
 
     @Override
-    public void expand(List<HighInst> space, CompileData cd) {
+    public void expand(List<HighInst> space) {
         space.add(highInst.apply(this));
     }
 

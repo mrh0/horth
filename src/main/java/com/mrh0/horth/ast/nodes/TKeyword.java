@@ -15,7 +15,7 @@ public class TKeyword extends Tok {
     }
 
     @Override
-    public void expand(List<HighInst> space, CompileData cd) throws ParserException {
+    public void expand(List<HighInst> space) throws ParserException {
         switch(text) {
             case "exit":
                 space.add(new HExit(this));

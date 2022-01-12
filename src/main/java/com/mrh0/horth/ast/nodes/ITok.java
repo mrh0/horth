@@ -11,7 +11,7 @@ import java.util.List;
 public interface ITok {
     Loc getLocation();
 
-    void expand(List<HighInst> space, CompileData cd) throws HorthException;
+    void expand(List<HighInst> space) throws HorthException;
 
     StringBuilder toString(StringBuilder sb);
 }

@@ -17,8 +17,8 @@ public class TProgram extends Tok {
     }
 
     @Override
-    public void expand(List<HighInst> space, CompileData cd) throws HorthException {
-        main.expand(space, cd);
+    public void expand(List<HighInst> space) throws HorthException {
+        main.expand(space);
     }
 
     @Override

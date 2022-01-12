@@ -19,7 +19,7 @@ public class TInt extends Tok {
     }
 
     @Override
-    public void expand(List<HighInst> space, CompileData cd) {
+    public void expand(List<HighInst> space) {
         space.add(new HPutInt(value, this));
     }
 

@@ -7,7 +7,7 @@ import java.util.List;
 
 public class TInclude extends Tok{
     @Override
-    public void expand(List<HighInst> space, CompileData cd) {
+    public void expand(List<HighInst> space) {
 
     }
 
