@@ -9,6 +9,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
 import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
+import com.mrh0.horth.util.IO;
 
 import java.io.File;
 import java.io.IOException;
@@ -49,16 +50,23 @@ public class Win64nasm extends Arch {
         for(LowInst li : /*optimized*/LLIR)
             li.asm(ib, data);
 
-
+        try {
+            nasmCompile("file:///horthdev/test.asm", "file:///horthdev/output.exe");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         return sb;
     }
 
     public void nasmCompile(String inputFilePath, String outputFilePath) throws IOException, URISyntaxException {
-        Paths.get(new URI(inputFilePath));
+        var in = IO.getFile(inputFilePath);
+        var out = IO.getFile(outputFilePath);
 
         Runtime rt = Runtime.getRuntime();
         System.out.println("nasm " + in.getAbsolutePath() + " -o " + out.getAbsolutePath());
-        //Process pr = rt.exec();
+        //Process nasmProcess = rt.exec();
     }
 }

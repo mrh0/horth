@@ -5,6 +5,7 @@ import com.mrh0.horth.Main;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 
@@ -26,5 +27,9 @@ public class IO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static File getFile(String file) throws URISyntaxException {
+        return Paths.get(new URI(file)).toFile();
     }
 }

@@ -18,4 +18,9 @@ public class HPutInt extends HighInst {
     public Contract getContract() {
         return contract;
     }
+
+    @Override
+    public String toString() {
+        return "HPut("+value+")";
+    }
 }

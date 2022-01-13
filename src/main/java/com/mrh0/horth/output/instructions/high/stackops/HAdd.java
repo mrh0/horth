@@ -16,4 +16,9 @@ public class HAdd extends HighInst {
     public Contract getContract() {
         return contract;
     }
+
+    @Override
+    public String toString() {
+        return "HAdd";
+    }
 }
