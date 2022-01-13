@@ -10,10 +10,8 @@ public class Optimizer {
     public static List<LowInst> optimize(List<LowInst> list) {
         int prev = list.size();
         List<LowInst> n = new ArrayList<>();
-
         for(int i = 0; i < list.size()-1; i++) {
             LowInst a = list.get(i), b = list.get(i+1);
-            System.out.println(a + ":" + b);
             if(a instanceof LPutInt) {
                 if(b instanceof LPutInt) {
                     n.add(new LPutInt2((LPutInt)a, (LPutInt)b));
@@ -24,8 +22,9 @@ public class Optimizer {
             else
                 n.add(a);
         }
+        n.add(list.get(list.size()-1));
 
-        if(prev != n.size())
+        if(prev != n.size() && n.size() > 1)
             return optimize(n);
         return n;
     }

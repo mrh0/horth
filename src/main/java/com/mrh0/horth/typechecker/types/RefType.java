@@ -9,4 +9,9 @@ public class RefType extends NestedType {
     public String getName() {
         return "ref";
     }
+
+    @Override
+    public int getSize() {
+        return 8;
+    }
 }

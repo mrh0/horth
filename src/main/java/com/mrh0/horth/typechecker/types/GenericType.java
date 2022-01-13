@@ -2,7 +2,7 @@ package com.mrh0.horth.typechecker.types;
 
 import java.util.Objects;
 
-public class GenericType implements CommonType {
+public class GenericType implements IType {
     public final String identifier;
 
     public GenericType(String identifier) {
@@ -12,6 +12,11 @@ public class GenericType implements CommonType {
     @Override
     public String getName() {
         return "any<" + identifier + ">";
+    }
+
+    @Override
+    public int getSize() {
+        return 0;
     }
 
     @Override

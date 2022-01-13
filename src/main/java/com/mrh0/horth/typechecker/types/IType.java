@@ -24,4 +24,6 @@ public interface IType {
     }
 
     String getName();
+
+    int getSize();
 }

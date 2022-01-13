@@ -1,5 +1,6 @@
 package com.mrh0.horth.output.x86_64.windows;
 
+import com.mrh0.horth.Main;
 import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.Arch;
@@ -9,6 +10,11 @@ import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
 import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +30,10 @@ public class Win64nasm extends Arch {
         InstructionBuilder ib = new InstructionBuilder(sb);
         CompileData data = new CompileData();
 
+        ib      .inst("global").reg("main")
+                .inst("section").reg(".text")
+                .label("main");
+
         Win64nasmIT it = new Win64nasmIT();
 
         List<LowInst> LLIR = new ArrayList<>();
@@ -32,13 +42,23 @@ public class Win64nasm extends Arch {
 
         System.out.println(LLIR);
 
-        List<LowInst> optimizedHLIR = Optimizer.optimize(LLIR);
+        //List<LowInst> optimizedLLIR = Optimizer.optimize(LLIR);
 
-        System.out.println(optimizedHLIR);
+        //System.out.println("Optimized:\n" + optimizedLLIR);
 
-        for(LowInst li : optimizedHLIR)
+        for(LowInst li : /*optimized*/LLIR)
             li.asm(ib, data);
 
+
+
         return sb;
+    }
+
+    public void nasmCompile(String inputFilePath, String outputFilePath) throws IOException, URISyntaxException {
+        Paths.get(new URI(inputFilePath));
+
+        Runtime rt = Runtime.getRuntime();
+        System.out.println("nasm " + in.getAbsolutePath() + " -o " + out.getAbsolutePath());
+        //Process pr = rt.exec();
     }
 }
