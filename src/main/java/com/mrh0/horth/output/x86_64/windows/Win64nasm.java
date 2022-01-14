@@ -31,9 +31,13 @@ public class Win64nasm extends Arch {
         InstructionBuilder ib = new InstructionBuilder(sb);
         CompileData data = new CompileData();
 
-        ib      .inst("global").reg("main")
+        ib      //.inst("bits").reg("64")
+                .inst("global").reg("main")
                 .inst("section").reg(".text")
-                .label("main");
+                .label("main")
+                .inst("mov").reg("r12").reg("rsp");
+
+
 
         Win64nasmIT it = new Win64nasmIT();
 
@@ -50,23 +54,32 @@ public class Win64nasm extends Arch {
         for(LowInst li : /*optimized*/LLIR)
             li.asm(ib, data);
 
-        try {
-            nasmCompile("file:///horthdev/test.asm", "file:///horthdev/output.exe");
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-
         return sb;
     }
 
-    public void nasmCompile(String inputFilePath, String outputFilePath) throws IOException, URISyntaxException {
+    public static void nasmCompile(String inputFilePath, String outputFilePath) throws IOException, URISyntaxException {
         var in = IO.getFile(inputFilePath);
         var out = IO.getFile(outputFilePath);
 
         Runtime rt = Runtime.getRuntime();
-        System.out.println("nasm " + in.getAbsolutePath() + " -o " + out.getAbsolutePath());
-        //Process nasmProcess = rt.exec();
+        var command = "nasm " + in.getAbsolutePath() + " -felf64 -o " + out.getAbsolutePath();
+        System.out.println("EXEC: '" + command + "'");
+        Process nasmProcess = rt.exec(command);
+        try {
+            nasmProcess.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("NASM finished with exit code " + nasmProcess.exitValue());
+
+        /*command = out.getAbsolutePath();
+        System.out.println("EXEC: '" + command + "'");
+        Process runProcess = rt.exec(command);
+        try {
+            runProcess.waitFor();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("PROGRAM finished with exit code " + runProcess.exitValue());*/
     }
 }

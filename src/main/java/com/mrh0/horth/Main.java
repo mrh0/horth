@@ -10,6 +10,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.x86_64.windows.Win64nasm;
 import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
 import com.mrh0.horth.typechecker.TypeChecker;
+import com.mrh0.horth.util.IO;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -47,6 +48,23 @@ public class Main {
         tc.check(HLIR);
         tc.end();
 
-        System.out.println(Arch.get("win64nasm").compile(HLIR).toString());
+        //win64nasm Arch Test
+
+        var asmFile = "file:///horthdev/test.asm";
+        var exeFile = "file:///horthdev/output.o";
+
+        String outputnasm = Arch.get("win64nasm").compile(HLIR).toString();
+
+        System.out.println(outputnasm);
+
+        IO.writeFile(IO.getFile(asmFile), outputnasm);
+
+        /*try {
+            Win64nasm.nasmCompile(asmFile, exeFile);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }*/
     }
 }

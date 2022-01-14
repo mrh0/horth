@@ -1,4 +1,4 @@
-0:RAX, 1:RDX, tmp0:R10, tmp1: R11
+0:RAX, 1:RDX, tmp0:R10, tmp1: R11, stackstart: R12
 
 //Manipulators
 swap:
@@ -75,7 +75,7 @@ put4:
 
 //Operands
 add:
-    add     rdx, rax
+    add     rax, rdx
     pop     rdx
 add_i:
     add     <i>, rax

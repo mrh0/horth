@@ -9,7 +9,7 @@ public class LAdd implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib      .inst("add").reg(S2).reg(S1)
+        ib      .inst("add").reg(S1).reg(S2)
                 .inst("pop").reg(S2);
     }
 }
