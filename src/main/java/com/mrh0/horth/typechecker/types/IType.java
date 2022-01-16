@@ -1,15 +1,16 @@
 package com.mrh0.horth.typechecker.types;
 
 import java.util.List;
+import java.util.Map;
 
 public interface IType {
-    public static boolean equals(IType a, IType b) {
+    public static boolean equals(IType a, IType b, Map<String, IType> generics) {
         if(a instanceof NestedType && b instanceof NestedType)
-            return equals(a.getNested(), b.getNested());
+            return equals(a.getNested(), b.getNested(), generics);
         return a == b;
     }
 
-    public default void addGenerics(List<GenericType> list, IType type) {
+    public static void addGenerics(List<GenericType> list, IType type) {
         if(type instanceof NestedType)
             addGenerics(list, type.getNested());
         else if(type instanceof GenericType)

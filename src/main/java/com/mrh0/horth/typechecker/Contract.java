@@ -6,16 +6,18 @@ import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Contract {
-    private List<IType> pop;
-    private List<IType> push;
+    private IType[] pop;
+    private IType[] push;
     private List<GenericType> generics;
 
     private Contract() {
-        pop = new ArrayList<>();
-        push = new ArrayList<>();
+        pop = new IType[0];
+        push = new IType[0];
     }
 
     public static class Builder {
@@ -29,13 +31,13 @@ public class Contract {
             return new Builder();
         }
 
-        public Builder pop(IType type) {
-            c.pop.add(type);
+        public Builder pop(IType...types) {
+            c.pop = types;
             return this;
         }
 
-        public Builder push(IType type) {
-            c.push.add(type);
+        public Builder push(IType...types) {
+            c.push = types;
             return this;
         }
 
@@ -45,9 +47,11 @@ public class Contract {
     }
 
     public void apply(VirtualStack stack, ITok tok) throws BreachOfContractException {
+        Map<String, IType> genMap = new HashMap<>();
+
         for(IType t : pop) {
             VirtualStack.StackEntry se = stack.pop();
-            if(!IType.equals(t, se.type()))
+            if(!IType.equals(t, se.type(), genMap))
                 throw new BreachOfContractException();
         }
         for(IType t : push) {
