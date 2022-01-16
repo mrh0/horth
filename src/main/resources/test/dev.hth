@@ -1,1 +1,1 @@
-5 dup + exit
+1 2 + dup + exit

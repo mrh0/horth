@@ -1,9 +1,8 @@
 package com.mrh0.horth.ast.nodes;
 
-import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.HDup;
+import com.mrh0.horth.output.instructions.high.stackops.base.HDup;
 import com.mrh0.horth.output.instructions.high.stackops.HExit;
 
 import java.util.List;

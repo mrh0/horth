@@ -4,11 +4,11 @@ import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
 
-public class LDup implements LowInst {
-    public static final LDup INSTANCE = new LDup();
+public class LDrop implements LowInst {
+    public static final LDrop INSTANCE = new LDrop();
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib      .inst("push").reg(S2)
-                .inst("mov").reg(S2).reg(S1);
+        ib      .inst("mov").reg(S1).reg(S2)
+                .inst("pop").reg(S2);
     }
 }
