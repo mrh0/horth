@@ -3,6 +3,7 @@ package com.mrh0.horth.output.instructions.high.stackops;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
+import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HAdd extends HighInst {
@@ -13,7 +14,7 @@ public class HAdd extends HighInst {
     }
 
     @Override
-    public Contract getContract() {
+    public IContract getContract() {
         return contract;
     }
 

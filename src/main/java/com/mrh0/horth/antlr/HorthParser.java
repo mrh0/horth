@@ -684,6 +684,10 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenIfContext extends GeneralContext {
+		public BlockContext block;
+		public List<BlockContext> conds = new ArrayList<BlockContext>();
+		public List<BlockContext> doBlock = new ArrayList<BlockContext>();
+		public BlockContext elseBlock;
 		public List<BlockContext> block() {
 			return getRuleContexts(BlockContext.class);
 		}
@@ -1078,11 +1082,13 @@ public class HorthParser extends Parser {
 				setState(126);
 				match(T__47);
 				setState(127);
-				block();
+				((GenIfContext)_localctx).block = block();
+				((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
 				setState(128);
 				match(T__48);
 				setState(129);
-				block();
+				((GenIfContext)_localctx).block = block();
+				((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
 				setState(137);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
@@ -1092,11 +1098,13 @@ public class HorthParser extends Parser {
 					setState(130);
 					match(T__49);
 					setState(131);
-					block();
+					((GenIfContext)_localctx).block = block();
+					((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
 					setState(132);
 					match(T__48);
 					setState(133);
-					block();
+					((GenIfContext)_localctx).block = block();
+					((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
 					}
 					}
 					setState(139);
@@ -1111,7 +1119,7 @@ public class HorthParser extends Parser {
 					setState(140);
 					match(T__50);
 					setState(141);
-					block();
+					((GenIfContext)_localctx).elseBlock = block();
 					}
 				}
 

@@ -22,7 +22,17 @@ public class VirtualStack {
     }
 
     public void push(IType type, ITok token) {
-        stack.push(new StackEntry(type, token));
+        push(new StackEntry(type, token));
+    }
+
+    public void push(StackEntry se) {
+        stack.push(se);
+    }
+
+    public StackEntry peek() throws BreachOfContractException {
+        if(stack.isEmpty())
+            throw new BreachOfContractException();
+        return stack.peek();
     }
 
     public int size() {

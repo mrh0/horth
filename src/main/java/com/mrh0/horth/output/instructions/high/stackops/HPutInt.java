@@ -2,11 +2,11 @@ package com.mrh0.horth.output.instructions.high.stackops;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.typechecker.Contract;
+import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HPutInt extends HighInst {
-    private static Contract contract = new Contract.Builder().push(AllTypes.INT64).build();
+    private static IContract contract = (s, t) -> s.push(AllTypes.INT64, t);
     public final int value;
 
     public HPutInt(int value, ITok token) {
@@ -15,12 +15,12 @@ public class HPutInt extends HighInst {
     }
 
     @Override
-    public Contract getContract() {
+    public IContract getContract() {
         return contract;
     }
 
     @Override
     public String toString() {
-        return "HPut("+value+")";
+        return "HPutInt("+value+")";
     }
 }

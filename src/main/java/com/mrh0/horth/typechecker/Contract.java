@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Contract {
+public class Contract implements IContract{
     private IType[] pop;
     private IType[] push;
     private List<GenericType> generics;
@@ -46,6 +46,7 @@ public class Contract {
         }
     }
 
+    @Override
     public void apply(VirtualStack stack, ITok tok) throws BreachOfContractException {
         Map<String, IType> genMap = new HashMap<>();
 

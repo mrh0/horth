@@ -65,7 +65,10 @@ general:
     | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'end'                #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
-    | 'if' block 'do' block ('elif' block 'do' block)* ('else' block)? 'end'                #genIf
+    | 'if' conds+=block 'do' doBlock+=block
+    ('elif' conds+=block 'do' doBlock+=block)*
+    ('else' elseBlock=block)? 'end'                                                         #genIf
+
     | 'while' block 'do' block ('else' block)? 'end'                                        #genWhile
 
     | 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet

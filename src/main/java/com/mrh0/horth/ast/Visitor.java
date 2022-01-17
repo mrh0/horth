@@ -47,4 +47,9 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitKeywords(HorthParser.KeywordsContext ctx) {
         return new TKeyword(ctx.getText());
     }
+
+    @Override
+    public ITok visitGenIf(HorthParser.GenIfContext ctx) {
+        return super.visitGenIf(ctx);
+    }
 }

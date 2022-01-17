@@ -1,1 +1,4 @@
-1 2 + dup + exit
+if 1 do
+    1 exit
+end
+0 exit
