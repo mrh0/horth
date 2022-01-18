@@ -6,6 +6,7 @@ import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.TKeyword;
 import com.mrh0.horth.ast.nodes.TProgram;
+import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -15,11 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Visitor extends HorthBaseVisitor<ITok> {
-    public <T extends ParserRuleContext> List<ITok> visit(List<T> list) {
-        List<ITok> t = new ArrayList<>();
+    public <T extends ParserRuleContext, O extends ITok> List<O> visit(List<T> list) {
+        List<O> t = new ArrayList<>();
         for(T pt : list)
-            t.add(visit(pt));
+            t.add((O)visit(pt));
         return t;
+    }
+
+    public <T extends ParserRuleContext, O extends ITok> O cvisit(T rule) {
+        return rule == null ? null : (O) visit(rule);
     }
 
     @Override
@@ -50,6 +55,6 @@ public class Visitor extends HorthBaseVisitor<ITok> {
 
     @Override
     public ITok visitGenIf(HorthParser.GenIfContext ctx) {
-        return super.visitGenIf(ctx);
+        return new TIf(visit(ctx.conds), visit(ctx.doBlock), cvisit(ctx.elseBlock));
     }
 }

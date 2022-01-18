@@ -9,9 +9,9 @@ import java.util.List;
 
 public class TIf extends Tok {
 
-    private List<TBlock> conditions;
-    private List<TBlock> doBlocks;
-    private TBlock elseBlock;
+    public final List<TBlock> conditions;
+    public final List<TBlock> doBlocks;
+    public final TBlock elseBlock;
 
     public TIf(List<TBlock> conditions, List<TBlock> doBlocks, TBlock elseBlock) {
         this.conditions  = conditions;
@@ -26,7 +26,21 @@ public class TIf extends Tok {
 
     @Override
     public StringBuilder toString(StringBuilder sb) {
-        sb.append("if(");
+        sb.append("Branch(");
+        for(int i = 0; i < conditions.size(); i++) {
+            if(i > 0)
+                sb.append("el");
+            sb.append("if(");
+            conditions.get(0).toString(sb);
+            sb.append(", ");
+            doBlocks.get(0).toString(sb);
+            sb.append(")");
+        }
+        if(elseBlock != null) {
+            sb.append("else(");
+            elseBlock.toString(sb);
+            sb.append(")");
+        }
         sb.append(")");
         return sb;
     }

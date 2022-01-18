@@ -5,13 +5,12 @@ import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.IExpanding;
 
 import java.util.List;
 
-public interface ITok {
+public interface ITok extends IExpanding {
     Loc getLocation();
-
-    void expand(List<HighInst> space) throws HorthException;
 
     StringBuilder toString(StringBuilder sb);
 }

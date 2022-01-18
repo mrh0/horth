@@ -14,7 +14,10 @@ public class TypeChecker {
 
     public void check(List<HighInst> list) throws BreachOfContractException {
         for(HighInst inst : list) {
-            inst.getContract().apply(stack, inst.token);
+            if(inst instanceof ISpecialCheck)
+                ((ISpecialCheck)inst).check(stack);
+            else
+                inst.getContract().apply(stack, inst.token);
         }
     }
 
