@@ -27,4 +27,8 @@ public interface IType {
     String getName();
 
     int getSize();
+
+    /*public default boolean cast(IType to) {
+        return false;
+    }*/
 }

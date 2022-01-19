@@ -60,6 +60,7 @@ general:
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
+    | '[' block ']'                                                                         #genAccessor
 
     | '(' infix ')'                                                                         #genInfix
     | 'assert' block 'end'                                                                  #genAssert

@@ -1,18 +1,15 @@
 package com.mrh0.horth.typechecker;
 
+import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
+import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.output.instructions.high.HighInst;
 
 import java.util.List;
 
 public class TypeChecker {
-    private VirtualStack stack;
 
-    public TypeChecker() {
-        stack = new VirtualStack();
-    }
-
-    public void check(List<HighInst> list) throws BreachOfContractException {
+    public static void check(VirtualStack stack, List<HighInst> list) throws HorthException {
         for(HighInst inst : list) {
             if(inst instanceof ISpecialCheck)
                 ((ISpecialCheck)inst).check(stack);
@@ -21,7 +18,7 @@ public class TypeChecker {
         }
     }
 
-    public void end() throws BreachOfContractException {
+    public static void end(VirtualStack stack) throws BreachOfContractException {
         if(stack.size() > 0)
             throw new BreachOfContractException();
     }

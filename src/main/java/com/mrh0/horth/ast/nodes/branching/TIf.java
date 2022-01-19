@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.branching.HBIf;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class TIf extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-
+        space.add(new HBIf(this));
     }
 
     @Override
