@@ -1,8 +1,8 @@
 package com.mrh0.horth.typechecker;
 
+import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
-import com.mrh0.horth.exceptions.typechecker.StackTypesException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.exceptions.typechecker.TypeStackMismatch;
 import com.mrh0.horth.typechecker.types.IType;
@@ -25,7 +25,13 @@ public class VirtualStack {
 
     public StackEntry pop() throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException();
+            throw new BreachOfContractException(null);
+        return stack.remove(stack.size()-1);
+    }
+
+    public StackEntry pop(ITok token) throws BreachOfContractException {
+        if(stack.isEmpty())
+            throw new BreachOfContractException(token.getLocation());
         return stack.remove(stack.size()-1);
     }
 
@@ -39,7 +45,7 @@ public class VirtualStack {
 
     public StackEntry peek() throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException();
+            throw new BreachOfContractException(null);
         return stack.get(stack.size()-1);
     }
 
@@ -56,12 +62,12 @@ public class VirtualStack {
         return new VirtualStack(this);
     }
 
-    public static void match(VirtualStack expected, VirtualStack actual) throws TypeCheckerException {
+    public static void match(VirtualStack expected, VirtualStack actual, Loc location) throws TypeCheckerException {
         if(expected.size() != actual.size())
-            throw new TypeStackMismatch(expected, actual);
+            throw new TypeStackMismatch(location, expected, actual);
         for(int i = expected.size()-1; i >= 0; i--) {
             if (!IType.equals(expected.stack.get(i).type(), actual.stack.get(i).type(), null))
-                throw new TypeStackMismatch(expected, actual);
+                throw new TypeStackMismatch(location, expected, actual);
         }
     }
 }

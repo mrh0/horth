@@ -51,9 +51,9 @@ public class Contract implements IContract{
         Map<String, IType> genMap = new HashMap<>();
 
         for(IType t : pop) {
-            VirtualStack.StackEntry se = stack.pop();
+            VirtualStack.StackEntry se = stack.pop(tok);
             if(!IType.equals(t, se.type(), genMap))
-                throw new BreachOfContractException();
+                throw new BreachOfContractException(tok.getLocation());
         }
         for(IType t : push) {
             stack.push(t, tok);

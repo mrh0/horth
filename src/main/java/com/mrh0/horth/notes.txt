@@ -82,9 +82,9 @@ add_i:
 
 //Keywords
 if:
-    sub     1, rax
+    cmp     rax, 0
     mov     rax, rdx
     pop     rdx
-    jl      <label>
+    jle     <label>
 
 local variables defined with let in a func will be put on a 'local stack' (not real rsp stack). Local variable sizes are summed and stored, when a func return it will pop the size from the 'local stack'.

@@ -55,7 +55,7 @@ public class HBIf extends HighBlock implements ISpecialCheck {
 
             TypeChecker.check(stack, insts);
             stack.pop();
-            VirtualStack.match(stack, snapshot);
+            VirtualStack.match(stack, snapshot, cond.getLocation());
         }
 
         for(TBlock dos : doBlocks) {
@@ -63,13 +63,13 @@ public class HBIf extends HighBlock implements ISpecialCheck {
             dos.expand(insts);
 
             TypeChecker.check(stack, insts);
-            VirtualStack.match(stack, snapshot);
+            VirtualStack.match(stack, snapshot, dos.getLocation());
         }
 
         List<HighInst> insts = new ArrayList<>();
         elseBlock.expand(insts);
 
         TypeChecker.check(stack, insts);
-        VirtualStack.match(stack, snapshot);
+        VirtualStack.match(stack, snapshot, elseBlock.getLocation());
     }
 }

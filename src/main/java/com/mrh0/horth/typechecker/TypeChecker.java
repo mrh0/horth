@@ -20,6 +20,6 @@ public class TypeChecker {
 
     public static void end(VirtualStack stack) throws BreachOfContractException {
         if(stack.size() > 0)
-            throw new BreachOfContractException();
+            throw new BreachOfContractException(null);
     }
 }

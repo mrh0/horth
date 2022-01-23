@@ -3,16 +3,18 @@ package com.mrh0.horth.exceptions;
 import com.mrh0.horth.ast.Loc;
 
 public class HorthException extends Exception {
-    private Loc location;
-    private String message = "Unexpected Horth Exception.\n";
+    private final Loc location;
+    private String message = "Unexpected Horth Exception.";
 
-    public HorthException() {}
+    public HorthException() {
+        location = null;
+    }
     public HorthException(Loc location) {
         this.location = location;
     }
 
     @Override
     public String getMessage() {
-        return (location == null ? "UNKNOWN: " : location.toString()) + message + super.getMessage();
+        return "\n\tat " + (location == null ? "UNKNOWN: " : location.toString() + "\nJava Exception:");
     }
 }

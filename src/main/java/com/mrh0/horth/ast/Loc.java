@@ -24,6 +24,6 @@ public class Loc {
 
     @Override
     public String toString() {
-        return getFileName() + ":" + token.getLine() + ":" + token.getCharPositionInLine() + ":\n" + token.getText();
+        return getFileName() + ":" + token.getLine() + ":" + token.getCharPositionInLine() + " near: '" + token.getText() + "'";
     }
 }

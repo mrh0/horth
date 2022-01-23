@@ -40,7 +40,6 @@ intrfunc:
     ;
 
 infix:
-    'st' | 'nd'
     | IDENTIFIER
     | ATOM
     | INT
@@ -74,8 +73,12 @@ general:
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
     | 'while' block 'do' block ('else' block)? 'end'                                        #genWhile
+    //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
 
-    | 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
+    //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
+    | 'let' (IDENTIFIER)+ 'in' block 'end'                                                  #genLet
+    | 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
+    | 'with' IDENTIFIER 'do' block 'end'                                                    #genWith
     | intrfunc                                                                              #genIntrfunc
     ;
 

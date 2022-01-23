@@ -40,7 +40,7 @@ public class Main {
         HorthParser parser = new HorthParser(tokens);
 
         var tree = parser.program();
-        var t = new Visitor().visitProgram(tree);
+        var t = new Visitor(inputFile).visitProgram(tree);
         System.out.println(t.toString());
 
         //PreTypeCheckExpanding

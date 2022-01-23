@@ -10,12 +10,18 @@ import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import org.antlr.v4.runtime.ParserRuleContext;
-import org.antlr.v4.runtime.tree.ParseTree;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Visitor extends HorthBaseVisitor<ITok> {
+    private File file;
+
+    public Visitor(File file) {
+        this.file = file;
+    }
+
     public <T extends ParserRuleContext, O extends ITok> List<O> visit(List<T> list) {
         List<O> t = new ArrayList<>();
         for(T pt : list)
@@ -30,31 +36,31 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitProgram(HorthParser.ProgramContext ctx) {
         ctx.include();
-        return new TProgram(visit(ctx.includes), visit(ctx.main));
+        return new TProgram(visit(ctx.includes), visit(ctx.main)).loc(ctx.start, file);
     }
 
     @Override
     public ITok visitBlock(HorthParser.BlockContext ctx) {
-        return new TBlock(visit(ctx.contents));
+        return new TBlock(visit(ctx.contents)).loc(ctx.start, file);
     }
 
     @Override
     public ITok visitBinop(HorthParser.BinopContext ctx) {
-        return TBinOp.getBinOp(ctx.getText());
+        return TBinOp.getBinOp(ctx.getText()).loc(ctx.start, file);
     }
 
     @Override
     public ITok visitGenInt(HorthParser.GenIntContext ctx) {
-        return new TInt(ctx.getText());
+        return new TInt(ctx.getText()).loc(ctx.start, file);
     }
 
     @Override
     public ITok visitKeywords(HorthParser.KeywordsContext ctx) {
-        return new TKeyword(ctx.getText());
+        return new TKeyword(ctx.getText()).loc(ctx.start, file);
     }
 
     @Override
     public ITok visitGenIf(HorthParser.GenIfContext ctx) {
-        return new TIf(visit(ctx.conds), visit(ctx.doBlock), cvisit(ctx.elseBlock));
+        return new TIf(visit(ctx.conds), visit(ctx.doBlock), cvisit(ctx.elseBlock)).loc(ctx.start, file);
     }
 }

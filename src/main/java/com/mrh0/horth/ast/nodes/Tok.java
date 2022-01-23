@@ -11,7 +11,7 @@ import java.util.List;
 public abstract class Tok implements ITok {
     private Loc location;
 
-    public ITok setLocation(Token token, File file) {
+    public ITok loc(Token token, File file) {
         location = new Loc(token, file);
         return this;
     }
