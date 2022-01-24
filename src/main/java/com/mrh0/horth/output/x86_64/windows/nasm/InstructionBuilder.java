@@ -52,6 +52,13 @@ public class InstructionBuilder {
         return this;
     }
 
+    public InstructionBuilder label(long id) {
+        begin();
+        sb.append("_inst");
+        sb.append(id);
+        return this;
+    }
+
     public InstructionBuilder comment(String commend) {
         sb.append("; ");
         sb.append(commend);

@@ -1,8 +1,4 @@
 if 1 do
     1 exit
-elif 2 do
-    2 exit
-else
-    3 exit
 end
 0 exit

@@ -12,6 +12,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.TypeChecker;
 import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,8 +36,13 @@ public class HBIf extends HighBlock implements ISpecialCheck {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        if(conditions.size() == 1 && elseBlock == null) {
 
+        if(conditions.size() == 1 && elseBlock == null) {
+            conditions.get(0).expand(space);
+            List<HighInst> dt = new ArrayList<>();
+            doBlocks.get(0).expand(dt);
+            space.add(new HBranch(token, Util.lastOf(dt)));
+            space.addAll(dt);
         }
         else if(conditions.size() == 1) {
 
@@ -66,10 +72,12 @@ public class HBIf extends HighBlock implements ISpecialCheck {
             VirtualStack.match(stack, snapshot, dos.getLocation());
         }
 
-        List<HighInst> insts = new ArrayList<>();
-        elseBlock.expand(insts);
+        if(elseBlock != null) {
+            List<HighInst> insts = new ArrayList<>();
+            elseBlock.expand(insts);
 
-        TypeChecker.check(stack, insts);
-        VirtualStack.match(stack, snapshot, elseBlock.getLocation());
+            TypeChecker.check(stack, insts);
+            VirtualStack.match(stack, snapshot, elseBlock.getLocation());
+        }
     }
 }
