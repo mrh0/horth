@@ -16,6 +16,6 @@ public class LBranch implements LowInst {
         ib.inst("cmp").reg(S1).imm(0)
                 .inst("mov").reg(S1).reg(S2)
                 .inst("pop").reg(S2)
-                .inst("jle").label(hi.falsePath.id);
+                .inst("jle").ilabel(hi.label.id);
     }
 }

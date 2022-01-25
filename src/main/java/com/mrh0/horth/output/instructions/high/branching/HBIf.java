@@ -1,18 +1,12 @@
 package com.mrh0.horth.output.instructions.high.branching;
 
-import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
-import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
+import com.mrh0.horth.output.instructions.high.HighLabel;
 import com.mrh0.horth.output.instructions.high.HighBlock;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.typechecker.IContract;
-import com.mrh0.horth.typechecker.ISpecialCheck;
-import com.mrh0.horth.typechecker.TypeChecker;
-import com.mrh0.horth.typechecker.VirtualStack;
-import com.mrh0.horth.util.Util;
+import com.mrh0.horth.typechecker.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +25,7 @@ public class HBIf extends HighBlock implements ISpecialCheck {
 
     @Override
     public IContract getContract() {
-        return null;
+        return Contract.VOID;
     }
 
     @Override
@@ -39,10 +33,10 @@ public class HBIf extends HighBlock implements ISpecialCheck {
 
         if(conditions.size() == 1 && elseBlock == null) {
             conditions.get(0).expand(space);
-            List<HighInst> dt = new ArrayList<>();
-            doBlocks.get(0).expand(dt);
-            space.add(new HBranch(token, Util.lastOf(dt)));
-            space.addAll(dt);
+            HighLabel label = new HighLabel();
+            space.add(new HBranch(token, label));
+            doBlocks.get(0).expand(space);
+            space.add(label);
         }
         else if(conditions.size() == 1) {
 

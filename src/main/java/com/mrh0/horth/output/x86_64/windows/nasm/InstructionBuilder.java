@@ -45,6 +45,13 @@ public class InstructionBuilder {
         return this;
     }
 
+    public InstructionBuilder label(long id) {
+        sb.append("\n_inst");
+        sb.append(id);
+        sb.append(":");
+        return this;
+    }
+
     public InstructionBuilder label(String name) {
         sb.append("\n");
         sb.append(name);
@@ -52,7 +59,7 @@ public class InstructionBuilder {
         return this;
     }
 
-    public InstructionBuilder label(long id) {
+    public InstructionBuilder ilabel(long id) {
         begin();
         sb.append("_inst");
         sb.append(id);

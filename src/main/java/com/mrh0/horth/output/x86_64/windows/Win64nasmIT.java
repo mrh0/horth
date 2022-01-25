@@ -2,6 +2,7 @@ package com.mrh0.horth.output.x86_64.windows;
 
 import com.mrh0.horth.output.instructions.InstructionTransformer;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.HighLabel;
 import com.mrh0.horth.output.instructions.high.branching.HBranch;
 import com.mrh0.horth.output.instructions.high.stackops.HAdd;
 import com.mrh0.horth.output.instructions.high.stackops.base.*;
@@ -9,6 +10,7 @@ import com.mrh0.horth.output.instructions.high.stackops.HExit;
 import com.mrh0.horth.output.instructions.high.stackops.HPutInt;
 import com.mrh0.horth.output.x86_64.windows.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.LExit;
+import com.mrh0.horth.output.x86_64.windows.nasm.other.Label;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.base.*;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.math.LAdd;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutInt;
@@ -38,6 +40,8 @@ public class Win64nasmIT implements InstructionTransformer {
         else if(in instanceof HSwap)
             out.add(LSwap.INSTANCE);
 
+        else if(in instanceof HighLabel)
+            out.add(new Label((HighLabel) in));
         else if(in instanceof HBranch)
             out.add(new LBranch((HBranch) in));
     }

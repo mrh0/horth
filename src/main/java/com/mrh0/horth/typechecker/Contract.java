@@ -15,6 +15,8 @@ public class Contract implements IContract{
     private IType[] push;
     private List<GenericType> generics;
 
+    public static IContract VOID = (s, t) -> {};
+
     private Contract() {
         pop = new IType[0];
         push = new IType[0];

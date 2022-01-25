@@ -1,21 +1,15 @@
 package com.mrh0.horth.output.x86_64.windows;
 
-import com.mrh0.horth.Main;
 import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.Arch;
-import com.mrh0.horth.output.instructions.InstructionTransformer;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
-import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
 import com.mrh0.horth.util.IO;
 
-import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 

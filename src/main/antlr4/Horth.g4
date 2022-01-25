@@ -1,6 +1,8 @@
 grammar Horth;
 
 IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9]*;
+KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
+KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
 ATOM: '#'IDENTIFIER;
 INT: '0'|[1-9][0-9]*;
 STRING: '"' (~('\'' | '\\') | '\\' . )* '"';
@@ -34,7 +36,7 @@ keywords:
     | 'exit'
     ;
 
-intrfunc:
+typefunc:
     'sizeof(' TYPE ')'
     | 'cast(' TYPE ')'
     ;
@@ -46,8 +48,15 @@ infix:
     | BOOL
     | infix binop infix
     | unop infix
-    | intrfunc
+    | typefunc
     | '(' infix ')'
+    ;
+
+static:
+    INT | ATOM | BOOL | STRING
+    | IDENTIFIER //constants only
+    | unop | binop
+    | typefunc
     ;
 
 general:
@@ -60,6 +69,7 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
     | '[' block ']'                                                                         #genAccessor
+    | '{' (static* ',')* static* '}'                                                        #genArray
 
     | '(' infix ')'                                                                         #genInfix
     | 'assert' block 'end'                                                                  #genAssert
@@ -79,7 +89,8 @@ general:
     | 'let' (IDENTIFIER)+ 'in' block 'end'                                                  #genLet
     | 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     | 'with' IDENTIFIER 'do' block 'end'                                                    #genWith
-    | intrfunc                                                                              #genIntrfunc
+    | 'const' IDENTIFIER static 'end'                                                       #genConst
+    | typefunc                                                                              #genIntrfunc
     ;
 
 block:
@@ -91,5 +102,5 @@ include:
     ;
 
 program:
-    (includes+=include)* main=block EOF
+    ('module' STRING)? (includes+=include)* main=block EOF
     ;
