@@ -46,7 +46,7 @@ public class InstructionBuilder {
     }
 
     public InstructionBuilder label(long id) {
-        sb.append("\n_inst");
+        sb.append("\nlabel_");
         sb.append(id);
         sb.append(":");
         return this;
@@ -61,13 +61,13 @@ public class InstructionBuilder {
 
     public InstructionBuilder ilabel(long id) {
         begin();
-        sb.append("_inst");
+        sb.append("label_");
         sb.append(id);
         return this;
     }
 
     public InstructionBuilder comment(String commend) {
-        sb.append("; ");
+        sb.append("\n;; ");
         sb.append(commend);
         return this;
     }

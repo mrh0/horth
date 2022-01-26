@@ -38,15 +38,15 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitKeywords(HorthParser.KeywordsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HorthParser#intrfunc}.
+	 * Enter a parse tree produced by {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterIntrfunc(HorthParser.IntrfuncContext ctx);
+	void enterTypefunc(HorthParser.TypefuncContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HorthParser#intrfunc}.
+	 * Exit a parse tree produced by {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitIntrfunc(HorthParser.IntrfuncContext ctx);
+	void exitTypefunc(HorthParser.TypefuncContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HorthParser#infix}.
 	 * @param ctx the parse tree
@@ -57,6 +57,16 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfix(HorthParser.InfixContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HorthParser#staticExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterStaticExpr(HorthParser.StaticExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HorthParser#staticExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitStaticExpr(HorthParser.StaticExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genAtom}
 	 * labeled alternative in {@link HorthParser#general}.
@@ -106,6 +116,18 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenString(HorthParser.GenStringContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genBool}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenBool(HorthParser.GenBoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genBool}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenBool(HorthParser.GenBoolContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genUnop}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -142,6 +164,30 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenKeyword(HorthParser.GenKeywordContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genAccessor}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenAccessor(HorthParser.GenAccessorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genAccessor}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenAccessor(HorthParser.GenAccessorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genArray}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenArray(HorthParser.GenArrayContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genArray}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenArray(HorthParser.GenArrayContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genInfix}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -165,6 +211,18 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenAssert(HorthParser.GenAssertContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genStaticAssert}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenStaticAssert(HorthParser.GenStaticAssertContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genStaticAssert}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenStaticAssert(HorthParser.GenStaticAssertContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genFuncInfer}
 	 * labeled alternative in {@link HorthParser#general}.
@@ -237,6 +295,30 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenLet(HorthParser.GenLetContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genWith}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenWith(HorthParser.GenWithContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genWith}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenWith(HorthParser.GenWithContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genConst}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenConst(HorthParser.GenConstContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genConst}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenConst(HorthParser.GenConstContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.

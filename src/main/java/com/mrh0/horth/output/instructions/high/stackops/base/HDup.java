@@ -6,7 +6,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HDup extends HighInst {
-    private static IContract contract = (s, t) -> s.push(s.peek());
+    private static IContract contract = (s, t) -> s.push(s.peek(t));
 
     public HDup(ITok token) {
         super(token);

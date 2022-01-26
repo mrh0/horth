@@ -25,13 +25,10 @@ public class Win64nasm extends Arch {
         InstructionBuilder ib = new InstructionBuilder(sb);
         CompileData data = new CompileData();
 
-        ib      //.inst("bits").reg("64")
-                .inst("global").reg("main")
+        ib      .inst("global").reg("main")
                 .inst("section").reg(".text")
                 .label("main")
                 .inst("mov").reg("r12").reg("rsp");
-
-
 
         Win64nasmIT it = new Win64nasmIT();
 
@@ -39,7 +36,10 @@ public class Win64nasm extends Arch {
         for(HighInst hi : HLIR)
             it.transform(LLIR, hi);
 
-        System.out.println(LLIR);
+        StringBuilder lisb = new StringBuilder();
+        for(LowInst li : LLIR)
+            lisb.append(li.getClass().getSimpleName() + ", ");
+        System.out.println(lisb.toString());
 
         //List<LowInst> optimizedLLIR = Optimizer.optimize(LLIR);
 
@@ -48,6 +48,7 @@ public class Win64nasm extends Arch {
         for(LowInst li : /*optimized*/LLIR)
             li.asm(ib, data);
 
+        sb.append('\n');
         return sb;
     }
 

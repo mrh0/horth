@@ -1,19 +1,20 @@
 grammar Horth;
 
+BOOL: 'true' | 'false';
 IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9]*;
 KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
 KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
 ATOM: '#'IDENTIFIER;
 INT: '0'|[1-9][0-9]*;
 STRING: '"' (~('\'' | '\\') | '\\' . )* '"';
-BOOL: 'true' | 'false';
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
-TYPE: 'int' | 'string' | 'char' | 'atom' | 'bool'
-    | 'ref' | 'ref<' TYPE '>' | 'arr<' TYPE '>' | 'obj<' (TYPE)+ '>' | 'any<' IDENTIFIER '>'
-    | 'func<' (TYPE)* ('->' (TYPE)+)? '>';
-    // | 'byte(' (INT | IDENTIFIER) (INT | '+' | '-' | '*')* ')';
+
+dataType: 'int' | 'string' | 'char' | 'atom' | 'bool'
+    | 'ref' | 'ref<' dataType '>' | 'arr<' dataType '>' | 'obj<' (dataType)+ '>' | 'any<' IDENTIFIER '>'
+    | 'func<' (dataType)* ('->' (dataType)+)? '>';
+    // | 'byte(' staticExpr ')';
 
 unop:
     'not' | '~' | '-'
@@ -23,7 +24,7 @@ binop:
     '+' | '-' | '*' | '/' | '%'
     | '<' | '>' | '<=' | '>=' | '==' | '!='
     | '&' | '|' | 'and' | 'or'
-    | '<<' | '>>' | 'is' | 'cast' | '='
+    | '<<' | '>>' | '='
     ;
 
 keywords:
@@ -37,8 +38,9 @@ keywords:
     ;
 
 typefunc:
-    'sizeof(' TYPE ')'
-    | 'cast(' TYPE ')'
+    'sizeof(' dataType ')'
+    | 'cast(' dataType ')'
+    | 'is(' dataType ')'
     ;
 
 infix:
@@ -52,7 +54,7 @@ infix:
     | '(' infix ')'
     ;
 
-static:
+staticExpr:
     INT | ATOM | BOOL | STRING
     | IDENTIFIER //constants only
     | unop | binop
@@ -64,18 +66,20 @@ general:
     | INT                                                                                   #genInt
     | IDENTIFIER                                                                            #genIdentifier
     | STRING                                                                                #genString
+    | BOOL                                                                                  #genBool
 
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
     | '[' block ']'                                                                         #genAccessor
-    | '{' (static* ',')* static* '}'                                                        #genArray
+    | '{' (staticExpr* ',')* staticExpr* '}'                                                #genArray
 
     | '(' infix ')'                                                                         #genInfix
     | 'assert' block 'end'                                                                  #genAssert
+    | 'static' 'assert' staticExpr 'end'                                                    #genStaticAssert
     | ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'in' block 'end'                     #genFuncInfer
-    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'in' block 'end'     #genFunc
-    | ('inline' | 'extern')? 'func' IDENTIFIER (TYPE)* ('->' (TYPE)+)? 'end'                #genFuncSignature
+    | ('inline' | 'extern')? 'func' IDENTIFIER (dataType)* ('->' (dataType)+)? 'in' block 'end'     #genFunc
+    | ('inline' | 'extern')? 'func' IDENTIFIER (dataType)* ('->' (dataType)+)? 'end'                #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
     | 'if' conds+=block 'do' doBlock+=block
@@ -86,10 +90,11 @@ general:
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
 
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
+    //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
     | 'let' (IDENTIFIER)+ 'in' block 'end'                                                  #genLet
-    | 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
+    //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     | 'with' IDENTIFIER 'do' block 'end'                                                    #genWith
-    | 'const' IDENTIFIER static 'end'                                                       #genConst
+    | 'const' IDENTIFIER staticExpr 'end'                                                       #genConst
     | typefunc                                                                              #genIntrfunc
     ;
 

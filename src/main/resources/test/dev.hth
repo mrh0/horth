@@ -1,4 +1,4 @@
-if 1 do
-    99 exit
+if true do
+    1
 end
-69 exit
+exit

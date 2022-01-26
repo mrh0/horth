@@ -55,7 +55,7 @@ public class Contract implements IContract{
         for(IType t : pop) {
             VirtualStack.StackEntry se = stack.pop(tok);
             if(!IType.equals(t, se.type(), genMap))
-                throw new BreachOfContractException(tok.getLocation());
+                throw new BreachOfContractException(tok.getLocation(), t, se.type());
         }
         for(IType t : push) {
             stack.push(t, tok);

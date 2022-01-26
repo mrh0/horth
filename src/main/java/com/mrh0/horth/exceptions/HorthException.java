@@ -13,8 +13,12 @@ public class HorthException extends Exception {
         this.location = location;
     }
 
+    public String additional() {
+        return "";
+    }
+
     @Override
     public String getMessage() {
-        return "\n\tat " + (location == null ? "UNKNOWN: " : location.toString() + "\nJava Exception:");
+        return "\n\tat " + ((location == null ? "UNKNOWN: " : location.toString()) + "\n" + additional() + "\nJava Exception:");
     }
 }

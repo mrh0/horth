@@ -9,9 +9,14 @@ import com.mrh0.horth.typechecker.IContract;
 public class HJump extends HighInst {
     public final HighLabel label;
 
-    public HJump(ITok token, HighLabel falsePath) {
+    public HJump(ITok token, HighLabel label) {
         super(token);
-        this.label = falsePath;
+        this.label = label;
+    }
+
+    public HJump(HighLabel label) {
+        super(null);
+        this.label = label;
     }
 
     @Override

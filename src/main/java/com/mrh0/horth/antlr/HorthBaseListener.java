@@ -52,13 +52,13 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterIntrfunc(HorthParser.IntrfuncContext ctx) { }
+	@Override public void enterTypefunc(HorthParser.TypefuncContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitIntrfunc(HorthParser.IntrfuncContext ctx) { }
+	@Override public void exitTypefunc(HorthParser.TypefuncContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -71,6 +71,18 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInfix(HorthParser.InfixContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterStaticExpr(HorthParser.StaticExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStaticExpr(HorthParser.StaticExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -124,6 +136,18 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGenBool(HorthParser.GenBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenBool(HorthParser.GenBoolContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGenUnop(HorthParser.GenUnopContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -160,6 +184,30 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGenAccessor(HorthParser.GenAccessorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenAccessor(HorthParser.GenAccessorContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGenArray(HorthParser.GenArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenArray(HorthParser.GenArrayContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGenInfix(HorthParser.GenInfixContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -179,6 +227,18 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitGenAssert(HorthParser.GenAssertContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGenStaticAssert(HorthParser.GenStaticAssertContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenStaticAssert(HorthParser.GenStaticAssertContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -251,6 +311,30 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitGenLet(HorthParser.GenLetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGenWith(HorthParser.GenWithContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenWith(HorthParser.GenWithContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGenConst(HorthParser.GenConstContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenConst(HorthParser.GenConstContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -11,4 +11,9 @@ public abstract class HighInst {
     }
 
     public abstract IContract getContract();
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }

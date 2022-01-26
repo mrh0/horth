@@ -6,10 +6,11 @@ import com.mrh0.horth.typechecker.IContract;
 
 public class HighLabel extends HighInst {
     public static long nextId = 0;
-    public final long id = nextId++;
+    public final long id;
 
     public HighLabel() {
         super(null);
+        id = nextId++;
     }
 
     @Override

@@ -13,7 +13,7 @@ public class LBranch implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("cmp").reg(S1).imm(0)
+        ib.comment("LBranch").inst("cmp").reg(S1).imm(0)
                 .inst("mov").reg(S1).reg(S2)
                 .inst("pop").reg(S2)
                 .inst("jle").ilabel(hi.label.id);

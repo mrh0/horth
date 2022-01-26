@@ -56,11 +56,7 @@ public class Main {
 
         //PostTypeCheckExpanding
         List<HighInst> newHLIR = new ArrayList<>();
-        for(HighInst hi : HLIR)
-            if(hi instanceof IExpanding)
-                ((IExpanding) hi).expand(newHLIR);
-            else
-                newHLIR.add(hi);
+        IExpanding.expandAll(HLIR, newHLIR);
 
         HLIR = newHLIR;
         System.out.println(HLIR);

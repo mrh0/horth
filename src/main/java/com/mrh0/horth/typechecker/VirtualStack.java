@@ -11,7 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VirtualStack {
-    public record StackEntry(IType type, ITok token) {}
+    public record StackEntry(IType type, ITok token) {
+        @Override
+        public String toString() {
+            return type.getName() + ':' + token.toString();
+        }
+    }
     public List<StackEntry> stack;
 
     public VirtualStack() {
@@ -23,16 +28,29 @@ public class VirtualStack {
         stack.addAll(other.stack);
     }
 
+    private int last() {
+        return stack.size()-1;
+    }
+
+    @Deprecated
     public StackEntry pop() throws BreachOfContractException {
         if(stack.isEmpty())
             throw new BreachOfContractException(null);
-        return stack.remove(stack.size()-1);
+        return stack.remove(last());
     }
 
     public StackEntry pop(ITok token) throws BreachOfContractException {
         if(stack.isEmpty())
             throw new BreachOfContractException(token.getLocation());
-        return stack.remove(stack.size()-1);
+        return stack.remove(last());
+    }
+
+    public StackEntry check(ITok token, IType type) throws BreachOfContractException {
+        if(stack.isEmpty())
+            throw new BreachOfContractException(token.getLocation());
+        if(!IType.equals(stack.get(last()).type(), type, null))
+            throw new BreachOfContractException(token.getLocation(), type, stack.get(last()).type());
+        return stack.remove(last());
     }
 
     public void push(IType type, ITok token) {
@@ -43,10 +61,10 @@ public class VirtualStack {
         stack.add(se);
     }
 
-    public StackEntry peek() throws BreachOfContractException {
+    public StackEntry peek(ITok token) throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(null);
-        return stack.get(stack.size()-1);
+            throw new BreachOfContractException(token.getLocation());
+        return stack.get(last());
     }
 
     public int size() {
@@ -62,12 +80,26 @@ public class VirtualStack {
         return new VirtualStack(this);
     }
 
+    public void load(VirtualStack snapshot) {
+        stack = new ArrayList<>();
+        stack.addAll(snapshot.stack);
+    }
+
     public static void match(VirtualStack expected, VirtualStack actual, Loc location) throws TypeCheckerException {
         if(expected.size() != actual.size())
-            throw new TypeStackMismatch(location, expected, actual);
+            throw new TypeStackMismatch(
+                    actual.size() == 0 ? location : actual.stack.get(actual.size()-1).token.getLocation(),
+                    expected, actual);
         for(int i = expected.size()-1; i >= 0; i--) {
             if (!IType.equals(expected.stack.get(i).type(), actual.stack.get(i).type(), null))
-                throw new TypeStackMismatch(location, expected, actual);
+                throw new TypeStackMismatch(
+                        actual.stack.get(i).token.getLocation(),
+                        expected, actual);
         }
+    }
+
+    @Override
+    public String toString() {
+        return stack.toString();
     }
 }

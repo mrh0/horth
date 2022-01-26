@@ -2,8 +2,11 @@ package com.mrh0.horth.ast.nodes;
 
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.stackops.base.HDrop;
 import com.mrh0.horth.output.instructions.high.stackops.base.HDup;
 import com.mrh0.horth.output.instructions.high.stackops.HExit;
+import com.mrh0.horth.output.instructions.high.stackops.base.HOver;
+import com.mrh0.horth.output.instructions.high.stackops.base.HSwap;
 
 import java.util.List;
 
@@ -22,6 +25,15 @@ public class TKeyword extends Tok {
                 break;
             case "dup":
                 space.add(new HDup(this));
+                break;
+            case "drop":
+                space.add(new HDrop(this));
+                break;
+            case "over":
+                space.add(new HOver(this));
+                break;
+            case "swap":
+                space.add(new HSwap(this));
                 break;
             default:
                 throw new ParserException();

@@ -1,19 +1,17 @@
 package com.mrh0.horth.ast.nodes.operators;
 
-import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
-import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.HAdd;
+import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
+import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.function.Function;
 
 public class TBinOp extends Tok {
     private static TBinOp ADD = new TBinOp("+", t -> new HAdd(t));
+    private static TBinOp SUB = new TBinOp("-", t -> new HSub(t));
 
     private final String op;
     private final Function<ITok, HighInst> highInst;
@@ -38,6 +36,8 @@ public class TBinOp extends Tok {
         switch(op) {
             case "+":
                 return ADD;
+            case "-":
+                return SUB;
             default:
                 return null;
         }

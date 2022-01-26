@@ -5,38 +5,37 @@ import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.branching.HBIf;
+import com.mrh0.horth.output.instructions.high.branching.HBWhile;
 
 import java.util.List;
 
-public class TIf extends Tok {
+public class TWhile extends Tok {
 
-    public final List<TBlock> conditions;
-    public final List<TBlock> doBlocks;
+    public final TBlock condition;
+    public final TBlock doBlock;
     public final TBlock elseBlock;
 
-    public TIf(List<TBlock> conditions, List<TBlock> doBlocks, TBlock elseBlock) {
-        this.conditions  = conditions;
-        this.doBlocks = doBlocks;
+    public TWhile(TBlock condition, TBlock doBlock, TBlock elseBlock) {
+        this.condition  = condition;
+        this.doBlock = doBlock;
         this.elseBlock = elseBlock;
     }
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        space.add(new HBIf(this));
+        space.add(new HBWhile(this));
     }
 
     @Override
     public StringBuilder toString(StringBuilder sb) {
         sb.append("Branch(");
-        for(int i = 0; i < conditions.size(); i++) {
-            if(i > 0)
-                sb.append("el");
-            sb.append("if(");
-            conditions.get(i).toString(sb);
-            sb.append(", ");
-            doBlocks.get(i).toString(sb);
-            sb.append(")");
-        }
+
+        sb.append("while(");
+        condition.toString(sb);
+        sb.append(", ");
+        doBlock.toString(sb);
+        sb.append(")");
+
         if(elseBlock != null) {
             sb.append("else(");
             elseBlock.toString(sb);

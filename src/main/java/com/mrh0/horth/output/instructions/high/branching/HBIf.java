@@ -1,26 +1,31 @@
 package com.mrh0.horth.output.instructions.high.branching;
 
-import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighLabel;
-import com.mrh0.horth.output.instructions.high.HighBlock;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.IExpanding;
 import com.mrh0.horth.typechecker.*;
+import com.mrh0.horth.typechecker.types.AllTypes;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HBIf extends HighBlock implements ISpecialCheck {
-    private final List<TBlock> conditions;
-    private final List<TBlock> doBlocks;
-    private final TBlock elseBlock;
+public class HBIf extends HighInst implements ISpecialCheck, IExpanding {
+    private final List<List<HighInst>> conditions;
+    private final List<List<HighInst>> doBlocks;
+    private List<HighInst> elseBlock;
 
-    public HBIf(TIf tok) {
+    public HBIf(TIf tok) throws HorthException {
         super(tok);
-        this.conditions  = tok.conditions;
-        this.doBlocks = tok.doBlocks;
-        this.elseBlock = tok.elseBlock;
+        this.conditions =  new ArrayList<>();
+        IExpanding.expandBlock(tok.conditions, this.conditions);
+        this.doBlocks = new ArrayList<>();
+        IExpanding.expandBlock(tok.doBlocks, this.doBlocks);
+        if(tok.elseBlock != null) {
+            elseBlock = new ArrayList<>();
+            tok.elseBlock.expand(elseBlock);
+        }
     }
 
     @Override
@@ -30,48 +35,76 @@ public class HBIf extends HighBlock implements ISpecialCheck {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-
         if(conditions.size() == 1 && elseBlock == null) {
-            conditions.get(0).expand(space);
+            IExpanding.expandAll(conditions.get(0), space);
             HighLabel label = new HighLabel();
             space.add(new HBranch(token, label));
-            doBlocks.get(0).expand(space);
+            IExpanding.expandAll(doBlocks.get(0), space);
             space.add(label);
         }
-        else if(conditions.size() == 1) {
-
-        }
+        /*else if(conditions.size() == 1) {
+            IExpanding.expandAll(conditions.get(0), space);
+            HighLabel labelElse = new HighLabel();
+            HighLabel label = new HighLabel();
+            space.add(new HBranch(token, labelElse));
+            IExpanding.expandAll(doBlocks.get(0), space);
+            space.add(new HJump(label));
+            space.add(labelElse);
+            IExpanding.expandAll(elseBlock, space);
+            space.add(label);
+        }*/
         else {
-
+            HighLabel label = new HighLabel();
+            for(int i = 0; i < conditions.size(); i++) {
+                IExpanding.expandAll(conditions.get(i), space);
+                HighLabel labelElse = new HighLabel();
+                space.add(new HBranch(token, labelElse));
+                IExpanding.expandAll(doBlocks.get(i), space);
+                space.add(new HJump(label));
+                space.add(labelElse);
+            }
+            if(elseBlock != null) {
+                IExpanding.expandAll(elseBlock, space);
+            }
+            space.add(label);
         }
     }
 
     @Override
     public void check(VirtualStack stack) throws HorthException {
-        VirtualStack snapshot = stack.snapshot();
-        for(TBlock cond : conditions) {
-            List<HighInst> insts = new ArrayList<>();
-            cond.expand(insts);
+        VirtualStack snapshot1 = stack.snapshot();
 
-            TypeChecker.check(stack, insts);
-            stack.pop();
-            VirtualStack.match(stack, snapshot, cond.getLocation());
+        for(List<HighInst> cond : conditions) {
+            TypeChecker.check(stack, cond);
+            stack.check(token, AllTypes.BOOL);
+            VirtualStack.match(snapshot1, stack, token.getLocation());
         }
 
-        for(TBlock dos : doBlocks) {
-            List<HighInst> insts = new ArrayList<>();
-            dos.expand(insts);
+        TypeChecker.check(stack, doBlocks.get(0));
+        VirtualStack snapshot2 = stack.snapshot();
+        stack.load(snapshot1);
 
-            TypeChecker.check(stack, insts);
-            VirtualStack.match(stack, snapshot, dos.getLocation());
+        for(int i = 1; i < doBlocks.size(); i++) {
+            List<HighInst> dos = doBlocks.get(i);
+
+            TypeChecker.check(stack, dos);
+            VirtualStack.match(snapshot2, stack, token.getLocation());
+            stack.load(snapshot1);
         }
 
         if(elseBlock != null) {
-            List<HighInst> insts = new ArrayList<>();
-            elseBlock.expand(insts);
-
-            TypeChecker.check(stack, insts);
-            VirtualStack.match(stack, snapshot, elseBlock.getLocation());
+            TypeChecker.check(stack, elseBlock);
+            VirtualStack.match(snapshot2, stack, token.getLocation());
         }
+        stack.load(snapshot2);
+    }
+
+    @Override
+    public String toString() {
+        return "HBIf{" +
+                "conditions=" + conditions +
+                ", doBlocks=" + doBlocks +
+                ", elseBlock=" + elseBlock +
+                '}';
     }
 }
