@@ -7,9 +7,11 @@ import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.TKeyword;
 import com.mrh0.horth.ast.nodes.TProgram;
 import com.mrh0.horth.ast.nodes.branching.TIf;
+import com.mrh0.horth.ast.nodes.branching.TWhile;
 import com.mrh0.horth.ast.nodes.operands.TBool;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
+import com.mrh0.horth.ast.nodes.operators.TUnOp;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 import java.io.File;
@@ -51,6 +53,11 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     @Override
+    public ITok visitGenUnop(HorthParser.GenUnopContext ctx) {
+        return TUnOp.getUnOp(ctx.getText()).loc(ctx.start, file);
+    }
+
+    @Override
     public ITok visitGenInt(HorthParser.GenIntContext ctx) {
         return new TInt(ctx.getText()).loc(ctx.start, file);
     }
@@ -68,5 +75,10 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitGenIf(HorthParser.GenIfContext ctx) {
         return new TIf(visit(ctx.conds), visit(ctx.doBlock), cvisit(ctx.elseBlock)).loc(ctx.start, file);
+    }
+
+    @Override
+    public ITok visitGenWhile(HorthParser.GenWhileContext ctx) {
+        return new TWhile(cvisit(ctx.cond), cvisit(ctx.doBlock), cvisit(ctx.elseBlock));
     }
 }

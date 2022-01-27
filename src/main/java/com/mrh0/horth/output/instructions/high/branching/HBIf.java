@@ -80,23 +80,32 @@ public class HBIf extends HighInst implements ISpecialCheck, IExpanding {
             VirtualStack.match(snapshot1, stack, token.getLocation());
         }
 
-        TypeChecker.check(stack, doBlocks.get(0));
-        VirtualStack snapshot2 = stack.snapshot();
-        stack.load(snapshot1);
+        if(elseBlock == null) {
+            for(int i = 0; i < doBlocks.size(); i++) {
+                List<HighInst> dos = doBlocks.get(i);
 
-        for(int i = 1; i < doBlocks.size(); i++) {
-            List<HighInst> dos = doBlocks.get(i);
-
-            TypeChecker.check(stack, dos);
-            VirtualStack.match(snapshot2, stack, token.getLocation());
-            stack.load(snapshot1);
+                TypeChecker.check(stack, dos);
+                VirtualStack.match(snapshot1, stack, token.getLocation());
+                stack.load(snapshot1);
+            }
         }
+        else {
+            TypeChecker.check(stack, doBlocks.get(0));
+            VirtualStack snapshot2 = stack.snapshot();
+            stack.load(snapshot1);
 
-        if(elseBlock != null) {
+            for(int i = 1; i < doBlocks.size(); i++) {
+                List<HighInst> dos = doBlocks.get(i);
+
+                TypeChecker.check(stack, dos);
+                VirtualStack.match(snapshot2, stack, token.getLocation());
+                stack.load(snapshot1);
+            }
+
             TypeChecker.check(stack, elseBlock);
             VirtualStack.match(snapshot2, stack, token.getLocation());
+            stack.load(snapshot2);
         }
-        stack.load(snapshot2);
     }
 
     @Override

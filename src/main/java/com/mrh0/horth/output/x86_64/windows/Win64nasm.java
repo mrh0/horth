@@ -26,9 +26,13 @@ public class Win64nasm extends Arch {
         CompileData data = new CompileData();
 
         ib      .inst("global").reg("main")
+                .inst("section .bss")
+                .label("init_stack").append(" resq 1")
+                .label("local_s").append("    resb 16 * 1024")
+                .label("local_rsp").append("  resq 1")
                 .inst("section").reg(".text")
                 .label("main")
-                .inst("mov").reg("r12").reg("rsp");
+                .inst("mov").vreg("init_stack", 0).reg("rsp");
 
         Win64nasmIT it = new Win64nasmIT();
 

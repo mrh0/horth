@@ -12,7 +12,7 @@ COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 dataType: 'int' | 'string' | 'char' | 'atom' | 'bool'
-    | 'ref' | 'ref<' dataType '>' | 'arr<' dataType '>' | 'obj<' (dataType)+ '>' | 'any<' IDENTIFIER '>'
+    | 'ref' | 'ref<' dataType '>' | 'arr<' dataType '>' | 'any<' IDENTIFIER '>'
     | 'func<' (dataType)* ('->' (dataType)+)? '>';
     // | 'byte(' staticExpr ')';
 
@@ -33,25 +33,27 @@ keywords:
     | 'rot'
     | 'drop' | 'drop2' | 'drop3'
     | 'out'
-    | 'err'
+    | 'throw'
     | 'exit'
+    | 'break'
     ;
 
 typefunc:
-    'sizeof(' dataType ')'
+    'sizeof(' dataType ('*' INT)? ')'
+    | 'alloc(' dataType ('*' INT)? ')'
     | 'cast(' dataType ')'
     | 'is(' dataType ')'
     ;
 
 infix:
-    | IDENTIFIER
-    | ATOM
-    | INT
-    | BOOL
-    | infix binop infix
-    | unop infix
-    | typefunc
-    | '(' infix ')'
+    IDENTIFIER                  #infixIdent
+    | ATOM                      #infixAtom
+    | INT                       #infixInt
+    | BOOL                      #infixBool
+    | infix binop infix         #infixBinOp
+    | unop infix                #infixUnOp
+    | typefunc                  #infixTypefunc
+    | '(' infix ')'             #infixInfix
     ;
 
 staticExpr:
@@ -86,7 +88,7 @@ general:
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
-    | 'while' block 'do' block ('else' block)? 'end'                                        #genWhile
+    | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                                        #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
 
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet

@@ -1,90 +1,102 @@
-0:RAX, 1:RDX, tmp0:R10, tmp1: R11, stackstart: R12
+0:RAX, 1:RBX, tmp0:R10, tmp1: R11, stackstart: R12
 
 //Manipulators
 swap:
-    xchg    rax, rdx
+    xchg    rax, rbx
 swap2:
     xchg    rax, [rsp]
-    xchg    rdx, [rsp-8]
+    xchg    rbx, [rsp-8]
 rot:
     xchg    rax, [rsp]
 over:
-    xchg    rax, rdx
+    xchg    rax, rbx
     push    rax
 over2:
-    push    rdx
+    push    rbx
     push    rax
     mov     rax, [rsp-16]
-    mov     rdx, [rsp-24]
+    mov     rbx, [rsp-24]
 drop:
-    mov     rax, rdx
-    pop     rdx
+    mov     rax, rbx
+    pop     rbx
 drop2:
     pop     rax
-    pop     rdx
+    pop     rbx
 drop3:
     pop     rax
     pop     rax
-    pop     rdx
+    pop     rbx
 dup:
-    push    rdx
-    mov     rdx, rax
+    push    rbx
+    mov     rbx, rax
 dup2x:                  //duplicates 2 times 'dup dup'
-    push    rdx
+    push    rbx
     push    rax
-    mov     rdx, rax
+    mov     rbx, rax
 dup3x:                  //duplicates 3 times 'dup dup dup'
-    push    rdx
+    push    rbx
     push    rax
     push    rax
-    mov     rdx, rax
+    mov     rbx, rax
 dup2s:                  //duplicates first 2 'dup2'
-    push    rdx
+    push    rbx
     push    rax
 dup3s:                  //duplicates first 3 'dup3'
     push    [rsp]
-    push    rdx
+    push    rbx
     push    rax
 
 //internal
 put1:
-    push    rdx
-    mov     rdx, rax
+    push    rbx
+    mov     rbx, rax
     mov     rax, <i>
 put2:
-    push    rdx
+    push    rbx
     push    rax
-    mov     rdx, <i>
+    mov     rbx, <i>
     mov     rax, <i>
 put3:
-    push    rdx
+    push    rbx
     push    rax
     mov     r10, <i>
     push    r10
-    mov     rdx, <i>
+    mov     rbx, <i>
     mov     rax, <i>
 put4:
-    push    rdx
+    push    rbx
     push    rax
     mov     r10, <i>
     push    r10
     mov     r11, <i>
     push    r11
-    mov     rdx, <i>
+    mov     rbx, <i>
     mov     rax, <i>
 
 //Operands
 add:
-    add     rax, rdx
-    pop     rdx
+    add     rax, rbx
+    pop     rbx
 add_i:
     add     <i>, rax
 
 //Keywords
 if:
     cmp     rax, 0
-    mov     rax, rdx
-    pop     rdx
+    mov     rax, rbx
+    pop     rbx
     jle     <label>
+
+lessThan:
+    mov     rcx, 0
+    mov     rdx, 1
+    cmp     rbx, rax
+    cmovl   rcx, rdx
+    pop     rbx
+    mov     rax, rcx
+
+and:
+    and     rax, rbx
+    pop     rbx
 
 local variables defined with let in a func will be put on a 'local stack' (not real rsp stack). Local variable sizes are summed and stored, when a func return it will pop the size from the 'local stack'.

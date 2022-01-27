@@ -1,4 +1,6 @@
-if true do
+if false false or do
     1
+else
+    0
 end
 exit

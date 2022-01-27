@@ -15,7 +15,7 @@ import java.util.List;
 public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
     private final List<HighInst> condition;
     private final List<HighInst> doBlock;
-    private final List<HighInst> elseBlock;
+    private List<HighInst> elseBlock;
 
     public HBWhile(TWhile tok) throws HorthException {
         super(tok);
@@ -23,8 +23,10 @@ public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
         tok.condition.expand(condition);
         this.doBlock = new ArrayList<>();
         tok.doBlock.expand(doBlock);
-        this.elseBlock = new ArrayList<>();
-        tok.elseBlock.expand(elseBlock);
+        if(tok.elseBlock != null) {
+            this.elseBlock = new ArrayList<>();
+            tok.elseBlock.expand(elseBlock);
+        }
     }
 
     @Override
@@ -40,7 +42,21 @@ public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
             space.add(condLabel);
             IExpanding.expandAll(condition, space);
             space.add(new HBranch(token, endLabel));
-            IExpanding.expandAll(doBlock, space);
+
+            List<HighInst> expandedDoBlock = new ArrayList<>();
+            IExpanding.expandAll(doBlock, expandedDoBlock);
+            for(HighInst inst : expandedDoBlock) {
+                if (inst instanceof HBreak) {
+                    HBreak hbreak = ((HBreak) inst);
+                    if(hbreak.label == null)
+                        hbreak.label = endLabel;
+                }
+                /*else if(inst instanceof HContinue) {
+
+                }*/
+            }
+            space.addAll(expandedDoBlock);
+
             space.add(new HJump(condLabel));
         }
         else {

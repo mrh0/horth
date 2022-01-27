@@ -1,0 +1,5 @@
+0 while true do
+    if dup 10 < not do
+        break
+    end
+end

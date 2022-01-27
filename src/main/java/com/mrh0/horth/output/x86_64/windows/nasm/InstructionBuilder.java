@@ -40,7 +40,6 @@ public class InstructionBuilder {
     }
 
     public InstructionBuilder append(Object str) {
-        begin();
         sb.append(str);
         return this;
     }

@@ -9,7 +9,7 @@ public class LExit implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib      .inst("mov").reg("rsp").reg("r12")
+        ib      .inst("mov").reg("rsp").vreg("init_stack", 0)
                 .inst("ret");
     }
 }
