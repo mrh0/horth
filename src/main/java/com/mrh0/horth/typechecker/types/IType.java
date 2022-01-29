@@ -33,11 +33,17 @@ public interface IType {
     int getSize();
 
     default void cast(Loc location, IType to) throws CannotCastException {
-        if(IType.equals(this, to, null))
+        if(!isRedundantCast(location, to))
+            throw new CannotCastException(location, this, to);
+    }
+
+    default boolean isRedundantCast(Loc location, IType to) {
+        if(IType.equals(this, to, null)) {
             IO.warn(
                     "Redundant cast of '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
                     location);
-        else
-            throw new CannotCastException(location, this, to);
+            return true;
+        }
+        return false;
     }
 }

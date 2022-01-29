@@ -1,2 +1,2 @@
-'a' cast(int) 1 +
+'a' cast(string) 1 +
 exit
