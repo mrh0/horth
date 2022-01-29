@@ -3,13 +3,15 @@ package com.mrh0.horth.ast.nodes.operators;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.unop.HNot;
+import com.mrh0.horth.output.instructions.high.stackops.unop.binary.HBinaryNot;
+import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
 
 import java.util.List;
 import java.util.function.Function;
 
 public class TUnOp extends Tok {
     private static TUnOp NOT = new TUnOp("not", t -> new HNot(t));
+    private static TUnOp BINNOT = new TUnOp("~", t -> new HBinaryNot(t));
 
     private final String op;
     private final Function<ITok, HighInst> highInst;
@@ -34,6 +36,8 @@ public class TUnOp extends Tok {
         switch(op) {
             case "not":
                 return NOT;
+            case "~":
+                return BINNOT;
             default:
                 return null;
         }

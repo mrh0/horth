@@ -13,4 +13,6 @@ public class LBinary {
     }
     public static final LowInst AND = make("and");
     public static final LowInst OR = make("or");
+    public static final LowInst NOT = (InstructionBuilder ib, CompileData cd) ->
+            ib.inst("not").reg(LowInst.S1);
 }

@@ -1,5 +1,9 @@
 package com.mrh0.horth.typechecker.types;
 
+import com.mrh0.horth.ast.Loc;
+import com.mrh0.horth.exceptions.typechecker.CannotCastException;
+import com.mrh0.horth.util.IO;
+
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +32,12 @@ public interface IType {
 
     int getSize();
 
-    /*public default boolean cast(IType to) {
-        return false;
-    }*/
+    default void cast(Loc location, IType to) throws CannotCastException {
+        if(IType.equals(this, to, null))
+            IO.warn(
+                    "Redundant cast of '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
+                    location);
+        else
+            throw new CannotCastException(location, this, to);
+    }
 }

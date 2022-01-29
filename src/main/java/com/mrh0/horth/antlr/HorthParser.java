@@ -26,17 +26,18 @@ public class HorthParser extends Parser {
 		T__45=46, T__46=47, T__47=48, T__48=49, T__49=50, T__50=51, T__51=52, 
 		T__52=53, T__53=54, T__54=55, T__55=56, T__56=57, T__57=58, T__58=59, 
 		T__59=60, T__60=61, T__61=62, T__62=63, T__63=64, T__64=65, T__65=66, 
-		T__66=67, T__67=68, T__68=69, T__69=70, T__70=71, T__71=72, BOOL=73, IDENTIFIER=74, 
-		KEYED_IDENTIFIER=75, KEYED_IDENTIFIER_DEF=76, ATOM=77, INT=78, STRING=79, 
-		WHITESPACE=80, COMMENT=81, BLOCKCOMMENT=82;
+		T__66=67, T__67=68, T__68=69, T__69=70, T__70=71, T__71=72, BOOL=73, NAME=74, 
+		KEYED_IDENTIFIER=75, KEYED_IDENTIFIER_DEF=76, ATOM=77, INT=78, HEX=79, 
+		BIN=80, CHAR=81, STRING=82, WHITESPACE=83, COMMENT=84, BLOCKCOMMENT=85;
 	public static final int
-		RULE_dataType = 0, RULE_unop = 1, RULE_binop = 2, RULE_keywords = 3, RULE_typefunc = 4, 
-		RULE_infix = 5, RULE_staticExpr = 6, RULE_general = 7, RULE_block = 8, 
-		RULE_include = 9, RULE_program = 10;
+		RULE_integer = 0, RULE_simpleDataType = 1, RULE_dataType = 2, RULE_unop = 3, 
+		RULE_binop = 4, RULE_keywords = 5, RULE_typefunc = 6, RULE_infix = 7, 
+		RULE_staticExpr = 8, RULE_general = 9, RULE_block = 10, RULE_include = 11, 
+		RULE_program = 12;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"dataType", "unop", "binop", "keywords", "typefunc", "infix", "staticExpr", 
-			"general", "block", "include", "program"
+			"integer", "simpleDataType", "dataType", "unop", "binop", "keywords", 
+			"typefunc", "infix", "staticExpr", "general", "block", "include", "program"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -44,11 +45,11 @@ public class HorthParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'int'", "'string'", "'char'", "'atom'", "'bool'", "'ref'", "'ref<'", 
-			"'>'", "'arr<'", "'obj<'", "'any<'", "'func<'", "'->'", "'not'", "'~'", 
-			"'-'", "'+'", "'*'", "'/'", "'%'", "'<'", "'<='", "'>='", "'=='", "'!='", 
-			"'&'", "'|'", "'and'", "'or'", "'<<'", "'>>'", "'='", "'dup'", "'dup2'", 
-			"'swap'", "'swap2'", "'rot'", "'drop'", "'drop2'", "'drop3'", "'out'", 
-			"'err'", "'exit'", "'break'", "'sizeof('", "')'", "'cast('", "'is('", 
+			"'>'", "'arr<'", "'any<'", "'func<'", "'->'", "'not'", "'~'", "'+'", 
+			"'-'", "'*'", "'/'", "'%'", "'<'", "'<='", "'>='", "'=='", "'!='", "'&'", 
+			"'|'", "'and'", "'or'", "'<<'", "'>>'", "'='", "'dup'", "'dup2'", "'swap'", 
+			"'swap2'", "'rot'", "'drop'", "'drop2'", "'drop3'", "'out'", "'throw'", 
+			"'exit'", "'break'", "'sizeof('", "')'", "'cast('", "'unsafe'", "'is('", 
 			"'('", "'['", "']'", "'{'", "','", "'}'", "'assert'", "'end'", "'static'", 
 			"'inline'", "'extern'", "'func'", "'infer'", "'in'", "'if'", "'do'", 
 			"'elif'", "'else'", "'while'", "'let'", "'with'", "'const'", "'include'", 
@@ -64,8 +65,8 @@ public class HorthParser extends Parser {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, "BOOL", "IDENTIFIER", "KEYED_IDENTIFIER", "KEYED_IDENTIFIER_DEF", 
-			"ATOM", "INT", "STRING", "WHITESPACE", "COMMENT", "BLOCKCOMMENT"
+			null, "BOOL", "NAME", "KEYED_IDENTIFIER", "KEYED_IDENTIFIER_DEF", "ATOM", 
+			"INT", "HEX", "BIN", "CHAR", "STRING", "WHITESPACE", "COMMENT", "BLOCKCOMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -119,183 +120,375 @@ public class HorthParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
+	public static class IntegerContext extends ParserRuleContext {
+		public IntegerContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_integer; }
+	 
+		public IntegerContext() { }
+		public void copyFrom(IntegerContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class IntegerHexContext extends IntegerContext {
+		public TerminalNode HEX() { return getToken(HorthParser.HEX, 0); }
+		public IntegerHexContext(IntegerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterIntegerHex(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitIntegerHex(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitIntegerHex(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntegerBinContext extends IntegerContext {
+		public TerminalNode BIN() { return getToken(HorthParser.BIN, 0); }
+		public IntegerBinContext(IntegerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterIntegerBin(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitIntegerBin(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitIntegerBin(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class IntegerIntContext extends IntegerContext {
+		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
+		public IntegerIntContext(IntegerContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterIntegerInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitIntegerInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitIntegerInt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final IntegerContext integer() throws RecognitionException {
+		IntegerContext _localctx = new IntegerContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_integer);
+		try {
+			setState(29);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case INT:
+				_localctx = new IntegerIntContext(_localctx);
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(26);
+				match(INT);
+				}
+				break;
+			case HEX:
+				_localctx = new IntegerHexContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(27);
+				match(HEX);
+				}
+				break;
+			case BIN:
+				_localctx = new IntegerBinContext(_localctx);
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(28);
+				match(BIN);
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class SimpleDataTypeContext extends ParserRuleContext {
+		public SimpleDataTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_simpleDataType; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterSimpleDataType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitSimpleDataType(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitSimpleDataType(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final SimpleDataTypeContext simpleDataType() throws RecognitionException {
+		SimpleDataTypeContext _localctx = new SimpleDataTypeContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_simpleDataType);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(31);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			else {
+				if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+				_errHandler.reportMatch(this);
+				consume();
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
 	public static class DataTypeContext extends ParserRuleContext {
+		public DataTypeContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_dataType; }
+	 
+		public DataTypeContext() { }
+		public void copyFrom(DataTypeContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class DataTypeSimpleContext extends DataTypeContext {
+		public SimpleDataTypeContext simpleDataType() {
+			return getRuleContext(SimpleDataTypeContext.class,0);
+		}
+		public DataTypeSimpleContext(DataTypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeSimple(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeSimple(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeSimple(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DataTypeArrContext extends DataTypeContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public DataTypeArrContext(DataTypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeArr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeArr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeArr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DataTypeRefContext extends DataTypeContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public DataTypeRefContext(DataTypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeRef(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeRef(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeRef(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DataTypeAnyContext extends DataTypeContext {
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
+		public DataTypeAnyContext(DataTypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeAny(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeAny(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeAny(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DataTypeFuncContext extends DataTypeContext {
 		public List<DataTypeContext> dataType() {
 			return getRuleContexts(DataTypeContext.class);
 		}
 		public DataTypeContext dataType(int i) {
 			return getRuleContext(DataTypeContext.class,i);
 		}
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
-		public DataTypeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_dataType; }
+		public DataTypeFuncContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataType(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeFunc(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataType(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeFunc(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataType(this);
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeFunc(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final DataTypeContext dataType() throws RecognitionException {
 		DataTypeContext _localctx = new DataTypeContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_dataType);
+		enterRule(_localctx, 4, RULE_dataType);
 		int _la;
 		try {
-			setState(63);
+			setState(61);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__0:
+			case T__1:
+			case T__2:
+			case T__3:
+			case T__4:
+			case T__5:
+				_localctx = new DataTypeSimpleContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(22);
-				match(T__0);
-				}
-				break;
-			case T__1:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(23);
-				match(T__1);
-				}
-				break;
-			case T__2:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(24);
-				match(T__2);
-				}
-				break;
-			case T__3:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(25);
-				match(T__3);
-				}
-				break;
-			case T__4:
-				enterOuterAlt(_localctx, 5);
-				{
-				setState(26);
-				match(T__4);
-				}
-				break;
-			case T__5:
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(27);
-				match(T__5);
+				setState(33);
+				simpleDataType();
 				}
 				break;
 			case T__6:
-				enterOuterAlt(_localctx, 7);
+				_localctx = new DataTypeRefContext(_localctx);
+				enterOuterAlt(_localctx, 2);
 				{
-				setState(28);
+				setState(34);
 				match(T__6);
-				setState(29);
+				setState(35);
 				dataType();
-				setState(30);
+				setState(36);
 				match(T__7);
 				}
 				break;
 			case T__8:
-				enterOuterAlt(_localctx, 8);
+				_localctx = new DataTypeArrContext(_localctx);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(32);
+				setState(38);
 				match(T__8);
-				setState(33);
+				setState(39);
 				dataType();
-				setState(34);
+				setState(40);
 				match(T__7);
 				}
 				break;
 			case T__9:
-				enterOuterAlt(_localctx, 9);
+				_localctx = new DataTypeAnyContext(_localctx);
+				enterOuterAlt(_localctx, 4);
 				{
-				setState(36);
-				match(T__9);
-				setState(38); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				do {
-					{
-					{
-					setState(37);
-					dataType();
-					}
-					}
-					setState(40); 
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0) );
 				setState(42);
+				match(T__9);
+				setState(43);
+				match(NAME);
+				setState(44);
 				match(T__7);
 				}
 				break;
 			case T__10:
-				enterOuterAlt(_localctx, 10);
+				_localctx = new DataTypeFuncContext(_localctx);
+				enterOuterAlt(_localctx, 5);
 				{
-				setState(44);
-				match(T__10);
 				setState(45);
-				match(IDENTIFIER);
-				setState(46);
-				match(T__7);
-				}
-				break;
-			case T__11:
-				enterOuterAlt(_localctx, 11);
-				{
-				setState(47);
-				match(T__11);
-				setState(51);
+				match(T__10);
+				setState(49);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0)) {
 					{
 					{
-					setState(48);
+					setState(46);
 					dataType();
 					}
 					}
-					setState(53);
+					setState(51);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(60);
+				setState(58);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__12) {
+				if (_la==T__11) {
 					{
-					setState(54);
-					match(T__12);
-					setState(56); 
+					setState(52);
+					match(T__11);
+					setState(54); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					do {
 						{
 						{
-						setState(55);
+						setState(53);
 						dataType();
 						}
 						}
-						setState(58); 
+						setState(56); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0) );
+					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0) );
 					}
 				}
 
-				setState(62);
+				setState(60);
 				match(T__7);
 				}
 				break;
@@ -336,14 +529,14 @@ public class HorthParser extends Parser {
 
 	public final UnopContext unop() throws RecognitionException {
 		UnopContext _localctx = new UnopContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_unop);
+		enterRule(_localctx, 6, RULE_unop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65);
+			setState(63);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__13) | (1L << T__14) | (1L << T__15))) != 0)) ) {
+			if ( !(_la==T__12 || _la==T__13) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -386,14 +579,14 @@ public class HorthParser extends Parser {
 
 	public final BinopContext binop() throws RecognitionException {
 		BinopContext _localctx = new BinopContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_binop);
+		enterRule(_localctx, 8, RULE_binop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(67);
+			setState(65);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -436,14 +629,14 @@ public class HorthParser extends Parser {
 
 	public final KeywordsContext keywords() throws RecognitionException {
 		KeywordsContext _localctx = new KeywordsContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_keywords);
+		enterRule(_localctx, 10, RULE_keywords);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(69);
+			setState(67);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__32) | (1L << T__33) | (1L << T__34) | (1L << T__35) | (1L << T__36) | (1L << T__37) | (1L << T__38) | (1L << T__39) | (1L << T__40) | (1L << T__41) | (1L << T__42) | (1L << T__43))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__31) | (1L << T__32) | (1L << T__33) | (1L << T__34) | (1L << T__35) | (1L << T__36) | (1L << T__37) | (1L << T__38) | (1L << T__39) | (1L << T__40) | (1L << T__41) | (1L << T__42))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -465,66 +658,148 @@ public class HorthParser extends Parser {
 	}
 
 	public static class TypefuncContext extends ParserRuleContext {
-		public DataTypeContext dataType() {
-			return getRuleContext(DataTypeContext.class,0);
-		}
 		public TypefuncContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_typefunc; }
+	 
+		public TypefuncContext() { }
+		public void copyFrom(TypefuncContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class TypefuncSizeofContext extends TypefuncContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public TypefuncSizeofContext(TypefuncContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterTypefunc(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterTypefuncSizeof(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitTypefunc(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitTypefuncSizeof(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitTypefunc(this);
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitTypefuncSizeof(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypefuncIsContext extends TypefuncContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public TypefuncIsContext(TypefuncContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterTypefuncIs(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitTypefuncIs(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitTypefuncIs(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypefuncCastContext extends TypefuncContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public TypefuncCastContext(TypefuncContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterTypefuncCast(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitTypefuncCast(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitTypefuncCast(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class TypefuncCastUnsafeContext extends TypefuncContext {
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
+		}
+		public TypefuncCastUnsafeContext(TypefuncContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterTypefuncCastUnsafe(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitTypefuncCastUnsafe(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitTypefuncCastUnsafe(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final TypefuncContext typefunc() throws RecognitionException {
 		TypefuncContext _localctx = new TypefuncContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_typefunc);
+		enterRule(_localctx, 12, RULE_typefunc);
 		try {
-			setState(83);
+			setState(86);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case T__44:
+			case T__43:
+				_localctx = new TypefuncSizeofContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
+				setState(69);
+				match(T__43);
+				setState(70);
+				dataType();
 				setState(71);
 				match(T__44);
-				setState(72);
-				dataType();
+				}
+				break;
+			case T__45:
+				_localctx = new TypefuncCastContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
 				setState(73);
 				match(T__45);
+				setState(74);
+				dataType();
+				setState(75);
+				match(T__44);
 				}
 				break;
 			case T__46:
-				enterOuterAlt(_localctx, 2);
+				_localctx = new TypefuncCastUnsafeContext(_localctx);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(75);
-				match(T__46);
-				setState(76);
-				dataType();
 				setState(77);
+				match(T__46);
+				setState(78);
 				match(T__45);
+				setState(79);
+				dataType();
+				setState(80);
+				match(T__44);
 				}
 				break;
 			case T__47:
-				enterOuterAlt(_localctx, 3);
+				_localctx = new TypefuncIsContext(_localctx);
+				enterOuterAlt(_localctx, 4);
 				{
-				setState(79);
+				setState(82);
 				match(T__47);
-				setState(80);
+				setState(83);
 				dataType();
-				setState(81);
-				match(T__45);
+				setState(84);
+				match(T__44);
 				}
 				break;
 			default:
@@ -543,40 +818,185 @@ public class HorthParser extends Parser {
 	}
 
 	public static class InfixContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public InfixContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_infix; }
+	 
+		public InfixContext() { }
+		public void copyFrom(InfixContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class InfixCharContext extends InfixContext {
+		public TerminalNode CHAR() { return getToken(HorthParser.CHAR, 0); }
+		public InfixCharContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixChar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixChar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixChar(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixAtomContext extends InfixContext {
 		public TerminalNode ATOM() { return getToken(HorthParser.ATOM, 0); }
-		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
-		public TerminalNode BOOL() { return getToken(HorthParser.BOOL, 0); }
+		public InfixAtomContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixAtom(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixAtom(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixUnOpContext extends InfixContext {
 		public UnopContext unop() {
 			return getRuleContext(UnopContext.class,0);
 		}
+		public InfixContext infix() {
+			return getRuleContext(InfixContext.class,0);
+		}
+		public InfixUnOpContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixUnOp(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixUnOp(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixUnOp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixIdentContext extends InfixContext {
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
+		public InfixIdentContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixIdent(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixIdent(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixIdent(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixTypefuncContext extends InfixContext {
+		public TypefuncContext typefunc() {
+			return getRuleContext(TypefuncContext.class,0);
+		}
+		public InfixTypefuncContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixTypefunc(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixTypefunc(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixTypefunc(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixIntContext extends InfixContext {
+		public IntegerContext integer() {
+			return getRuleContext(IntegerContext.class,0);
+		}
+		public InfixIntContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixInt(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixInt(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixInt(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixInfixContext extends InfixContext {
+		public InfixContext infix() {
+			return getRuleContext(InfixContext.class,0);
+		}
+		public InfixInfixContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixInfix(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixInfix(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixInfix(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixBinOpContext extends InfixContext {
 		public List<InfixContext> infix() {
 			return getRuleContexts(InfixContext.class);
 		}
 		public InfixContext infix(int i) {
 			return getRuleContext(InfixContext.class,i);
 		}
-		public TypefuncContext typefunc() {
-			return getRuleContext(TypefuncContext.class,0);
-		}
 		public BinopContext binop() {
 			return getRuleContext(BinopContext.class,0);
 		}
-		public InfixContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_infix; }
+		public InfixBinOpContext(InfixContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfix(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixBinOp(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfix(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixBinOp(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfix(this);
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixBinOp(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class InfixBoolContext extends InfixContext {
+		public TerminalNode BOOL() { return getToken(HorthParser.BOOL, 0); }
+		public InfixBoolContext(InfixContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterInfixBool(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitInfixBool(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitInfixBool(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -590,70 +1010,105 @@ public class HorthParser extends Parser {
 		int _parentState = getState();
 		InfixContext _localctx = new InfixContext(_ctx, _parentState);
 		InfixContext _prevctx = _localctx;
-		int _startState = 10;
-		enterRecursionRule(_localctx, 10, RULE_infix, _p);
+		int _startState = 14;
+		enterRecursionRule(_localctx, 14, RULE_infix, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(98);
+			setState(102);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case NAME:
 				{
+				_localctx = new InfixIdentContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(89);
+				match(NAME);
 				}
 				break;
-			case 2:
+			case ATOM:
 				{
-				setState(86);
-				match(IDENTIFIER);
-				}
-				break;
-			case 3:
-				{
-				setState(87);
+				_localctx = new InfixAtomContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(90);
 				match(ATOM);
 				}
 				break;
-			case 4:
+			case INT:
+			case HEX:
+			case BIN:
 				{
-				setState(88);
-				match(INT);
+				_localctx = new InfixIntContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(91);
+				integer();
 				}
 				break;
-			case 5:
+			case BOOL:
 				{
-				setState(89);
+				_localctx = new InfixBoolContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(92);
 				match(BOOL);
 				}
 				break;
-			case 6:
+			case CHAR:
 				{
-				setState(90);
+				_localctx = new InfixCharContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(93);
+				match(CHAR);
+				}
+				break;
+			case T__12:
+			case T__13:
+				{
+				_localctx = new InfixUnOpContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(94);
 				unop();
-				setState(91);
+				setState(95);
 				infix(3);
 				}
 				break;
-			case 7:
+			case T__43:
+			case T__45:
+			case T__46:
+			case T__47:
 				{
-				setState(93);
+				_localctx = new InfixTypefuncContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(97);
 				typefunc();
 				}
 				break;
-			case 8:
+			case T__48:
 				{
-				setState(94);
+				_localctx = new InfixInfixContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(98);
 				match(T__48);
-				setState(95);
+				setState(99);
 				infix(0);
-				setState(96);
-				match(T__45);
+				setState(100);
+				match(T__44);
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(106);
+			setState(110);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -662,18 +1117,18 @@ public class HorthParser extends Parser {
 					_prevctx = _localctx;
 					{
 					{
-					_localctx = new InfixContext(_parentctx, _parentState);
+					_localctx = new InfixBinOpContext(new InfixContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_infix);
-					setState(100);
+					setState(104);
 					if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
-					setState(101);
+					setState(105);
 					binop();
-					setState(102);
+					setState(106);
 					infix(5);
 					}
 					} 
 				}
-				setState(108);
+				setState(112);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
 			}
@@ -691,11 +1146,14 @@ public class HorthParser extends Parser {
 	}
 
 	public static class StaticExprContext extends ParserRuleContext {
-		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
+		public IntegerContext integer() {
+			return getRuleContext(IntegerContext.class,0);
+		}
 		public TerminalNode ATOM() { return getToken(HorthParser.ATOM, 0); }
 		public TerminalNode BOOL() { return getToken(HorthParser.BOOL, 0); }
 		public TerminalNode STRING() { return getToken(HorthParser.STRING, 0); }
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode CHAR() { return getToken(HorthParser.CHAR, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public UnopContext unop() {
 			return getRuleContext(UnopContext.class,0);
 		}
@@ -726,67 +1184,99 @@ public class HorthParser extends Parser {
 
 	public final StaticExprContext staticExpr() throws RecognitionException {
 		StaticExprContext _localctx = new StaticExprContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_staticExpr);
+		enterRule(_localctx, 16, RULE_staticExpr);
 		try {
-			setState(117);
+			setState(122);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
-			case 1:
+			switch (_input.LA(1)) {
+			case INT:
+			case HEX:
+			case BIN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(109);
-				match(INT);
+				setState(113);
+				integer();
 				}
 				break;
-			case 2:
+			case ATOM:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(110);
+				setState(114);
 				match(ATOM);
 				}
 				break;
-			case 3:
+			case BOOL:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(111);
+				setState(115);
 				match(BOOL);
 				}
 				break;
-			case 4:
+			case STRING:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(112);
+				setState(116);
 				match(STRING);
 				}
 				break;
-			case 5:
+			case CHAR:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(113);
-				match(IDENTIFIER);
+				setState(117);
+				match(CHAR);
 				}
 				break;
-			case 6:
+			case NAME:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(114);
+				setState(118);
+				match(NAME);
+				}
+				break;
+			case T__12:
+			case T__13:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(119);
 				unop();
 				}
 				break;
-			case 7:
-				enterOuterAlt(_localctx, 7);
+			case T__7:
+			case T__14:
+			case T__15:
+			case T__16:
+			case T__17:
+			case T__18:
+			case T__19:
+			case T__20:
+			case T__21:
+			case T__22:
+			case T__23:
+			case T__24:
+			case T__25:
+			case T__26:
+			case T__27:
+			case T__28:
+			case T__29:
+			case T__30:
+				enterOuterAlt(_localctx, 8);
 				{
-				setState(115);
+				setState(120);
 				binop();
 				}
 				break;
-			case 8:
-				enterOuterAlt(_localctx, 8);
+			case T__43:
+			case T__45:
+			case T__46:
+			case T__47:
+				enterOuterAlt(_localctx, 9);
 				{
-				setState(116);
+				setState(121);
 				typefunc();
 				}
 				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -831,7 +1321,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenFuncInferContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
@@ -873,7 +1363,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenWithContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
@@ -946,7 +1436,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenFuncSignatureContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public List<DataTypeContext> dataType() {
 			return getRuleContexts(DataTypeContext.class);
 		}
@@ -991,9 +1481,9 @@ public class HorthParser extends Parser {
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
-		public List<TerminalNode> IDENTIFIER() { return getTokens(HorthParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(HorthParser.IDENTIFIER, i);
+		public List<TerminalNode> NAME() { return getTokens(HorthParser.NAME); }
+		public TerminalNode NAME(int i) {
+			return getToken(HorthParser.NAME, i);
 		}
 		public GenLetContext(GeneralContext ctx) { copyFrom(ctx); }
 		@Override
@@ -1007,6 +1497,23 @@ public class HorthParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenLet(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GenCharContext extends GeneralContext {
+		public TerminalNode CHAR() { return getToken(HorthParser.CHAR, 0); }
+		public GenCharContext(GeneralContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterGenChar(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitGenChar(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitGenChar(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1028,7 +1535,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenIdentifierContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public GenIdentifierContext(GeneralContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1064,7 +1571,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenConstContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public StaticExprContext staticExpr() {
 			return getRuleContext(StaticExprContext.class,0);
 		}
@@ -1129,7 +1636,9 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenIntContext extends GeneralContext {
-		public TerminalNode INT() { return getToken(HorthParser.INT, 0); }
+		public IntegerContext integer() {
+			return getRuleContext(IntegerContext.class,0);
+		}
 		public GenIntContext(GeneralContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -1203,7 +1712,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class GenFuncContext extends GeneralContext {
-		public TerminalNode IDENTIFIER() { return getToken(HorthParser.IDENTIFIER, 0); }
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public BlockContext block() {
 			return getRuleContext(BlockContext.class,0);
 		}
@@ -1256,18 +1765,18 @@ public class HorthParser extends Parser {
 
 	public final GeneralContext general() throws RecognitionException {
 		GeneralContext _localctx = new GeneralContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_general);
+		enterRule(_localctx, 18, RULE_general);
 		int _la;
 		try {
 			int _alt;
-			setState(269);
+			setState(275);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
 			case 1:
 				_localctx = new GenAtomContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(119);
+				setState(124);
 				match(ATOM);
 				}
 				break;
@@ -1275,23 +1784,23 @@ public class HorthParser extends Parser {
 				_localctx = new GenIntContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(120);
-				match(INT);
+				setState(125);
+				integer();
 				}
 				break;
 			case 3:
 				_localctx = new GenIdentifierContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(121);
-				match(IDENTIFIER);
+				setState(126);
+				match(NAME);
 				}
 				break;
 			case 4:
 				_localctx = new GenStringContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(122);
+				setState(127);
 				match(STRING);
 				}
 				break;
@@ -1299,184 +1808,156 @@ public class HorthParser extends Parser {
 				_localctx = new GenBoolContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(123);
+				setState(128);
 				match(BOOL);
 				}
 				break;
 			case 6:
-				_localctx = new GenUnopContext(_localctx);
+				_localctx = new GenCharContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(124);
-				unop();
+				setState(129);
+				match(CHAR);
 				}
 				break;
 			case 7:
-				_localctx = new GenBinOpContext(_localctx);
+				_localctx = new GenUnopContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(125);
-				binop();
+				setState(130);
+				unop();
 				}
 				break;
 			case 8:
-				_localctx = new GenKeywordContext(_localctx);
+				_localctx = new GenBinOpContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(126);
-				keywords();
+				setState(131);
+				binop();
 				}
 				break;
 			case 9:
-				_localctx = new GenAccessorContext(_localctx);
+				_localctx = new GenKeywordContext(_localctx);
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(127);
-				match(T__49);
-				setState(128);
-				block();
-				setState(129);
-				match(T__50);
+				setState(132);
+				keywords();
 				}
 				break;
 			case 10:
-				_localctx = new GenArrayContext(_localctx);
+				_localctx = new GenAccessorContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(131);
+				setState(133);
+				match(T__49);
+				setState(134);
+				block();
+				setState(135);
+				match(T__50);
+				}
+				break;
+			case 11:
+				_localctx = new GenArrayContext(_localctx);
+				enterOuterAlt(_localctx, 11);
+				{
+				setState(137);
 				match(T__51);
-				setState(141);
+				setState(147);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(135);
+						setState(141);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-						while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__44) | (1L << T__46) | (1L << T__47))) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & ((1L << (BOOL - 73)) | (1L << (IDENTIFIER - 73)) | (1L << (ATOM - 73)) | (1L << (INT - 73)) | (1L << (STRING - 73)))) != 0)) {
+						while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__43) | (1L << T__45) | (1L << T__46) | (1L << T__47))) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & ((1L << (BOOL - 73)) | (1L << (NAME - 73)) | (1L << (ATOM - 73)) | (1L << (INT - 73)) | (1L << (HEX - 73)) | (1L << (BIN - 73)) | (1L << (CHAR - 73)) | (1L << (STRING - 73)))) != 0)) {
 							{
 							{
-							setState(132);
+							setState(138);
 							staticExpr();
 							}
 							}
-							setState(137);
+							setState(143);
 							_errHandler.sync(this);
 							_la = _input.LA(1);
 						}
-						setState(138);
+						setState(144);
 						match(T__52);
 						}
 						} 
 					}
-					setState(143);
+					setState(149);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,10,_ctx);
 				}
-				setState(147);
+				setState(153);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__44) | (1L << T__46) | (1L << T__47))) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & ((1L << (BOOL - 73)) | (1L << (IDENTIFIER - 73)) | (1L << (ATOM - 73)) | (1L << (INT - 73)) | (1L << (STRING - 73)))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__43) | (1L << T__45) | (1L << T__46) | (1L << T__47))) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & ((1L << (BOOL - 73)) | (1L << (NAME - 73)) | (1L << (ATOM - 73)) | (1L << (INT - 73)) | (1L << (HEX - 73)) | (1L << (BIN - 73)) | (1L << (CHAR - 73)) | (1L << (STRING - 73)))) != 0)) {
 					{
 					{
-					setState(144);
+					setState(150);
 					staticExpr();
 					}
 					}
-					setState(149);
+					setState(155);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(150);
+				setState(156);
 				match(T__53);
 				}
 				break;
-			case 11:
-				_localctx = new GenInfixContext(_localctx);
-				enterOuterAlt(_localctx, 11);
-				{
-				setState(151);
-				match(T__48);
-				setState(152);
-				infix(0);
-				setState(153);
-				match(T__45);
-				}
-				break;
 			case 12:
-				_localctx = new GenAssertContext(_localctx);
+				_localctx = new GenInfixContext(_localctx);
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(155);
-				match(T__54);
-				setState(156);
-				block();
 				setState(157);
-				match(T__55);
+				match(T__48);
+				setState(158);
+				infix(0);
+				setState(159);
+				match(T__44);
 				}
 				break;
 			case 13:
-				_localctx = new GenStaticAssertContext(_localctx);
+				_localctx = new GenAssertContext(_localctx);
 				enterOuterAlt(_localctx, 13);
 				{
-				setState(159);
-				match(T__56);
-				setState(160);
-				match(T__54);
 				setState(161);
-				staticExpr();
+				match(T__54);
 				setState(162);
+				block();
+				setState(163);
 				match(T__55);
 				}
 				break;
 			case 14:
-				_localctx = new GenFuncInferContext(_localctx);
+				_localctx = new GenStaticAssertContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
 				setState(165);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==T__57 || _la==T__58) {
-					{
-					setState(164);
-					_la = _input.LA(1);
-					if ( !(_la==T__57 || _la==T__58) ) {
-					_errHandler.recoverInline(this);
-					}
-					else {
-						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
-						_errHandler.reportMatch(this);
-						consume();
-					}
-					}
-				}
-
+				match(T__56);
+				setState(166);
+				match(T__54);
 				setState(167);
-				match(T__59);
+				staticExpr();
 				setState(168);
-				match(IDENTIFIER);
-				setState(169);
-				match(T__60);
-				setState(170);
-				match(T__61);
-				setState(171);
-				block();
-				setState(172);
 				match(T__55);
 				}
 				break;
 			case 15:
-				_localctx = new GenFuncContext(_localctx);
+				_localctx = new GenFuncInferContext(_localctx);
 				enterOuterAlt(_localctx, 15);
 				{
-				setState(175);
+				setState(171);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__57 || _la==T__58) {
 					{
-					setState(174);
+					setState(170);
 					_la = _input.LA(1);
 					if ( !(_la==T__57 || _la==T__58) ) {
 					_errHandler.recoverInline(this);
@@ -1489,66 +1970,30 @@ public class HorthParser extends Parser {
 					}
 				}
 
-				setState(177);
+				setState(173);
 				match(T__59);
-				setState(178);
-				match(IDENTIFIER);
-				setState(182);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) {
-					{
-					{
-					setState(179);
-					dataType();
-					}
-					}
-					setState(184);
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				}
-				setState(191);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==T__12) {
-					{
-					setState(185);
-					match(T__12);
-					setState(187); 
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-					do {
-						{
-						{
-						setState(186);
-						dataType();
-						}
-						}
-						setState(189); 
-						_errHandler.sync(this);
-						_la = _input.LA(1);
-					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0) );
-					}
-				}
-
-				setState(193);
+				setState(174);
+				match(NAME);
+				setState(175);
+				match(T__60);
+				setState(176);
 				match(T__61);
-				setState(194);
+				setState(177);
 				block();
-				setState(195);
+				setState(178);
 				match(T__55);
 				}
 				break;
 			case 16:
-				_localctx = new GenFuncSignatureContext(_localctx);
+				_localctx = new GenFuncContext(_localctx);
 				enterOuterAlt(_localctx, 16);
 				{
-				setState(198);
+				setState(181);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__57 || _la==T__58) {
 					{
-					setState(197);
+					setState(180);
 					_la = _input.LA(1);
 					if ( !(_la==T__57 || _la==T__58) ) {
 					_errHandler.recoverInline(this);
@@ -1561,170 +2006,226 @@ public class HorthParser extends Parser {
 					}
 				}
 
-				setState(200);
+				setState(183);
 				match(T__59);
-				setState(201);
-				match(IDENTIFIER);
-				setState(205);
+				setState(184);
+				match(NAME);
+				setState(188);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) {
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0)) {
 					{
 					{
-					setState(202);
+					setState(185);
 					dataType();
 					}
 					}
-					setState(207);
+					setState(190);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(214);
+				setState(197);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__12) {
+				if (_la==T__11) {
 					{
-					setState(208);
-					match(T__12);
-					setState(210); 
+					setState(191);
+					match(T__11);
+					setState(193); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					do {
 						{
 						{
-						setState(209);
+						setState(192);
 						dataType();
 						}
 						}
-						setState(212); 
+						setState(195); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
-					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11))) != 0) );
+					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0) );
 					}
 				}
 
-				setState(216);
+				setState(199);
+				match(T__61);
+				setState(200);
+				block();
+				setState(201);
 				match(T__55);
 				}
 				break;
 			case 17:
-				_localctx = new GenIfContext(_localctx);
+				_localctx = new GenFuncSignatureContext(_localctx);
 				enterOuterAlt(_localctx, 17);
 				{
-				setState(217);
+				setState(204);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==T__57 || _la==T__58) {
+					{
+					setState(203);
+					_la = _input.LA(1);
+					if ( !(_la==T__57 || _la==T__58) ) {
+					_errHandler.recoverInline(this);
+					}
+					else {
+						if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+						_errHandler.reportMatch(this);
+						consume();
+					}
+					}
+				}
+
+				setState(206);
+				match(T__59);
+				setState(207);
+				match(NAME);
+				setState(211);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0)) {
+					{
+					{
+					setState(208);
+					dataType();
+					}
+					}
+					setState(213);
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+				}
+				setState(220);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==T__11) {
+					{
+					setState(214);
+					match(T__11);
+					setState(216); 
+					_errHandler.sync(this);
+					_la = _input.LA(1);
+					do {
+						{
+						{
+						setState(215);
+						dataType();
+						}
+						}
+						setState(218); 
+						_errHandler.sync(this);
+						_la = _input.LA(1);
+					} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__0) | (1L << T__1) | (1L << T__2) | (1L << T__3) | (1L << T__4) | (1L << T__5) | (1L << T__6) | (1L << T__8) | (1L << T__9) | (1L << T__10))) != 0) );
+					}
+				}
+
+				setState(222);
+				match(T__55);
+				}
+				break;
+			case 18:
+				_localctx = new GenIfContext(_localctx);
+				enterOuterAlt(_localctx, 18);
+				{
+				setState(223);
 				match(T__62);
-				setState(218);
+				setState(224);
 				((GenIfContext)_localctx).block = block();
 				((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
-				setState(219);
+				setState(225);
 				match(T__63);
-				setState(220);
+				setState(226);
 				((GenIfContext)_localctx).block = block();
 				((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
-				setState(228);
+				setState(234);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__64) {
 					{
 					{
-					setState(221);
+					setState(227);
 					match(T__64);
-					setState(222);
+					setState(228);
 					((GenIfContext)_localctx).block = block();
 					((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
-					setState(223);
+					setState(229);
 					match(T__63);
-					setState(224);
+					setState(230);
 					((GenIfContext)_localctx).block = block();
 					((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
 					}
 					}
-					setState(230);
+					setState(236);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(233);
+				setState(239);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__65) {
 					{
-					setState(231);
+					setState(237);
 					match(T__65);
-					setState(232);
+					setState(238);
 					((GenIfContext)_localctx).elseBlock = block();
 					}
 				}
 
-				setState(235);
-				match(T__55);
-				}
-				break;
-			case 18:
-				_localctx = new GenWhileContext(_localctx);
-				enterOuterAlt(_localctx, 18);
-				{
-				setState(237);
-				match(T__66);
-				setState(238);
-				((GenWhileContext)_localctx).cond = block();
-				setState(239);
-				match(T__63);
-				setState(240);
-				((GenWhileContext)_localctx).doBlock = block();
-				setState(243);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				if (_la==T__65) {
-					{
-					setState(241);
-					match(T__65);
-					setState(242);
-					((GenWhileContext)_localctx).elseBlock = block();
-					}
-				}
-
-				setState(245);
+				setState(241);
 				match(T__55);
 				}
 				break;
 			case 19:
-				_localctx = new GenLetContext(_localctx);
+				_localctx = new GenWhileContext(_localctx);
 				enterOuterAlt(_localctx, 19);
 				{
-				setState(247);
+				setState(243);
+				match(T__66);
+				setState(244);
+				((GenWhileContext)_localctx).cond = block();
+				setState(245);
+				match(T__63);
+				setState(246);
+				((GenWhileContext)_localctx).doBlock = block();
+				setState(249);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+				if (_la==T__65) {
+					{
+					setState(247);
+					match(T__65);
+					setState(248);
+					((GenWhileContext)_localctx).elseBlock = block();
+					}
+				}
+
+				setState(251);
+				match(T__55);
+				}
+				break;
+			case 20:
+				_localctx = new GenLetContext(_localctx);
+				enterOuterAlt(_localctx, 20);
+				{
+				setState(253);
 				match(T__67);
-				setState(249); 
+				setState(255); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(248);
-					match(IDENTIFIER);
+					setState(254);
+					match(NAME);
 					}
 					}
-					setState(251); 
+					setState(257); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
-				} while ( _la==IDENTIFIER );
-				setState(253);
-				match(T__61);
-				setState(254);
-				block();
-				setState(255);
-				match(T__55);
-				}
-				break;
-			case 20:
-				_localctx = new GenWithContext(_localctx);
-				enterOuterAlt(_localctx, 20);
-				{
-				setState(257);
-				match(T__68);
-				setState(258);
-				match(IDENTIFIER);
+				} while ( _la==NAME );
 				setState(259);
-				match(T__63);
+				match(T__61);
 				setState(260);
 				block();
 				setState(261);
@@ -1732,24 +2233,40 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 21:
-				_localctx = new GenConstContext(_localctx);
+				_localctx = new GenWithContext(_localctx);
 				enterOuterAlt(_localctx, 21);
 				{
 				setState(263);
-				match(T__69);
+				match(T__68);
 				setState(264);
-				match(IDENTIFIER);
+				match(NAME);
 				setState(265);
-				staticExpr();
+				match(T__63);
 				setState(266);
+				block();
+				setState(267);
 				match(T__55);
 				}
 				break;
 			case 22:
-				_localctx = new GenIntrfuncContext(_localctx);
+				_localctx = new GenConstContext(_localctx);
 				enterOuterAlt(_localctx, 22);
 				{
-				setState(268);
+				setState(269);
+				match(T__69);
+				setState(270);
+				match(NAME);
+				setState(271);
+				staticExpr();
+				setState(272);
+				match(T__55);
+				}
+				break;
+			case 23:
+				_localctx = new GenIntrfuncContext(_localctx);
+				enterOuterAlt(_localctx, 23);
+				{
+				setState(274);
 				typefunc();
 				}
 				break;
@@ -1796,23 +2313,23 @@ public class HorthParser extends Parser {
 
 	public final BlockContext block() throws RecognitionException {
 		BlockContext _localctx = new BlockContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_block);
+		enterRule(_localctx, 20, RULE_block);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(274);
+			setState(280);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__32) | (1L << T__33) | (1L << T__34) | (1L << T__35) | (1L << T__36) | (1L << T__37) | (1L << T__38) | (1L << T__39) | (1L << T__40) | (1L << T__41) | (1L << T__42) | (1L << T__43) | (1L << T__44) | (1L << T__46) | (1L << T__47) | (1L << T__48) | (1L << T__49) | (1L << T__51) | (1L << T__54) | (1L << T__56) | (1L << T__57) | (1L << T__58) | (1L << T__59) | (1L << T__62))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (T__66 - 67)) | (1L << (T__67 - 67)) | (1L << (T__68 - 67)) | (1L << (T__69 - 67)) | (1L << (BOOL - 67)) | (1L << (IDENTIFIER - 67)) | (1L << (ATOM - 67)) | (1L << (INT - 67)) | (1L << (STRING - 67)))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__7) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__29) | (1L << T__30) | (1L << T__31) | (1L << T__32) | (1L << T__33) | (1L << T__34) | (1L << T__35) | (1L << T__36) | (1L << T__37) | (1L << T__38) | (1L << T__39) | (1L << T__40) | (1L << T__41) | (1L << T__42) | (1L << T__43) | (1L << T__45) | (1L << T__46) | (1L << T__47) | (1L << T__48) | (1L << T__49) | (1L << T__51) | (1L << T__54) | (1L << T__56) | (1L << T__57) | (1L << T__58) | (1L << T__59) | (1L << T__62))) != 0) || ((((_la - 67)) & ~0x3f) == 0 && ((1L << (_la - 67)) & ((1L << (T__66 - 67)) | (1L << (T__67 - 67)) | (1L << (T__68 - 67)) | (1L << (T__69 - 67)) | (1L << (BOOL - 67)) | (1L << (NAME - 67)) | (1L << (ATOM - 67)) | (1L << (INT - 67)) | (1L << (HEX - 67)) | (1L << (BIN - 67)) | (1L << (CHAR - 67)) | (1L << (STRING - 67)))) != 0)) {
 				{
 				{
-				setState(271);
+				setState(277);
 				((BlockContext)_localctx).general = general();
 				((BlockContext)_localctx).contents.add(((BlockContext)_localctx).general);
 				}
 				}
-				setState(276);
+				setState(282);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -1852,13 +2369,13 @@ public class HorthParser extends Parser {
 
 	public final IncludeContext include() throws RecognitionException {
 		IncludeContext _localctx = new IncludeContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_include);
+		enterRule(_localctx, 22, RULE_include);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(277);
+			setState(283);
 			match(T__70);
-			setState(278);
+			setState(284);
 			match(STRING);
 			}
 		}
@@ -1909,41 +2426,41 @@ public class HorthParser extends Parser {
 
 	public final ProgramContext program() throws RecognitionException {
 		ProgramContext _localctx = new ProgramContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_program);
+		enterRule(_localctx, 24, RULE_program);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(282);
+			setState(288);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__71) {
 				{
-				setState(280);
+				setState(286);
 				match(T__71);
-				setState(281);
+				setState(287);
 				match(STRING);
 				}
 			}
 
-			setState(287);
+			setState(293);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__70) {
 				{
 				{
-				setState(284);
+				setState(290);
 				((ProgramContext)_localctx).include = include();
 				((ProgramContext)_localctx).includes.add(((ProgramContext)_localctx).include);
 				}
 				}
-				setState(289);
+				setState(295);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(290);
+			setState(296);
 			((ProgramContext)_localctx).main = block();
-			setState(291);
+			setState(297);
 			match(EOF);
 			}
 		}
@@ -1960,7 +2477,7 @@ public class HorthParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 5:
+		case 7:
 			return infix_sempred((InfixContext)_localctx, predIndex);
 		}
 		return true;
@@ -1974,111 +2491,116 @@ public class HorthParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3T\u0128\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3W\u012e\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3\2\3"+
-		"\2\3\2\6\2)\n\2\r\2\16\2*\3\2\3\2\3\2\3\2\3\2\3\2\3\2\7\2\64\n\2\f\2\16"+
-		"\2\67\13\2\3\2\3\2\6\2;\n\2\r\2\16\2<\5\2?\n\2\3\2\5\2B\n\2\3\3\3\3\3"+
-		"\4\3\4\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\5\6V\n"+
-		"\6\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\3\7\5\7e\n\7\3\7\3"+
-		"\7\3\7\3\7\7\7k\n\7\f\7\16\7n\13\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\5\b"+
-		"x\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t\u0088"+
-		"\n\t\f\t\16\t\u008b\13\t\3\t\7\t\u008e\n\t\f\t\16\t\u0091\13\t\3\t\7\t"+
-		"\u0094\n\t\f\t\16\t\u0097\13\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\3\t\5\t\u00a8\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t"+
-		"\u00b2\n\t\3\t\3\t\3\t\7\t\u00b7\n\t\f\t\16\t\u00ba\13\t\3\t\3\t\6\t\u00be"+
-		"\n\t\r\t\16\t\u00bf\5\t\u00c2\n\t\3\t\3\t\3\t\3\t\3\t\5\t\u00c9\n\t\3"+
-		"\t\3\t\3\t\7\t\u00ce\n\t\f\t\16\t\u00d1\13\t\3\t\3\t\6\t\u00d5\n\t\r\t"+
-		"\16\t\u00d6\5\t\u00d9\n\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\7\t"+
-		"\u00e5\n\t\f\t\16\t\u00e8\13\t\3\t\3\t\5\t\u00ec\n\t\3\t\3\t\3\t\3\t\3"+
-		"\t\3\t\3\t\3\t\5\t\u00f6\n\t\3\t\3\t\3\t\3\t\6\t\u00fc\n\t\r\t\16\t\u00fd"+
-		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\t\u0110"+
-		"\n\t\3\n\7\n\u0113\n\n\f\n\16\n\u0116\13\n\3\13\3\13\3\13\3\f\3\f\5\f"+
-		"\u011d\n\f\3\f\7\f\u0120\n\f\f\f\16\f\u0123\13\f\3\f\3\f\3\f\3\f\2\3\f"+
-		"\r\2\4\6\b\n\f\16\20\22\24\26\2\6\3\2\20\22\4\2\n\n\22\"\3\2#.\3\2<=\2"+
-		"\u0163\2A\3\2\2\2\4C\3\2\2\2\6E\3\2\2\2\bG\3\2\2\2\nU\3\2\2\2\fd\3\2\2"+
-		"\2\16w\3\2\2\2\20\u010f\3\2\2\2\22\u0114\3\2\2\2\24\u0117\3\2\2\2\26\u011c"+
-		"\3\2\2\2\30B\7\3\2\2\31B\7\4\2\2\32B\7\5\2\2\33B\7\6\2\2\34B\7\7\2\2\35"+
-		"B\7\b\2\2\36\37\7\t\2\2\37 \5\2\2\2 !\7\n\2\2!B\3\2\2\2\"#\7\13\2\2#$"+
-		"\5\2\2\2$%\7\n\2\2%B\3\2\2\2&(\7\f\2\2\')\5\2\2\2(\'\3\2\2\2)*\3\2\2\2"+
-		"*(\3\2\2\2*+\3\2\2\2+,\3\2\2\2,-\7\n\2\2-B\3\2\2\2./\7\r\2\2/\60\7L\2"+
-		"\2\60B\7\n\2\2\61\65\7\16\2\2\62\64\5\2\2\2\63\62\3\2\2\2\64\67\3\2\2"+
-		"\2\65\63\3\2\2\2\65\66\3\2\2\2\66>\3\2\2\2\67\65\3\2\2\28:\7\17\2\29;"+
-		"\5\2\2\2:9\3\2\2\2;<\3\2\2\2<:\3\2\2\2<=\3\2\2\2=?\3\2\2\2>8\3\2\2\2>"+
-		"?\3\2\2\2?@\3\2\2\2@B\7\n\2\2A\30\3\2\2\2A\31\3\2\2\2A\32\3\2\2\2A\33"+
-		"\3\2\2\2A\34\3\2\2\2A\35\3\2\2\2A\36\3\2\2\2A\"\3\2\2\2A&\3\2\2\2A.\3"+
-		"\2\2\2A\61\3\2\2\2B\3\3\2\2\2CD\t\2\2\2D\5\3\2\2\2EF\t\3\2\2F\7\3\2\2"+
-		"\2GH\t\4\2\2H\t\3\2\2\2IJ\7/\2\2JK\5\2\2\2KL\7\60\2\2LV\3\2\2\2MN\7\61"+
-		"\2\2NO\5\2\2\2OP\7\60\2\2PV\3\2\2\2QR\7\62\2\2RS\5\2\2\2ST\7\60\2\2TV"+
-		"\3\2\2\2UI\3\2\2\2UM\3\2\2\2UQ\3\2\2\2V\13\3\2\2\2We\b\7\1\2Xe\7L\2\2"+
-		"Ye\7O\2\2Ze\7P\2\2[e\7K\2\2\\]\5\4\3\2]^\5\f\7\5^e\3\2\2\2_e\5\n\6\2`"+
-		"a\7\63\2\2ab\5\f\7\2bc\7\60\2\2ce\3\2\2\2dW\3\2\2\2dX\3\2\2\2dY\3\2\2"+
-		"\2dZ\3\2\2\2d[\3\2\2\2d\\\3\2\2\2d_\3\2\2\2d`\3\2\2\2el\3\2\2\2fg\f\6"+
-		"\2\2gh\5\6\4\2hi\5\f\7\7ik\3\2\2\2jf\3\2\2\2kn\3\2\2\2lj\3\2\2\2lm\3\2"+
-		"\2\2m\r\3\2\2\2nl\3\2\2\2ox\7P\2\2px\7O\2\2qx\7K\2\2rx\7Q\2\2sx\7L\2\2"+
-		"tx\5\4\3\2ux\5\6\4\2vx\5\n\6\2wo\3\2\2\2wp\3\2\2\2wq\3\2\2\2wr\3\2\2\2"+
-		"ws\3\2\2\2wt\3\2\2\2wu\3\2\2\2wv\3\2\2\2x\17\3\2\2\2y\u0110\7O\2\2z\u0110"+
-		"\7P\2\2{\u0110\7L\2\2|\u0110\7Q\2\2}\u0110\7K\2\2~\u0110\5\4\3\2\177\u0110"+
-		"\5\6\4\2\u0080\u0110\5\b\5\2\u0081\u0082\7\64\2\2\u0082\u0083\5\22\n\2"+
-		"\u0083\u0084\7\65\2\2\u0084\u0110\3\2\2\2\u0085\u008f\7\66\2\2\u0086\u0088"+
-		"\5\16\b\2\u0087\u0086\3\2\2\2\u0088\u008b\3\2\2\2\u0089\u0087\3\2\2\2"+
-		"\u0089\u008a\3\2\2\2\u008a\u008c\3\2\2\2\u008b\u0089\3\2\2\2\u008c\u008e"+
-		"\7\67\2\2\u008d\u0089\3\2\2\2\u008e\u0091\3\2\2\2\u008f\u008d\3\2\2\2"+
-		"\u008f\u0090\3\2\2\2\u0090\u0095\3\2\2\2\u0091\u008f\3\2\2\2\u0092\u0094"+
-		"\5\16\b\2\u0093\u0092\3\2\2\2\u0094\u0097\3\2\2\2\u0095\u0093\3\2\2\2"+
-		"\u0095\u0096\3\2\2\2\u0096\u0098\3\2\2\2\u0097\u0095\3\2\2\2\u0098\u0110"+
-		"\78\2\2\u0099\u009a\7\63\2\2\u009a\u009b\5\f\7\2\u009b\u009c\7\60\2\2"+
-		"\u009c\u0110\3\2\2\2\u009d\u009e\79\2\2\u009e\u009f\5\22\n\2\u009f\u00a0"+
-		"\7:\2\2\u00a0\u0110\3\2\2\2\u00a1\u00a2\7;\2\2\u00a2\u00a3\79\2\2\u00a3"+
-		"\u00a4\5\16\b\2\u00a4\u00a5\7:\2\2\u00a5\u0110\3\2\2\2\u00a6\u00a8\t\5"+
-		"\2\2\u00a7\u00a6\3\2\2\2\u00a7\u00a8\3\2\2\2\u00a8\u00a9\3\2\2\2\u00a9"+
-		"\u00aa\7>\2\2\u00aa\u00ab\7L\2\2\u00ab\u00ac\7?\2\2\u00ac\u00ad\7@\2\2"+
-		"\u00ad\u00ae\5\22\n\2\u00ae\u00af\7:\2\2\u00af\u0110\3\2\2\2\u00b0\u00b2"+
-		"\t\5\2\2\u00b1\u00b0\3\2\2\2\u00b1\u00b2\3\2\2\2\u00b2\u00b3\3\2\2\2\u00b3"+
-		"\u00b4\7>\2\2\u00b4\u00b8\7L\2\2\u00b5\u00b7\5\2\2\2\u00b6\u00b5\3\2\2"+
-		"\2\u00b7\u00ba\3\2\2\2\u00b8\u00b6\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00c1"+
-		"\3\2\2\2\u00ba\u00b8\3\2\2\2\u00bb\u00bd\7\17\2\2\u00bc\u00be\5\2\2\2"+
-		"\u00bd\u00bc\3\2\2\2\u00be\u00bf\3\2\2\2\u00bf\u00bd\3\2\2\2\u00bf\u00c0"+
-		"\3\2\2\2\u00c0\u00c2\3\2\2\2\u00c1\u00bb\3\2\2\2\u00c1\u00c2\3\2\2\2\u00c2"+
-		"\u00c3\3\2\2\2\u00c3\u00c4\7@\2\2\u00c4\u00c5\5\22\n\2\u00c5\u00c6\7:"+
-		"\2\2\u00c6\u0110\3\2\2\2\u00c7\u00c9\t\5\2\2\u00c8\u00c7\3\2\2\2\u00c8"+
-		"\u00c9\3\2\2\2\u00c9\u00ca\3\2\2\2\u00ca\u00cb\7>\2\2\u00cb\u00cf\7L\2"+
-		"\2\u00cc\u00ce\5\2\2\2\u00cd\u00cc\3\2\2\2\u00ce\u00d1\3\2\2\2\u00cf\u00cd"+
-		"\3\2\2\2\u00cf\u00d0\3\2\2\2\u00d0\u00d8\3\2\2\2\u00d1\u00cf\3\2\2\2\u00d2"+
-		"\u00d4\7\17\2\2\u00d3\u00d5\5\2\2\2\u00d4\u00d3\3\2\2\2\u00d5\u00d6\3"+
-		"\2\2\2\u00d6\u00d4\3\2\2\2\u00d6\u00d7\3\2\2\2\u00d7\u00d9\3\2\2\2\u00d8"+
-		"\u00d2\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9\u00da\3\2\2\2\u00da\u0110\7:"+
-		"\2\2\u00db\u00dc\7A\2\2\u00dc\u00dd\5\22\n\2\u00dd\u00de\7B\2\2\u00de"+
-		"\u00e6\5\22\n\2\u00df\u00e0\7C\2\2\u00e0\u00e1\5\22\n\2\u00e1\u00e2\7"+
-		"B\2\2\u00e2\u00e3\5\22\n\2\u00e3\u00e5\3\2\2\2\u00e4\u00df\3\2\2\2\u00e5"+
-		"\u00e8\3\2\2\2\u00e6\u00e4\3\2\2\2\u00e6\u00e7\3\2\2\2\u00e7\u00eb\3\2"+
-		"\2\2\u00e8\u00e6\3\2\2\2\u00e9\u00ea\7D\2\2\u00ea\u00ec\5\22\n\2\u00eb"+
-		"\u00e9\3\2\2\2\u00eb\u00ec\3\2\2\2\u00ec\u00ed\3\2\2\2\u00ed\u00ee\7:"+
-		"\2\2\u00ee\u0110\3\2\2\2\u00ef\u00f0\7E\2\2\u00f0\u00f1\5\22\n\2\u00f1"+
-		"\u00f2\7B\2\2\u00f2\u00f5\5\22\n\2\u00f3\u00f4\7D\2\2\u00f4\u00f6\5\22"+
-		"\n\2\u00f5\u00f3\3\2\2\2\u00f5\u00f6\3\2\2\2\u00f6\u00f7\3\2\2\2\u00f7"+
-		"\u00f8\7:\2\2\u00f8\u0110\3\2\2\2\u00f9\u00fb\7F\2\2\u00fa\u00fc\7L\2"+
-		"\2\u00fb\u00fa\3\2\2\2\u00fc\u00fd\3\2\2\2\u00fd\u00fb\3\2\2\2\u00fd\u00fe"+
-		"\3\2\2\2\u00fe\u00ff\3\2\2\2\u00ff\u0100\7@\2\2\u0100\u0101\5\22\n\2\u0101"+
-		"\u0102\7:\2\2\u0102\u0110\3\2\2\2\u0103\u0104\7G\2\2\u0104\u0105\7L\2"+
-		"\2\u0105\u0106\7B\2\2\u0106\u0107\5\22\n\2\u0107\u0108\7:\2\2\u0108\u0110"+
-		"\3\2\2\2\u0109\u010a\7H\2\2\u010a\u010b\7L\2\2\u010b\u010c\5\16\b\2\u010c"+
-		"\u010d\7:\2\2\u010d\u0110\3\2\2\2\u010e\u0110\5\n\6\2\u010fy\3\2\2\2\u010f"+
-		"z\3\2\2\2\u010f{\3\2\2\2\u010f|\3\2\2\2\u010f}\3\2\2\2\u010f~\3\2\2\2"+
-		"\u010f\177\3\2\2\2\u010f\u0080\3\2\2\2\u010f\u0081\3\2\2\2\u010f\u0085"+
-		"\3\2\2\2\u010f\u0099\3\2\2\2\u010f\u009d\3\2\2\2\u010f\u00a1\3\2\2\2\u010f"+
-		"\u00a7\3\2\2\2\u010f\u00b1\3\2\2\2\u010f\u00c8\3\2\2\2\u010f\u00db\3\2"+
-		"\2\2\u010f\u00ef\3\2\2\2\u010f\u00f9\3\2\2\2\u010f\u0103\3\2\2\2\u010f"+
-		"\u0109\3\2\2\2\u010f\u010e\3\2\2\2\u0110\21\3\2\2\2\u0111\u0113\5\20\t"+
-		"\2\u0112\u0111\3\2\2\2\u0113\u0116\3\2\2\2\u0114\u0112\3\2\2\2\u0114\u0115"+
-		"\3\2\2\2\u0115\23\3\2\2\2\u0116\u0114\3\2\2\2\u0117\u0118\7I\2\2\u0118"+
-		"\u0119\7Q\2\2\u0119\25\3\2\2\2\u011a\u011b\7J\2\2\u011b\u011d\7Q\2\2\u011c"+
-		"\u011a\3\2\2\2\u011c\u011d\3\2\2\2\u011d\u0121\3\2\2\2\u011e\u0120\5\24"+
-		"\13\2\u011f\u011e\3\2\2\2\u0120\u0123\3\2\2\2\u0121\u011f\3\2\2\2\u0121"+
-		"\u0122\3\2\2\2\u0122\u0124\3\2\2\2\u0123\u0121\3\2\2\2\u0124\u0125\5\22"+
-		"\n\2\u0125\u0126\7\2\2\3\u0126\27\3\2\2\2\37*\65<>AUdlw\u0089\u008f\u0095"+
-		"\u00a7\u00b1\u00b8\u00bf\u00c1\u00c8\u00cf\u00d6\u00d8\u00e6\u00eb\u00f5"+
-		"\u00fd\u010f\u0114\u011c\u0121";
+		"\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\3\2\5\2 \n\2\3\3\3\3\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7\4\62\n\4\f\4\16\4\65\13"+
+		"\4\3\4\3\4\6\49\n\4\r\4\16\4:\5\4=\n\4\3\4\5\4@\n\4\3\5\3\5\3\6\3\6\3"+
+		"\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b"+
+		"\3\b\5\bY\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
+		"\5\ti\n\t\3\t\3\t\3\t\3\t\7\to\n\t\f\t\16\tr\13\t\3\n\3\n\3\n\3\n\3\n"+
+		"\3\n\3\n\3\n\3\n\5\n}\n\n\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u008e\n\13\f\13\16\13\u0091\13\13"+
+		"\3\13\7\13\u0094\n\13\f\13\16\13\u0097\13\13\3\13\7\13\u009a\n\13\f\13"+
+		"\16\13\u009d\13\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\3\13\3\13\5\13\u00ae\n\13\3\13\3\13\3\13\3\13\3\13\3\13"+
+		"\3\13\3\13\5\13\u00b8\n\13\3\13\3\13\3\13\7\13\u00bd\n\13\f\13\16\13\u00c0"+
+		"\13\13\3\13\3\13\6\13\u00c4\n\13\r\13\16\13\u00c5\5\13\u00c8\n\13\3\13"+
+		"\3\13\3\13\3\13\3\13\5\13\u00cf\n\13\3\13\3\13\3\13\7\13\u00d4\n\13\f"+
+		"\13\16\13\u00d7\13\13\3\13\3\13\6\13\u00db\n\13\r\13\16\13\u00dc\5\13"+
+		"\u00df\n\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\7\13\u00eb"+
+		"\n\13\f\13\16\13\u00ee\13\13\3\13\3\13\5\13\u00f2\n\13\3\13\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\5\13\u00fc\n\13\3\13\3\13\3\13\3\13\6\13\u0102"+
+		"\n\13\r\13\16\13\u0103\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u0116\n\13\3\f\7\f\u0119\n\f\f"+
+		"\f\16\f\u011c\13\f\3\r\3\r\3\r\3\16\3\16\5\16\u0123\n\16\3\16\7\16\u0126"+
+		"\n\16\f\16\16\16\u0129\13\16\3\16\3\16\3\16\3\16\2\3\20\17\2\4\6\b\n\f"+
+		"\16\20\22\24\26\30\32\2\7\3\2\3\b\3\2\17\20\4\2\n\n\21!\3\2\"-\3\2<=\2"+
+		"\u0165\2\37\3\2\2\2\4!\3\2\2\2\6?\3\2\2\2\bA\3\2\2\2\nC\3\2\2\2\fE\3\2"+
+		"\2\2\16X\3\2\2\2\20h\3\2\2\2\22|\3\2\2\2\24\u0115\3\2\2\2\26\u011a\3\2"+
+		"\2\2\30\u011d\3\2\2\2\32\u0122\3\2\2\2\34 \7P\2\2\35 \7Q\2\2\36 \7R\2"+
+		"\2\37\34\3\2\2\2\37\35\3\2\2\2\37\36\3\2\2\2 \3\3\2\2\2!\"\t\2\2\2\"\5"+
+		"\3\2\2\2#@\5\4\3\2$%\7\t\2\2%&\5\6\4\2&\'\7\n\2\2\'@\3\2\2\2()\7\13\2"+
+		"\2)*\5\6\4\2*+\7\n\2\2+@\3\2\2\2,-\7\f\2\2-.\7L\2\2.@\7\n\2\2/\63\7\r"+
+		"\2\2\60\62\5\6\4\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2"+
+		"\2\2\64<\3\2\2\2\65\63\3\2\2\2\668\7\16\2\2\679\5\6\4\28\67\3\2\2\29:"+
+		"\3\2\2\2:8\3\2\2\2:;\3\2\2\2;=\3\2\2\2<\66\3\2\2\2<=\3\2\2\2=>\3\2\2\2"+
+		">@\7\n\2\2?#\3\2\2\2?$\3\2\2\2?(\3\2\2\2?,\3\2\2\2?/\3\2\2\2@\7\3\2\2"+
+		"\2AB\t\3\2\2B\t\3\2\2\2CD\t\4\2\2D\13\3\2\2\2EF\t\5\2\2F\r\3\2\2\2GH\7"+
+		".\2\2HI\5\6\4\2IJ\7/\2\2JY\3\2\2\2KL\7\60\2\2LM\5\6\4\2MN\7/\2\2NY\3\2"+
+		"\2\2OP\7\61\2\2PQ\7\60\2\2QR\5\6\4\2RS\7/\2\2SY\3\2\2\2TU\7\62\2\2UV\5"+
+		"\6\4\2VW\7/\2\2WY\3\2\2\2XG\3\2\2\2XK\3\2\2\2XO\3\2\2\2XT\3\2\2\2Y\17"+
+		"\3\2\2\2Z[\b\t\1\2[i\7L\2\2\\i\7O\2\2]i\5\2\2\2^i\7K\2\2_i\7S\2\2`a\5"+
+		"\b\5\2ab\5\20\t\5bi\3\2\2\2ci\5\16\b\2de\7\63\2\2ef\5\20\t\2fg\7/\2\2"+
+		"gi\3\2\2\2hZ\3\2\2\2h\\\3\2\2\2h]\3\2\2\2h^\3\2\2\2h_\3\2\2\2h`\3\2\2"+
+		"\2hc\3\2\2\2hd\3\2\2\2ip\3\2\2\2jk\f\6\2\2kl\5\n\6\2lm\5\20\t\7mo\3\2"+
+		"\2\2nj\3\2\2\2or\3\2\2\2pn\3\2\2\2pq\3\2\2\2q\21\3\2\2\2rp\3\2\2\2s}\5"+
+		"\2\2\2t}\7O\2\2u}\7K\2\2v}\7T\2\2w}\7S\2\2x}\7L\2\2y}\5\b\5\2z}\5\n\6"+
+		"\2{}\5\16\b\2|s\3\2\2\2|t\3\2\2\2|u\3\2\2\2|v\3\2\2\2|w\3\2\2\2|x\3\2"+
+		"\2\2|y\3\2\2\2|z\3\2\2\2|{\3\2\2\2}\23\3\2\2\2~\u0116\7O\2\2\177\u0116"+
+		"\5\2\2\2\u0080\u0116\7L\2\2\u0081\u0116\7T\2\2\u0082\u0116\7K\2\2\u0083"+
+		"\u0116\7S\2\2\u0084\u0116\5\b\5\2\u0085\u0116\5\n\6\2\u0086\u0116\5\f"+
+		"\7\2\u0087\u0088\7\64\2\2\u0088\u0089\5\26\f\2\u0089\u008a\7\65\2\2\u008a"+
+		"\u0116\3\2\2\2\u008b\u0095\7\66\2\2\u008c\u008e\5\22\n\2\u008d\u008c\3"+
+		"\2\2\2\u008e\u0091\3\2\2\2\u008f\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090"+
+		"\u0092\3\2\2\2\u0091\u008f\3\2\2\2\u0092\u0094\7\67\2\2\u0093\u008f\3"+
+		"\2\2\2\u0094\u0097\3\2\2\2\u0095\u0093\3\2\2\2\u0095\u0096\3\2\2\2\u0096"+
+		"\u009b\3\2\2\2\u0097\u0095\3\2\2\2\u0098\u009a\5\22\n\2\u0099\u0098\3"+
+		"\2\2\2\u009a\u009d\3\2\2\2\u009b\u0099\3\2\2\2\u009b\u009c\3\2\2\2\u009c"+
+		"\u009e\3\2\2\2\u009d\u009b\3\2\2\2\u009e\u0116\78\2\2\u009f\u00a0\7\63"+
+		"\2\2\u00a0\u00a1\5\20\t\2\u00a1\u00a2\7/\2\2\u00a2\u0116\3\2\2\2\u00a3"+
+		"\u00a4\79\2\2\u00a4\u00a5\5\26\f\2\u00a5\u00a6\7:\2\2\u00a6\u0116\3\2"+
+		"\2\2\u00a7\u00a8\7;\2\2\u00a8\u00a9\79\2\2\u00a9\u00aa\5\22\n\2\u00aa"+
+		"\u00ab\7:\2\2\u00ab\u0116\3\2\2\2\u00ac\u00ae\t\6\2\2\u00ad\u00ac\3\2"+
+		"\2\2\u00ad\u00ae\3\2\2\2\u00ae\u00af\3\2\2\2\u00af\u00b0\7>\2\2\u00b0"+
+		"\u00b1\7L\2\2\u00b1\u00b2\7?\2\2\u00b2\u00b3\7@\2\2\u00b3\u00b4\5\26\f"+
+		"\2\u00b4\u00b5\7:\2\2\u00b5\u0116\3\2\2\2\u00b6\u00b8\t\6\2\2\u00b7\u00b6"+
+		"\3\2\2\2\u00b7\u00b8\3\2\2\2\u00b8\u00b9\3\2\2\2\u00b9\u00ba\7>\2\2\u00ba"+
+		"\u00be\7L\2\2\u00bb\u00bd\5\6\4\2\u00bc\u00bb\3\2\2\2\u00bd\u00c0\3\2"+
+		"\2\2\u00be\u00bc\3\2\2\2\u00be\u00bf\3\2\2\2\u00bf\u00c7\3\2\2\2\u00c0"+
+		"\u00be\3\2\2\2\u00c1\u00c3\7\16\2\2\u00c2\u00c4\5\6\4\2\u00c3\u00c2\3"+
+		"\2\2\2\u00c4\u00c5\3\2\2\2\u00c5\u00c3\3\2\2\2\u00c5\u00c6\3\2\2\2\u00c6"+
+		"\u00c8\3\2\2\2\u00c7\u00c1\3\2\2\2\u00c7\u00c8\3\2\2\2\u00c8\u00c9\3\2"+
+		"\2\2\u00c9\u00ca\7@\2\2\u00ca\u00cb\5\26\f\2\u00cb\u00cc\7:\2\2\u00cc"+
+		"\u0116\3\2\2\2\u00cd\u00cf\t\6\2\2\u00ce\u00cd\3\2\2\2\u00ce\u00cf\3\2"+
+		"\2\2\u00cf\u00d0\3\2\2\2\u00d0\u00d1\7>\2\2\u00d1\u00d5\7L\2\2\u00d2\u00d4"+
+		"\5\6\4\2\u00d3\u00d2\3\2\2\2\u00d4\u00d7\3\2\2\2\u00d5\u00d3\3\2\2\2\u00d5"+
+		"\u00d6\3\2\2\2\u00d6\u00de\3\2\2\2\u00d7\u00d5\3\2\2\2\u00d8\u00da\7\16"+
+		"\2\2\u00d9\u00db\5\6\4\2\u00da\u00d9\3\2\2\2\u00db\u00dc\3\2\2\2\u00dc"+
+		"\u00da\3\2\2\2\u00dc\u00dd\3\2\2\2\u00dd\u00df\3\2\2\2\u00de\u00d8\3\2"+
+		"\2\2\u00de\u00df\3\2\2\2\u00df\u00e0\3\2\2\2\u00e0\u0116\7:\2\2\u00e1"+
+		"\u00e2\7A\2\2\u00e2\u00e3\5\26\f\2\u00e3\u00e4\7B\2\2\u00e4\u00ec\5\26"+
+		"\f\2\u00e5\u00e6\7C\2\2\u00e6\u00e7\5\26\f\2\u00e7\u00e8\7B\2\2\u00e8"+
+		"\u00e9\5\26\f\2\u00e9\u00eb\3\2\2\2\u00ea\u00e5\3\2\2\2\u00eb\u00ee\3"+
+		"\2\2\2\u00ec\u00ea\3\2\2\2\u00ec\u00ed\3\2\2\2\u00ed\u00f1\3\2\2\2\u00ee"+
+		"\u00ec\3\2\2\2\u00ef\u00f0\7D\2\2\u00f0\u00f2\5\26\f\2\u00f1\u00ef\3\2"+
+		"\2\2\u00f1\u00f2\3\2\2\2\u00f2\u00f3\3\2\2\2\u00f3\u00f4\7:\2\2\u00f4"+
+		"\u0116\3\2\2\2\u00f5\u00f6\7E\2\2\u00f6\u00f7\5\26\f\2\u00f7\u00f8\7B"+
+		"\2\2\u00f8\u00fb\5\26\f\2\u00f9\u00fa\7D\2\2\u00fa\u00fc\5\26\f\2\u00fb"+
+		"\u00f9\3\2\2\2\u00fb\u00fc\3\2\2\2\u00fc\u00fd\3\2\2\2\u00fd\u00fe\7:"+
+		"\2\2\u00fe\u0116\3\2\2\2\u00ff\u0101\7F\2\2\u0100\u0102\7L\2\2\u0101\u0100"+
+		"\3\2\2\2\u0102\u0103\3\2\2\2\u0103\u0101\3\2\2\2\u0103\u0104\3\2\2\2\u0104"+
+		"\u0105\3\2\2\2\u0105\u0106\7@\2\2\u0106\u0107\5\26\f\2\u0107\u0108\7:"+
+		"\2\2\u0108\u0116\3\2\2\2\u0109\u010a\7G\2\2\u010a\u010b\7L\2\2\u010b\u010c"+
+		"\7B\2\2\u010c\u010d\5\26\f\2\u010d\u010e\7:\2\2\u010e\u0116\3\2\2\2\u010f"+
+		"\u0110\7H\2\2\u0110\u0111\7L\2\2\u0111\u0112\5\22\n\2\u0112\u0113\7:\2"+
+		"\2\u0113\u0116\3\2\2\2\u0114\u0116\5\16\b\2\u0115~\3\2\2\2\u0115\177\3"+
+		"\2\2\2\u0115\u0080\3\2\2\2\u0115\u0081\3\2\2\2\u0115\u0082\3\2\2\2\u0115"+
+		"\u0083\3\2\2\2\u0115\u0084\3\2\2\2\u0115\u0085\3\2\2\2\u0115\u0086\3\2"+
+		"\2\2\u0115\u0087\3\2\2\2\u0115\u008b\3\2\2\2\u0115\u009f\3\2\2\2\u0115"+
+		"\u00a3\3\2\2\2\u0115\u00a7\3\2\2\2\u0115\u00ad\3\2\2\2\u0115\u00b7\3\2"+
+		"\2\2\u0115\u00ce\3\2\2\2\u0115\u00e1\3\2\2\2\u0115\u00f5\3\2\2\2\u0115"+
+		"\u00ff\3\2\2\2\u0115\u0109\3\2\2\2\u0115\u010f\3\2\2\2\u0115\u0114\3\2"+
+		"\2\2\u0116\25\3\2\2\2\u0117\u0119\5\24\13\2\u0118\u0117\3\2\2\2\u0119"+
+		"\u011c\3\2\2\2\u011a\u0118\3\2\2\2\u011a\u011b\3\2\2\2\u011b\27\3\2\2"+
+		"\2\u011c\u011a\3\2\2\2\u011d\u011e\7I\2\2\u011e\u011f\7T\2\2\u011f\31"+
+		"\3\2\2\2\u0120\u0121\7J\2\2\u0121\u0123\7T\2\2\u0122\u0120\3\2\2\2\u0122"+
+		"\u0123\3\2\2\2\u0123\u0127\3\2\2\2\u0124\u0126\5\30\r\2\u0125\u0124\3"+
+		"\2\2\2\u0126\u0129\3\2\2\2\u0127\u0125\3\2\2\2\u0127\u0128\3\2\2\2\u0128"+
+		"\u012a\3\2\2\2\u0129\u0127\3\2\2\2\u012a\u012b\5\26\f\2\u012b\u012c\7"+
+		"\2\2\3\u012c\33\3\2\2\2\37\37\63:<?Xhp|\u008f\u0095\u009b\u00ad\u00b7"+
+		"\u00be\u00c5\u00c7\u00ce\u00d5\u00dc\u00de\u00ec\u00f1\u00fb\u0103\u0115"+
+		"\u011a\u0122\u0127";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

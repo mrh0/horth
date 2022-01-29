@@ -2,6 +2,7 @@ package com.mrh0.horth.output.x86_64.windows.nasm.stackop.put;
 
 import com.mrh0.horth.ast.CompileData;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutBool;
+import com.mrh0.horth.output.instructions.high.stackops.operands.HPutChar;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
@@ -19,6 +20,10 @@ public class LPutInt implements LowInst {
 
     public LPutInt(HPutBool inst) {
         this.value = inst.value ? 1 : 0;
+    }
+
+    public LPutInt(HPutChar inst) {
+        this.value = inst.value;
     }
 
     @Override

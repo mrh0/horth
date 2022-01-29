@@ -2,24 +2,32 @@ package com.mrh0.horth.ast.nodes.operands;
 
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.stackops.operands.HPutChar;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
 
 import java.util.List;
 
-public class TInt extends Tok {
-    public final int value;
+public class TChar extends Tok {
+    public final char value;
 
-    public TInt(int value) {
+    public TChar(char value) {
         this.value = value;
     }
 
-    public TInt(String text, int base) {
-        this(Integer.parseInt(text, base));
+    public TChar(String text) {
+        this.value = parse(text);
+    }
+
+    private char parse(String text) {
+        switch(text) {
+            default:
+                return text.charAt(1);
+        }
     }
 
     @Override
     public void expand(List<HighInst> space) {
-        space.add(new HPutInt(value, this));
+        space.add(new HPutChar(value, this));
     }
 
     @Override

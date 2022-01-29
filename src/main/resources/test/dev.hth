@@ -1,6 +1,2 @@
-if false false or do
-    1
-else
-    0
-end
+'a' cast(int) 1 +
 exit

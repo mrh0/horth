@@ -4,8 +4,10 @@ import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
-import com.mrh0.horth.output.instructions.high.stackops.binop.HAnd;
-import com.mrh0.horth.output.instructions.high.stackops.binop.HOr;
+import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HAnd;
+import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HOr;
+import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryAnd;
+import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryOr;
 import com.mrh0.horth.output.instructions.high.stackops.binop.compare.*;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
 
@@ -18,6 +20,9 @@ public class TBinOp extends Tok {
 
     private static TBinOp AND = new TBinOp("and", t -> new HAnd(t));
     private static TBinOp OR = new TBinOp("or", t -> new HOr(t));
+
+    private static TBinOp BINAND = new TBinOp("&", t -> new HBinaryAnd(t));
+    private static TBinOp BINOR = new TBinOp("|", t -> new HBinaryOr(t));
 
     private static TBinOp LT = new TBinOp("<", t -> new HLessThan(t));
     private static TBinOp LTE = new TBinOp("<=", t -> new HLessThanOrEquals(t));
@@ -56,6 +61,11 @@ public class TBinOp extends Tok {
                 return AND;
             case "or":
                 return OR;
+
+            case "&":
+                return BINAND;
+            case "|":
+                return BINOR;
 
             case "<":
                 return LT;

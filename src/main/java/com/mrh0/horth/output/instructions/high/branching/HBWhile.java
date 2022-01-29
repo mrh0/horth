@@ -60,7 +60,7 @@ public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
             space.add(new HJump(condLabel));
         }
         else {
-
+            //TODO: Else Block
         }
         space.add(endLabel);
     }
@@ -73,6 +73,7 @@ public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
         stack.check(token, AllTypes.BOOL);
         VirtualStack.match(snapshot, stack, token.getLocation());
 
+        //TODO: type/stack check break and continue
         TypeChecker.check(stack, doBlock);
         VirtualStack.match(snapshot, stack, token.getLocation());
 

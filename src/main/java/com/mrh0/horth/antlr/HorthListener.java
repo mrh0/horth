@@ -8,15 +8,111 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface HorthListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link HorthParser#dataType}.
+	 * Enter a parse tree produced by the {@code integerInt}
+	 * labeled alternative in {@link HorthParser#integer}.
 	 * @param ctx the parse tree
 	 */
-	void enterDataType(HorthParser.DataTypeContext ctx);
+	void enterIntegerInt(HorthParser.IntegerIntContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HorthParser#dataType}.
+	 * Exit a parse tree produced by the {@code integerInt}
+	 * labeled alternative in {@link HorthParser#integer}.
 	 * @param ctx the parse tree
 	 */
-	void exitDataType(HorthParser.DataTypeContext ctx);
+	void exitIntegerInt(HorthParser.IntegerIntContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code integerHex}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerHex(HorthParser.IntegerHexContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code integerHex}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerHex(HorthParser.IntegerHexContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code integerBin}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerBin(HorthParser.IntegerBinContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code integerBin}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerBin(HorthParser.IntegerBinContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HorthParser#simpleDataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HorthParser#simpleDataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeSimple}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeSimple}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeArr}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeArr(HorthParser.DataTypeArrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeArr}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeArr(HorthParser.DataTypeArrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeAny}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeAny(HorthParser.DataTypeAnyContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeAny}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeAny(HorthParser.DataTypeAnyContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeFunc}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeFunc(HorthParser.DataTypeFuncContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeFunc}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeFunc(HorthParser.DataTypeFuncContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HorthParser#unop}.
 	 * @param ctx the parse tree
@@ -48,25 +144,161 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitKeywords(HorthParser.KeywordsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HorthParser#typefunc}.
+	 * Enter a parse tree produced by the {@code typefuncSizeof}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypefunc(HorthParser.TypefuncContext ctx);
+	void enterTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HorthParser#typefunc}.
+	 * Exit a parse tree produced by the {@code typefuncSizeof}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypefunc(HorthParser.TypefuncContext ctx);
+	void exitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HorthParser#infix}.
+	 * Enter a parse tree produced by the {@code typefuncCast}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterInfix(HorthParser.InfixContext ctx);
+	void enterTypefuncCast(HorthParser.TypefuncCastContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HorthParser#infix}.
+	 * Exit a parse tree produced by the {@code typefuncCast}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitInfix(HorthParser.InfixContext ctx);
+	void exitTypefuncCast(HorthParser.TypefuncCastContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typefuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typefuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typefuncIs}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typefuncIs}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixChar}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixChar(HorthParser.InfixCharContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixChar}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixChar(HorthParser.InfixCharContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixAtom}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixAtom(HorthParser.InfixAtomContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixAtom}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixAtom(HorthParser.InfixAtomContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixUnOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixUnOp(HorthParser.InfixUnOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixUnOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixUnOp(HorthParser.InfixUnOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixIdent}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixIdent(HorthParser.InfixIdentContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixIdent}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixIdent(HorthParser.InfixIdentContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixTypefunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixTypefunc(HorthParser.InfixTypefuncContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixTypefunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixTypefunc(HorthParser.InfixTypefuncContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixInt}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixInt(HorthParser.InfixIntContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixInt}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixInt(HorthParser.InfixIntContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixInfix}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixInfix(HorthParser.InfixInfixContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixInfix}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixInfix(HorthParser.InfixInfixContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixBinOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixBinOp(HorthParser.InfixBinOpContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixBinOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixBinOp(HorthParser.InfixBinOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixBool}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixBool(HorthParser.InfixBoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixBool}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixBool(HorthParser.InfixBoolContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HorthParser#staticExpr}.
 	 * @param ctx the parse tree
@@ -137,6 +369,18 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenBool(HorthParser.GenBoolContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genChar}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenChar(HorthParser.GenCharContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genChar}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenChar(HorthParser.GenCharContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genUnop}
 	 * labeled alternative in {@link HorthParser#general}.

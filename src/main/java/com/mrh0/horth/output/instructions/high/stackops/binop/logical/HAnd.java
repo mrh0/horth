@@ -1,4 +1,4 @@
-package com.mrh0.horth.output.instructions.high.stackops.binop;
+package com.mrh0.horth.output.instructions.high.stackops.binop.logical;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.output.instructions.high.HighInst;

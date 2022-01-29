@@ -1,6 +1,7 @@
 package com.mrh0.horth.util;
 
 import com.mrh0.horth.Main;
+import com.mrh0.horth.ast.Loc;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -31,5 +32,9 @@ public class IO {
 
     public static File getFile(String file) throws URISyntaxException {
         return Paths.get(new URI(file)).toFile();
+    }
+
+    public static void warn(String text, Loc location) {
+        System.out.println("[WARN]: " + text + (location == null ? "" : "\n\tat: " + location.toString()));
     }
 }

@@ -9,7 +9,8 @@ public class LSub implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib      .inst("sub").reg(S1).reg(S2)
+        ib      .inst("xchg").reg(S1).reg(S2)
+                .inst("sub").reg(S1).reg(S2)
                 .inst("pop").reg(S2);
     }
 }

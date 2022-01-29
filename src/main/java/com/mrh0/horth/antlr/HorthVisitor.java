@@ -11,11 +11,67 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link HorthParser#dataType}.
+	 * Visit a parse tree produced by the {@code integerInt}
+	 * labeled alternative in {@link HorthParser#integer}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDataType(HorthParser.DataTypeContext ctx);
+	T visitIntegerInt(HorthParser.IntegerIntContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code integerHex}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerHex(HorthParser.IntegerHexContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code integerBin}
+	 * labeled alternative in {@link HorthParser#integer}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIntegerBin(HorthParser.IntegerBinContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HorthParser#simpleDataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeSimple}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeArr}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeArr(HorthParser.DataTypeArrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeAny}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeAny(HorthParser.DataTypeAnyContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeFunc}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeFunc(HorthParser.DataTypeFuncContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HorthParser#unop}.
 	 * @param ctx the parse tree
@@ -35,17 +91,96 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitKeywords(HorthParser.KeywordsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HorthParser#typefunc}.
+	 * Visit a parse tree produced by the {@code typefuncSizeof}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypefunc(HorthParser.TypefuncContext ctx);
+	T visitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HorthParser#infix}.
+	 * Visit a parse tree produced by the {@code typefuncCast}
+	 * labeled alternative in {@link HorthParser#typefunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitInfix(HorthParser.InfixContext ctx);
+	T visitTypefuncCast(HorthParser.TypefuncCastContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typefuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typefuncIs}
+	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixChar}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixChar(HorthParser.InfixCharContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixAtom}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixAtom(HorthParser.InfixAtomContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixUnOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixUnOp(HorthParser.InfixUnOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixIdent}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixIdent(HorthParser.InfixIdentContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixTypefunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixTypefunc(HorthParser.InfixTypefuncContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixInt}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixInt(HorthParser.InfixIntContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixInfix}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixInfix(HorthParser.InfixInfixContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixBinOp}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixBinOp(HorthParser.InfixBinOpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixBool}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixBool(HorthParser.InfixBoolContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HorthParser#staticExpr}.
 	 * @param ctx the parse tree
@@ -87,6 +222,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitGenBool(HorthParser.GenBoolContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genChar}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenChar(HorthParser.GenCharContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code genUnop}
 	 * labeled alternative in {@link HorthParser#general}.
