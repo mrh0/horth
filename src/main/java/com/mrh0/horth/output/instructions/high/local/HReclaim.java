@@ -1,7 +1,6 @@
-package com.mrh0.horth.output.instructions.high.types;
+package com.mrh0.horth.output.instructions.high.local;
 
 import com.mrh0.horth.ast.nodes.ITok;
-import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
@@ -9,11 +8,11 @@ import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualStack;
-import com.mrh0.horth.typechecker.types.AllTypes;
 
-public class HCast extends HighInst implements ISpecialCheck {
+public class HReclaim extends HighInst implements ISpecialCheck {
+    public int count, size;
 
-    public HCast(TTypeFuncCast token) {
+    public HReclaim(ITok token) {
         super(token);
     }
 
@@ -22,15 +21,13 @@ public class HCast extends HighInst implements ISpecialCheck {
         return Contract.VOID;
     }
 
-    @Override
-    public String toString() {
-        return "HCast";
+    public void set(int count, int size) {
+        this.count = count;
+        this.size = size;
     }
 
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        var to = ((TTypeFuncCast)token).type;
-        stack.pop(token).type().cast(token.getLocation(), to);
-        stack.push(to, token);
+        cd.reclaimLocal();
     }
 }

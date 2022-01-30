@@ -1,6 +1,6 @@
 package com.mrh0.horth.output.x86_64.windows.nasm.other;
 
-import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;

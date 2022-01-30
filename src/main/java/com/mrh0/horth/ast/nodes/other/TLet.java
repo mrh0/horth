@@ -1,21 +1,21 @@
 package com.mrh0.horth.ast.nodes.other;
 
-import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
-import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.local.HLet;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TLet extends Tok {
-    private final List<String> names;
-    private final TBlock block;
+    public final List<String> names;
+    public final TBlock localBlock;
 
-    public TLet(List<String> names, TBlock block) {
+    public TLet(List<String> names, TBlock localBlock) {
         this.names = names;
-        this.block = block;
+        this.localBlock = localBlock;
     }
 
     @Override
@@ -28,13 +28,18 @@ public class TLet extends Tok {
         }
         sb.append("]");
         sb.append(", ");
-        block.toString(sb);
+        localBlock.toString(sb);
         sb.append(")");
         return sb;
     }
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-
+        var let = new HLet(this);
+        space.add(let);
+        List<HighInst> lb =  new ArrayList<>();
+        localBlock.expand(lb);
+        space.addAll(lb);
+        space.add(let.getReclaim());
     }
 }

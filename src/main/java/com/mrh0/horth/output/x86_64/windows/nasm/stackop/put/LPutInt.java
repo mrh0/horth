@@ -1,6 +1,6 @@
 package com.mrh0.horth.output.x86_64.windows.nasm.stackop.put;
 
-import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutBool;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutChar;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;

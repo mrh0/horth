@@ -11,6 +11,12 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link HorthParser#identifier}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifier(HorthParser.IdentifierContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code integerInt}
 	 * labeled alternative in {@link HorthParser#integer}.
 	 * @param ctx the parse tree

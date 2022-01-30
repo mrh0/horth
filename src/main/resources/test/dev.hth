@@ -1,2 +1,5 @@
-'a' cast(string) 1 +
+1 2
+let a b in
+    1
+end
 exit

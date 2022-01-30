@@ -2,7 +2,7 @@ package com.mrh0.horth;
 
 import com.mrh0.horth.antlr.HorthLexer;
 import com.mrh0.horth.antlr.HorthParser;
-import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.ast.Visitor;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.Arch;
@@ -10,10 +10,10 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.IDataChecked;
 import com.mrh0.horth.output.instructions.high.IExpanding;
 import com.mrh0.horth.output.x86_64.windows.Win64nasm;
-import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
 import com.mrh0.horth.typechecker.TypeChecker;
 import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.util.IO;
+import com.mrh0.horth.util.Util;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -39,6 +39,7 @@ public class Main {
         HorthLexer lexer = new HorthLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         HorthParser parser = new HorthParser(tokens);
+        CompileData compileData = new CompileData();
 
         var tree = parser.program();
         var t = new Visitor(inputFile).visitProgram(tree);
@@ -52,8 +53,8 @@ public class Main {
 
         //TypeChecking
         VirtualStack stack = new VirtualStack();
-        TypeChecker.check(stack, HLIR);
-        TypeChecker.end(stack);
+        TypeChecker.check(stack, compileData, HLIR);
+        TypeChecker.end(stack, Util.lastOf(HLIR).token.getLocation());
 
         //PostTypeCheckExpanding
         List<HighInst> newHLIR = new ArrayList<>();
@@ -62,8 +63,8 @@ public class Main {
         HLIR = newHLIR;
         System.out.println(HLIR);
 
-        CompileData cd = new CompileData();
-        IDataChecked.checkAll(cd, HLIR);
+
+        //IDataChecked.checkAll(cd, HLIR);
 
         //win64nasm Arch Test
         var asmFile = "file:///horthdev/test.asm";

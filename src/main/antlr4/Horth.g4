@@ -17,6 +17,10 @@ WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
+identifier:
+    NAME
+    ;
+
 integer:
     INT         #integerInt
     | HEX       #integerHex
@@ -67,7 +71,7 @@ typefunc:
     ;
 
 infix:
-    NAME                        #infixIdent
+    identifier                  #infixIdent
     | ATOM                      #infixAtom
     | integer                   #infixInt
     | BOOL                      #infixBool
@@ -80,7 +84,7 @@ infix:
 
 staticExpr:
     integer | ATOM | BOOL | STRING | CHAR
-    | NAME //constants only
+    | identifier //constants only
     | unop | binop
     | typefunc
     ;
@@ -88,7 +92,7 @@ staticExpr:
 general:
     ATOM                                                                                    #genAtom
     | integer                                                                               #genInt
-    | NAME                                                                                  #genIdentifier
+    | identifier                                                                            #genIdentifier
     | STRING                                                                                #genString
     | BOOL                                                                                  #genBool
     | CHAR                                                                                  #genChar
@@ -119,7 +123,7 @@ general:
 
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
-    | 'let' (names+=NAME)+ 'in' block 'end'                                                  #genLet
+    | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                 #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     | 'with' NAME 'do' block 'end'                                                    #genWith
     | 'const' NAME staticExpr 'end'                                                       #genConst

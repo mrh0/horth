@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
@@ -29,7 +30,7 @@ public class HIs extends HighInst implements ISpecialCheck {
     }
 
     @Override
-    public void check(VirtualStack stack) throws HorthException {
+    public void check(VirtualStack stack, CompileData cd) throws HorthException {
         var shouldBe = ((TTypeFuncIs)token).type;
         var onStack = stack.pop(token).type();
         if(!IType.equals(onStack, shouldBe, null))

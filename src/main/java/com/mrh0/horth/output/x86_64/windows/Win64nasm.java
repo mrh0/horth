@@ -1,6 +1,6 @@
 package com.mrh0.horth.output.x86_64.windows;
 
-import com.mrh0.horth.ast.CompileData;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.instructions.high.HighInst;

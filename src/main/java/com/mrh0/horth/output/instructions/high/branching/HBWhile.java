@@ -3,6 +3,7 @@ package com.mrh0.horth.output.instructions.high.branching;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.branching.TWhile;
 import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.HighLabel;
 import com.mrh0.horth.output.instructions.high.IExpanding;
@@ -66,19 +67,19 @@ public class HBWhile extends HighInst implements ISpecialCheck, IExpanding {
     }
 
     @Override
-    public void check(VirtualStack stack) throws HorthException {
+    public void check(VirtualStack stack, CompileData cd) throws HorthException {
         VirtualStack snapshot = stack.snapshot();
 
-        TypeChecker.check(stack, condition);
+        TypeChecker.check(stack, cd, condition);
         stack.check(token, AllTypes.BOOL);
         VirtualStack.match(snapshot, stack, token.getLocation());
 
         //TODO: type/stack check break and continue
-        TypeChecker.check(stack, doBlock);
+        TypeChecker.check(stack, cd, doBlock);
         VirtualStack.match(snapshot, stack, token.getLocation());
 
         if (elseBlock != null) {
-            TypeChecker.check(stack, elseBlock);
+            TypeChecker.check(stack, cd, elseBlock);
             VirtualStack.match(snapshot, stack, token.getLocation());
         }
     }
