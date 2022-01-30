@@ -520,6 +520,18 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGenFuncLet(HorthParser.GenFuncLetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenFuncLet(HorthParser.GenFuncLetContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterGenFuncSignature(HorthParser.GenFuncSignatureContext ctx) { }
 	/**
 	 * {@inheritDoc}

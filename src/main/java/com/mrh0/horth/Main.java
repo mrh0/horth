@@ -7,6 +7,7 @@ import com.mrh0.horth.ast.Visitor;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.IDataChecked;
 import com.mrh0.horth.output.instructions.high.IExpanding;
 import com.mrh0.horth.output.x86_64.windows.Win64nasm;
 import com.mrh0.horth.output.x86_64.windows.nasm.Optimizer;
@@ -60,6 +61,9 @@ public class Main {
 
         HLIR = newHLIR;
         System.out.println(HLIR);
+
+        CompileData cd = new CompileData();
+        IDataChecked.checkAll(cd, HLIR);
 
         //win64nasm Arch Test
         var asmFile = "file:///horthdev/test.asm";

@@ -12,10 +12,13 @@ import com.mrh0.horth.ast.nodes.operands.TChar;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import com.mrh0.horth.ast.nodes.operators.TUnOp;
+import com.mrh0.horth.ast.nodes.other.TLet;
 import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
+import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,6 +35,13 @@ public class Visitor extends HorthBaseVisitor<ITok> {
         List<O> t = new ArrayList<>();
         for(T pt : list)
             t.add((O)visit(pt));
+        return t;
+    }
+
+    public <T extends Token> List<String> tvisit(List<T> list) {
+        List<String> t = new ArrayList<>();
+        for(T pt : list)
+            t.add(pt.getText());
         return t;
     }
 
@@ -123,6 +133,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     @Override
+    public ITok visitTypefuncIs(HorthParser.TypefuncIsContext ctx) {
+        return new TTypeFuncIs(cvisit(ctx.dataType()))
+                .loc(ctx.start, file);
+    }
+
+    @Override
     public ITok visitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx) {
         return new TTypeFuncCast(cvisit(ctx.dataType()), true)
                 .loc(ctx.start, file);
@@ -162,5 +178,11 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitInfixUnOp(HorthParser.InfixUnOpContext ctx) {
         return new TInfixUnOp(cvisit(ctx.infix()), cvisit(ctx.unop()))
                 .loc(ctx.start, file);
+    }
+
+    //Let
+    @Override
+    public ITok visitGenLet(HorthParser.GenLetContext ctx) {
+        return new TLet(tvisit(ctx.names), cvisit(ctx.block()));
     }
 }

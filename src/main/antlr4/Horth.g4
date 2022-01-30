@@ -97,26 +97,29 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
     | '[' block ']'                                                                         #genAccessor
-    | '{' (staticExpr* ',')* staticExpr* '}'                                                #genArray
+    | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
 
     | '(' infix ')'                                                                         #genInfix
-    | 'assert' block 'end'                                                                  #genAssert
-    | 'static' 'assert' staticExpr 'end'                                                    #genStaticAssert
-    | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                     #genFuncInfer
-    | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'in' block 'end'     #genFunc
-    | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'                #genFuncSignature
+    | 'assert(' message=STRING ')' block 'end'                                              #genAssert
+    | 'static' 'assert(' message=STRING ')' staticExpr 'end'                                #genStaticAssert
+    | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
+    | ('inline' | 'extern')? 'func' NAME
+        (dataType)* ('->' (dataType)+)? 'in' block 'end'                                    #genFunc
+    | ('inline' | 'extern')? 'func' NAME
+        (dataType)* ('->' (dataType)+)? 'let' (names+=NAME)+ 'in' block 'end'               #genFuncLet
+    | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
     | 'if' conds+=block 'do' doBlock+=block
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
-    | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                                        #genWhile
+    | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                  #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
 
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
-    | 'let' (NAME)+ 'in' block 'end'                                                  #genLet
+    | 'let' (names+=NAME)+ 'in' block 'end'                                                  #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     | 'with' NAME 'do' block 'end'                                                    #genWith
     | 'const' NAME staticExpr 'end'                                                       #genConst

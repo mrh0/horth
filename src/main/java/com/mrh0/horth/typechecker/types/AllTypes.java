@@ -42,14 +42,15 @@ public class AllTypes {
             throw new CannotCastException(location, this, to);
         }
     };
-    public static IType STRING = new IType() {
+    public static IType STRING = ref(CHAR);
+    /*new IType() {
         public String getName() {
             return "string";
         }
         public int getSize() {
             return 8;
         }
-    };
+    };*/
     public static IType ATOM = new IType() {
         public String getName() {
             return "atom";
@@ -64,6 +65,8 @@ public class AllTypes {
     public static RefType ref(IType type) {return new RefType(type);}
 
     public static String stringOf(IType type) {
+        if(type == STRING)
+            return "string";
         return type.getName();
     }
 
