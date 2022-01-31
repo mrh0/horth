@@ -1,5 +1,5 @@
-1 2
-let a b in
-    1
+5 10 15 is(int int int)
+let a b c in
+    (c - a)
 end
 exit

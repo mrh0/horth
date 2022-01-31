@@ -1,5 +1,6 @@
 package com.mrh0.horth.output.instructions.high.types;
 
+import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.exceptions.HorthException;
@@ -12,6 +13,8 @@ import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.typechecker.types.IType;
+
+import java.util.List;
 
 public class HIs extends HighInst implements ISpecialCheck {
 
@@ -31,9 +34,15 @@ public class HIs extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        var shouldBe = ((TTypeFuncIs)token).type;
-        var onStack = stack.pop(token).type();
-        if(!IType.equals(onStack, shouldBe, null))
-            throw new CompileException(token.getLocation(), "Static type check 'is(" + AllTypes.stringOf(shouldBe) + ")' failed, was of type '" + AllTypes.stringOf(onStack) + "'.");
+        List<TType> types = ((TTypeFuncIs)token).types;
+        for(int i = types.size()-1; i >= 0; i--) {
+            var shouldBe = types.get(i).type;
+            var onStack = stack.peek(token).type();
+            if(!IType.equals(onStack, shouldBe, null))
+                throw new CompileException(token.getLocation(),
+                        "Static type check 'is(" + AllTypes.stringOf(shouldBe) + ")' failed, was of type '"
+                                + AllTypes.stringOf(onStack) + "'.");
+        }
+
     }
 }

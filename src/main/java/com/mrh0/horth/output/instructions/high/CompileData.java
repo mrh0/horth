@@ -1,7 +1,9 @@
 package com.mrh0.horth.output.instructions.high;
 
 import com.mrh0.horth.ast.Loc;
+import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.ArrayList;
@@ -33,11 +35,13 @@ public class CompileData {
     private Map<String, NamedGlobalTypes> namedGlobalsMap;
     private List<LocalEntry> namedLocalsList;
     private List<LocalScope> localScopeList;
+    private final Arch arch;
 
-    public CompileData() {
+    public CompileData(Arch arch) {
         namedGlobalsMap = new HashMap<>();
         namedLocalsList = new ArrayList<>();
         localScopeList = new ArrayList<>();
+        this.arch = arch;
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -73,7 +77,7 @@ public class CompileData {
             throw new CompileException(location, "Name '" + name + "' is already a defined " + globalType.name() + ".");
         LocalScope scope = getCurrentLocalScope();
         namedLocalsList.add(new LocalEntry(name, type, scope, scope.offset));
-        scope.incrementOffset(type.getSize());
+        scope.incrementOffset(8);
     }
 
     public LocalEntry findNamedLocal(Loc location, String name) throws CompileException {
@@ -86,5 +90,12 @@ public class CompileData {
             }
         }
         throw new CompileException(location, "Unknown local variable '" + name + "'.");
+    }
+
+    public Arch.SysCall getSysCallByName(Loc location, String name) throws HorthException {
+        Arch.SysCall sc = arch.getSysCallByName(name);
+        if(sc == null)
+            throw new CompileException(location, "Unknown System-Call function '" + name + "'.");
+        return sc;
     }
 }

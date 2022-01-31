@@ -16,6 +16,7 @@ public class HLet extends HighInst implements ISpecialCheck {
 
     private List<String> names;
     private HReclaim reclaim;
+    public int count;
 
     public HLet(TLet tok) throws HorthException {
         super(tok);
@@ -31,13 +32,12 @@ public class HLet extends HighInst implements ISpecialCheck {
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
         cd.claimLocal();
-        int size = 0;
         for(int i = names.size()-1; i >= 0; i--) { // Reversed or not?
             IType type = stack.pop(token).type();
             cd.defineNamedLocal(token.getLocation(), names.get(i), type);
-            size += type.getSize();
         }
-        this.reclaim.set(names.size(), size);
+        this.reclaim.set(names.size());
+        count = names.size();
     }
 
     public HReclaim getReclaim() {

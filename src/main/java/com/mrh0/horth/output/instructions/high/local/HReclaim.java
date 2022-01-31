@@ -10,7 +10,7 @@ import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualStack;
 
 public class HReclaim extends HighInst implements ISpecialCheck {
-    public int count, size;
+    public int count;
 
     public HReclaim(ITok token) {
         super(token);
@@ -21,9 +21,8 @@ public class HReclaim extends HighInst implements ISpecialCheck {
         return Contract.VOID;
     }
 
-    public void set(int count, int size) {
+    public void set(int count) {
         this.count = count;
-        this.size = size;
     }
 
     @Override

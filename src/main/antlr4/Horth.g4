@@ -37,6 +37,7 @@ dataType:
     | 'arr<' dataType '>'                           #dataTypeArr
     | 'any<' NAME '>'                               #dataTypeAny
     | 'func<' (dataType)* ('->' (dataType)+)? '>'   #dataTypeFunc
+    | dataType '*' staticExpr                       #dataTypeMany
     ;
     // | 'byte(' staticExpr ')';
 
@@ -60,13 +61,16 @@ keywords:
     | 'throw'
     | 'exit'
     | 'break'
+    | 'syscall0' | 'syscall1' | 'syscall2'
+    | 'syscall3' | 'syscall4' | 'syscall5'
+    | 'syscall6'
     ;
 
 typefunc:
-    'sizeof(' dataType /*('*' integer)?*/ ')'   #typefuncSizeof
+    'sizeof(' dataType ')'   #typefuncSizeof
     | 'cast(' dataType ')'                      #typefuncCast
     | 'unsafe' 'cast(' dataType ')'             #typefuncCastUnsafe
-    | 'is(' dataType ')'                        #typefuncIs
+    | 'is(' (types+=dataType)* ')'              #typefuncIs
     //| 'alloc(' dataType /*('*' integer)?*/ ')'  #typefuncAlloc
     ;
 
@@ -96,6 +100,7 @@ general:
     | STRING                                                                                #genString
     | BOOL                                                                                  #genBool
     | CHAR                                                                                  #genChar
+    | ','                                                                                   #genSeparator
 
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
@@ -108,25 +113,34 @@ general:
     | 'static' 'assert(' message=STRING ')' staticExpr 'end'                                #genStaticAssert
     | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
     | ('inline' | 'extern')? 'func' NAME
-        (dataType)* ('->' (dataType)+)? 'in' block 'end'                                    #genFunc
+        (dataType)* ('->' (dataType)+)? ('throws' dataType)? 'in' block 'end'               #genFunc
     | ('inline' | 'extern')? 'func' NAME
         (dataType)* ('->' (dataType)+)? 'let' (names+=NAME)+ 'in' block 'end'               #genFuncLet
     | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
+    | 'static' 'alloc' NAME dataType ('*' staticExpr)* 'end'                                #genAllocStatic
+    | 'alloc' NAME dataType ('*' block)? 'in' block 'end'                                   #genAlloc
+
     | 'if' conds+=block 'do' doBlock+=block
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
-    | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                  #genWhile
+    | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
 
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
-    | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                 #genLet
+    | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                      #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
-    | 'with' NAME 'do' block 'end'                                                    #genWith
-    | 'const' NAME staticExpr 'end'                                                       #genConst
+    | 'with' NAME 'do' block 'end'                                                          #genWith
+    | 'const' NAME staticExpr 'end'                                                         #genConst
+
+    | 'try' NAME                                                                            #genTry
+    | 'throw' block 'end'                                                                   #genThrow
+    | 'catch' NAME 'passed' block 'failed' block 'end'                                      #genCatch
+
+    | 'syscall' NAME                                                                        #genSyscall
     | typefunc                                                                              #genIntrfunc
     ;
 

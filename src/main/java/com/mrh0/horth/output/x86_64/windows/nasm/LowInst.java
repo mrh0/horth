@@ -8,6 +8,7 @@ public interface LowInst {
     String T1 = "rcx";  //Temp1
     String T2 = "rdx";  //Temp2
     String LSP = "r15";  //Local Stack Pointer
+    String LS = "local_stack";
 
     void asm(InstructionBuilder ib, CompileData cd);
 }

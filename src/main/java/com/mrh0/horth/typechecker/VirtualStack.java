@@ -35,19 +35,19 @@ public class VirtualStack {
     @Deprecated
     public StackEntry pop() throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(null);
+            throw new BreachOfContractException(null, null);
         return stack.remove(last());
     }
 
     public StackEntry pop(ITok token) throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(token.getLocation());
+            throw new BreachOfContractException(token.getLocation(), null);
         return stack.remove(last());
     }
 
     public StackEntry check(ITok token, IType type) throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(token.getLocation());
+            throw new BreachOfContractException(token.getLocation(), type);
         if(!IType.equals(stack.get(last()).type(), type, null))
             throw new BreachOfContractException(token.getLocation(), type, stack.get(last()).type());
         return stack.remove(last());
@@ -63,7 +63,7 @@ public class VirtualStack {
 
     public StackEntry peek(ITok token) throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(token.getLocation());
+            throw new BreachOfContractException(token.getLocation(), null);
         return stack.get(last());
     }
 

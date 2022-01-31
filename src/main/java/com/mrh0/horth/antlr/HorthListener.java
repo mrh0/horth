@@ -76,18 +76,6 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code dataTypeRef}
-	 * labeled alternative in {@link HorthParser#dataType}.
-	 * @param ctx the parse tree
-	 */
-	void enterDataTypeRef(HorthParser.DataTypeRefContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code dataTypeRef}
-	 * labeled alternative in {@link HorthParser#dataType}.
-	 * @param ctx the parse tree
-	 */
-	void exitDataTypeRef(HorthParser.DataTypeRefContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code dataTypeArr}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
@@ -100,6 +88,18 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitDataTypeArr(HorthParser.DataTypeArrContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code dataTypeAny}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
@@ -111,6 +111,18 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDataTypeAny(HorthParser.DataTypeAnyContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dataTypeMany}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void enterDataTypeMany(HorthParser.DataTypeManyContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dataTypeMany}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 */
+	void exitDataTypeMany(HorthParser.DataTypeManyContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code dataTypeFunc}
 	 * labeled alternative in {@link HorthParser#dataType}.
@@ -392,6 +404,18 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenChar(HorthParser.GenCharContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genSeparator}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenSeparator(HorthParser.GenSeparatorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genSeparator}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenSeparator(HorthParser.GenSeparatorContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genUnop}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -536,6 +560,30 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenFuncSignature(HorthParser.GenFuncSignatureContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genAllocStatic}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenAllocStatic(HorthParser.GenAllocStaticContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genAllocStatic}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenAllocStatic(HorthParser.GenAllocStaticContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genAlloc}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenAlloc(HorthParser.GenAllocContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genAlloc}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenAlloc(HorthParser.GenAllocContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genIf}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -595,6 +643,18 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenConst(HorthParser.GenConstContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code genSyscall}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenSyscall(HorthParser.GenSyscallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genSyscall}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenSyscall(HorthParser.GenSyscallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.

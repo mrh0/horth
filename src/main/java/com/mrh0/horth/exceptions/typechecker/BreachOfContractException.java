@@ -9,9 +9,15 @@ import com.mrh0.horth.typechecker.types.IType;
 public class BreachOfContractException extends TypeCheckerException {
     private final IType expected, actual;
 
-    public BreachOfContractException(Loc location) {
+    /*public BreachOfContractException(Loc location) {
         super(location);
         this.expected = null;
+        this.actual = null;
+    }*/
+
+    public BreachOfContractException(Loc location, IType expected) {
+        super(location);
+        this.expected = expected;
         this.actual = null;
     }
 
@@ -23,10 +29,8 @@ public class BreachOfContractException extends TypeCheckerException {
 
     @Override
     public String additional() {
-        if(expected == null)
-            return "";
         return  "\tUnexpected type on the stack: " +
-                "\n\t\tExpected: " + AllTypes.stringOf(expected) +
+                "\n\t\tExpected: " + (expected == null ? "any" : AllTypes.stringOf(expected)) +
                 "\n\t\tGot: " + (actual == null ? "void" : AllTypes.stringOf(actual));
     }
 }

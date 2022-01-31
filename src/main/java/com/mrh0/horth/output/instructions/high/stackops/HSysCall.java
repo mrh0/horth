@@ -1,21 +1,22 @@
-package com.mrh0.horth.output.instructions.high.stackops.operands;
+package com.mrh0.horth.output.instructions.high.stackops;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.typechecker.types.AllTypes;
 
-public class HPutVar extends HighInst implements ISpecialCheck {
-    private final String name;
-    public int offset = 0;
+public class HSysCall extends HighInst implements ISpecialCheck {
+    public final String call;
 
-    public HPutVar(ITok token, String name) {
+    public HSysCall(ITok token, String call) {
         super(token);
-        this.name = name;
+        this.call = call;
     }
 
     @Override
@@ -25,8 +26,9 @@ public class HPutVar extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        CompileData.LocalEntry le = cd.findNamedLocal(token.getLocation(), this.name);
-        stack.push(le.type(), token);
-        this.offset = le.offset();
+        Arch.SysCall sc = cd.getSysCallByName(token.getLocation(), call);
+        for(int i = 0; i < sc.args(); i++)
+            stack.pop(token);
+        stack.push(AllTypes.INT64, token);
     }
 }

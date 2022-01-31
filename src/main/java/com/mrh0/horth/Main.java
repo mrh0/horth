@@ -35,11 +35,16 @@ public class Main {
         //Register win64nasm
         Arch.register(new Win64nasm());
 
+        //Select Arch
+        Arch arch = Arch.get("win64nasm");
+
         //Antlr4
         HorthLexer lexer = new HorthLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         HorthParser parser = new HorthParser(tokens);
-        CompileData compileData = new CompileData();
+
+        //Compile Data
+        CompileData compileData = new CompileData(arch);
 
         var tree = parser.program();
         var t = new Visitor(inputFile).visitProgram(tree);
@@ -70,7 +75,7 @@ public class Main {
         var asmFile = "file:///horthdev/test.asm";
         var exeFile = "file:///horthdev/output.o";
 
-        String outputnasm = Arch.get("win64nasm").compile(HLIR).toString();
+        String outputnasm = arch.compile(compileData, HLIR).toString();
 
         //Output
         System.out.println(outputnasm);

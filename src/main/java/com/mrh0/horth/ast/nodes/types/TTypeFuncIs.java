@@ -12,16 +12,19 @@ import com.mrh0.horth.typechecker.types.IType;
 import java.util.List;
 
 public class TTypeFuncIs extends Tok {
-    public final IType type;
+    public final List<TType> types;
 
-    public TTypeFuncIs(TType token) {
-        this.type = token.type;
+    public TTypeFuncIs(List<TType> types) {
+        this.types = types;
     }
 
     @Override
     public StringBuilder toString(StringBuilder sb) {
         sb.append("is(");
-        sb.append(AllTypes.stringOf(type));
+        for(TType type : types) {
+            sb.append(AllTypes.stringOf(type.type));
+            sb.append(", ");
+        }
         sb.append(")");
         return sb;
     }

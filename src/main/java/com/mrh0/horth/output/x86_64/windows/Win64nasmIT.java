@@ -7,11 +7,14 @@ import com.mrh0.horth.output.instructions.high.HighLabel;
 import com.mrh0.horth.output.instructions.high.branching.HBranch;
 import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;
+import com.mrh0.horth.output.instructions.high.local.HLet;
+import com.mrh0.horth.output.instructions.high.local.HReclaim;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
 import com.mrh0.horth.output.instructions.high.stackops.base.*;
 import com.mrh0.horth.output.instructions.high.stackops.HExit;
 import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryAnd;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutChar;
+import com.mrh0.horth.output.instructions.high.stackops.operands.HPutVar;
 import com.mrh0.horth.output.instructions.high.stackops.unop.binary.HBinaryNot;
 import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryOr;
 import com.mrh0.horth.output.instructions.high.stackops.binop.compare.*;
@@ -22,6 +25,8 @@ import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.windows.nasm.branching.LBranch;
+import com.mrh0.horth.output.x86_64.windows.nasm.local.LClaim;
+import com.mrh0.horth.output.x86_64.windows.nasm.local.LReclaim;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.LExit;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.LJump;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.Label;
@@ -32,6 +37,7 @@ import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LAdd;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LSub;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutInt;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
+import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutVar;
 
 import java.util.List;
 
@@ -48,6 +54,10 @@ public class Win64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutInt((HPutBool) in));
         else if(in instanceof HPutChar)
             out.add(new LPutInt((HPutChar) in));
+
+        else if(in instanceof HPutVar)
+            out.add(new LPutVar(((HPutVar) in).offset));
+
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
 
@@ -100,5 +110,10 @@ public class Win64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LJump((HJump) in));
         else if(in instanceof HBreak)
             out.add(new LJump((HBreak) in));
+
+        else if(in instanceof HLet)
+            out.add(new LClaim(((HLet)in).count));
+        else if(in instanceof HReclaim)
+            out.add(new LReclaim(((HReclaim)in).count));
     }
 }

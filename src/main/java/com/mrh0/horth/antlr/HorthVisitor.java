@@ -51,13 +51,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code dataTypeRef}
-	 * labeled alternative in {@link HorthParser#dataType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDataTypeRef(HorthParser.DataTypeRefContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code dataTypeArr}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
@@ -65,12 +58,26 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDataTypeArr(HorthParser.DataTypeArrContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code dataTypeRef}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeRef(HorthParser.DataTypeRefContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code dataTypeAny}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitDataTypeAny(HorthParser.DataTypeAnyContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeMany}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeMany(HorthParser.DataTypeManyContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code dataTypeFunc}
 	 * labeled alternative in {@link HorthParser#dataType}.
@@ -236,6 +243,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenChar(HorthParser.GenCharContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genSeparator}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenSeparator(HorthParser.GenSeparatorContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genUnop}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -320,6 +334,20 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenFuncSignature(HorthParser.GenFuncSignatureContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genAllocStatic}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenAllocStatic(HorthParser.GenAllocStaticContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genAlloc}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenAlloc(HorthParser.GenAllocContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genIf}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -354,6 +382,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitGenConst(HorthParser.GenConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genSyscall}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenSyscall(HorthParser.GenSyscallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.

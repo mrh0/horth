@@ -100,3 +100,29 @@ and:
     pop     rbx
 
 local variables defined with let in a func will be put on a 'local stack' (not real rsp stack). Local variable sizes are summed and stored, when a func return it will pop the size from the 'local stack'.
+
+error handling:
+func test1 int int -> int throws string in
+    -
+    if 0 == do
+        throw "This is a error" end
+    end
+end
+
+func test2 int int -> int throws string in
+    try test1 end
+end
+//ending the return list with a 'throws' declares that this function can throw an error
+//if the top of the stack is non-zero when test2 completes, test1 will throw the error further
+
+func test3 in
+    catch test2 passed
+        ...
+    failed
+        let error in
+            error eputs
+        end
+    end
+end
+
+//a throws chain must at some point end with a catch (passed/threw)

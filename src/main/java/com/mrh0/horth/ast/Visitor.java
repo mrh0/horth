@@ -9,14 +9,17 @@ import com.mrh0.horth.ast.nodes.infix.TInfixBinOp;
 import com.mrh0.horth.ast.nodes.infix.TInfixUnOp;
 import com.mrh0.horth.ast.nodes.operands.TBool;
 import com.mrh0.horth.ast.nodes.operands.TChar;
+import com.mrh0.horth.ast.nodes.operands.TIdentifier;
 import com.mrh0.horth.ast.nodes.operands.TInt;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import com.mrh0.horth.ast.nodes.operators.TUnOp;
 import com.mrh0.horth.ast.nodes.other.TLet;
+import com.mrh0.horth.ast.nodes.other.TSeparator;
 import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
+import com.mrh0.horth.output.instructions.high.stackops.operands.HPutVar;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -60,6 +63,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitBlock(HorthParser.BlockContext ctx) {
         return new TBlock(visit(ctx.contents))
                 .loc(ctx.start, file);
+    }
+
+    //Ignores
+    @Override
+    public ITok visitGenSeparator(HorthParser.GenSeparatorContext ctx) {
+        return TSeparator.INSTANCE;
     }
 
     //Operators
@@ -106,6 +115,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
                 .loc(ctx.start, file);
     }
 
+    @Override
+    public ITok visitIdentifier(HorthParser.IdentifierContext ctx) {
+        return new TIdentifier(ctx.getText())
+                .loc(ctx.start, file);
+    }
+
     //Keywords
     @Override
     public ITok visitKeywords(HorthParser.KeywordsContext ctx) {
@@ -134,7 +149,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
 
     @Override
     public ITok visitTypefuncIs(HorthParser.TypefuncIsContext ctx) {
-        return new TTypeFuncIs(cvisit(ctx.dataType()))
+        return new TTypeFuncIs(visit(ctx.types))
                 .loc(ctx.start, file);
     }
 
@@ -183,6 +198,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     //Let
     @Override
     public ITok visitGenLet(HorthParser.GenLetContext ctx) {
-        return new TLet(tvisit(ctx.names), cvisit(ctx.block()));
+        return new TLet(tvisit(ctx.names), cvisit(ctx.block()))
+                .loc(ctx.start, file);
     }
 }
