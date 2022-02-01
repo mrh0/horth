@@ -1,5 +1,6 @@
 # horth
- stack-based native programming language compiler written in Java, inspired by Porth by Tsodling
+ Stack-based native programming language compiler written in Java, inspired by Porth by Tsodling
+ (C) mrh0 2022
 
 # examples
 
