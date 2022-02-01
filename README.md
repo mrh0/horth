@@ -3,6 +3,51 @@
  
  (C) mrh0 2022
 
+# syntax
+```
+//comment
+/*comment*/
+```
+```
+//String
+"Hello World"
+
+//Null terminated String
+"Hello World"^
+
+//Character
+'a' '5' 'Z' '\n' '\r' '\r' '\0' '\\' '\''
+
+//Int
+0 1 42 -10 0xA0 0b1100
+```
+```
+//BinOps:
++ - * / % < > <= >= == != & | and or << >> =
+
+//UnOps:
+not ~
+```
+```
+//Primitive types:
+int string char bool ref
+
+//Pointer type
+ref<type>
+arr<type>
+func<type... -> type...>
+
+//Type Functions
+sizeof(type)
+cast(type)
+unsafe cast(type)
+is(type...)
+```
+```
+
+```
+
+
 # examples
 
 ```
