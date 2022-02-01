@@ -44,9 +44,13 @@ unsafe cast(type)
 is(type...)
 ```
 ```
-const name value/expression end
+//Constants
+const name /*value or expression*/ end
 ```
-
+```
+//System Call
+syscall name //Names is Linux System Call name in all lowcase
+```
 
 # Examples
 
