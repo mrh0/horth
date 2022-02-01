@@ -92,7 +92,7 @@ exit
 //Let
 1 2 3
 let a b c in
-   a b c
+   c b a
 end
 //Reversed stack
 ```
