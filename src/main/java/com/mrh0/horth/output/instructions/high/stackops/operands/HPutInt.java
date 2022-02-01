@@ -6,7 +6,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HPutInt extends HighInst {
-    private static IContract contract = (s, t) -> s.push(AllTypes.INT64, t);
+    private static IContract contract = (s, t) -> s.push(AllTypes.INT, t);
     public final int value;
 
     public HPutInt(int value, ITok token) {

@@ -18,7 +18,7 @@ public class BreachOfContractException extends TypeCheckerException {
     public BreachOfContractException(Loc location, IType expected) {
         super(location);
         this.expected = expected;
-        this.actual = null;
+        this.actual = AllTypes.VOID;
     }
 
     public BreachOfContractException(Loc location, IType expected, IType actual) {
@@ -31,6 +31,6 @@ public class BreachOfContractException extends TypeCheckerException {
     public String additional() {
         return  "\tUnexpected type on the stack: " +
                 "\n\t\tExpected: " + (expected == null ? "any" : AllTypes.stringOf(expected)) +
-                "\n\t\tGot: " + (actual == null ? "void" : AllTypes.stringOf(actual));
+                "\n\t\tGot: " +  AllTypes.stringOf(actual);
     }
 }

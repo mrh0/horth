@@ -7,7 +7,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HExit extends HighInst {
-    private static Contract contract = new Contract.Builder().pop(AllTypes.INT64).build();
+    private static Contract contract = new Contract.Builder().pop(AllTypes.INT).build();
 
     public HExit(ITok token) {
         super(token);

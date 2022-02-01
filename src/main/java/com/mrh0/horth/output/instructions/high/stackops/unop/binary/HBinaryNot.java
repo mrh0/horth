@@ -7,7 +7,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HBinaryNot extends HighInst {
-    private static Contract contract = new Contract.Builder().pop(AllTypes.INT64).push(AllTypes.INT64).build();
+    private static Contract contract = new Contract.Builder().pop(AllTypes.INT).push(AllTypes.INT).build();
 
     public HBinaryNot(ITok token) {
         super(token);

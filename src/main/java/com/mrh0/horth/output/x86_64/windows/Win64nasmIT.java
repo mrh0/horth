@@ -9,19 +9,17 @@ import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;
 import com.mrh0.horth.output.instructions.high.local.HLet;
 import com.mrh0.horth.output.instructions.high.local.HReclaim;
+import com.mrh0.horth.output.instructions.high.stackops.HSysCall;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
 import com.mrh0.horth.output.instructions.high.stackops.base.*;
 import com.mrh0.horth.output.instructions.high.stackops.HExit;
 import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryAnd;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutChar;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutVar;
+import com.mrh0.horth.output.instructions.high.stackops.operands.*;
 import com.mrh0.horth.output.instructions.high.stackops.unop.binary.HBinaryNot;
 import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryOr;
 import com.mrh0.horth.output.instructions.high.stackops.binop.compare.*;
 import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HAnd;
 import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HOr;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutBool;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.windows.nasm.branching.LBranch;
@@ -29,6 +27,7 @@ import com.mrh0.horth.output.x86_64.windows.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.windows.nasm.local.LReclaim;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.LExit;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.LJump;
+import com.mrh0.horth.output.x86_64.windows.nasm.other.LSysCall;
 import com.mrh0.horth.output.x86_64.windows.nasm.other.Label;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.base.*;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LBinary;
@@ -37,6 +36,7 @@ import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LAdd;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LSub;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutInt;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
+import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutString;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.put.LPutVar;
 
 import java.util.List;
@@ -54,12 +54,16 @@ public class Win64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutInt((HPutBool) in));
         else if(in instanceof HPutChar)
             out.add(new LPutInt((HPutChar) in));
+        else if(in instanceof HPutString)
+            out.add(new LPutString((HPutString) in));
 
         else if(in instanceof HPutVar)
             out.add(new LPutVar(((HPutVar) in).offset));
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
+        else if(in instanceof HSysCall)
+            out.add(new LSysCall(((HSysCall)in).getSysCall()));
 
         else if(in instanceof HAdd)
             out.add(LAdd.INSTANCE);

@@ -278,6 +278,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenAccessor(HorthParser.GenAccessorContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genLength}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenLength(HorthParser.GenLengthContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genArray}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -383,12 +390,40 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenConst(HorthParser.GenConstContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genTry}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenTry(HorthParser.GenTryContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genThrow}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenThrow(HorthParser.GenThrowContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genCatch}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenCatch(HorthParser.GenCatchContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genSyscall}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGenSyscall(HorthParser.GenSyscallContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code genExport}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenExport(HorthParser.GenExportContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.

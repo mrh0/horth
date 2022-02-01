@@ -4,12 +4,12 @@ import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 
 public class AllTypes {
-    public static IType INT64 = new IType() {
+    public static IType INT = new IType() {
         public String getName() {
             return "int";
         }
         public int getSize() {
-            return 8;
+            return 4;
         }
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
@@ -37,26 +37,34 @@ public class AllTypes {
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
                 return;
-            else if(to == INT64)
+            else if(to == INT)
                 return;
             throw new CannotCastException(location, this, to);
         }
     };
-    public static IType STRING = ref(CHAR);
-    /*new IType() {
+    public static IType STRING = new IType() {
         public String getName() {
             return "string";
         }
         public int getSize() {
-            return 8;
+            return 4;
         }
-    };*/
+    };
     public static IType ATOM = new IType() {
         public String getName() {
             return "atom";
         }
         public int getSize() {
-            return 8;
+            return 4;
+        }
+    };
+
+    public static IType VOID = new IType() {
+        public String getName() {
+            return "void";
+        }
+        public int getSize() {
+            return 0;
         }
     };
 
@@ -73,7 +81,7 @@ public class AllTypes {
     public static IType bySimpleName(String name) {
         switch(name) {
             case "int":
-                return INT64;
+                return INT;
             case "bool":
                 return BOOL;
             case "char":
@@ -82,6 +90,8 @@ public class AllTypes {
                 return STRING;
             case "atom":
                 return ATOM;
+            case "void":
+                return VOID;
             case "ref":
                 return defRef;
             default:

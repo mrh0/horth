@@ -7,7 +7,7 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HLessThan extends HighInst {
-    private static Contract contract = new Contract.Builder().pop(AllTypes.INT64, AllTypes.INT64).push(AllTypes.BOOL).build();
+    private static Contract contract = new Contract.Builder().pop(AllTypes.INT, AllTypes.INT).push(AllTypes.BOOL).build();
 
     public HLessThan(ITok token) {
         super(token);

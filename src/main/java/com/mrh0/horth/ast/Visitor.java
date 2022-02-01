@@ -7,14 +7,12 @@ import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.branching.TWhile;
 import com.mrh0.horth.ast.nodes.infix.TInfixBinOp;
 import com.mrh0.horth.ast.nodes.infix.TInfixUnOp;
-import com.mrh0.horth.ast.nodes.operands.TBool;
-import com.mrh0.horth.ast.nodes.operands.TChar;
-import com.mrh0.horth.ast.nodes.operands.TIdentifier;
-import com.mrh0.horth.ast.nodes.operands.TInt;
+import com.mrh0.horth.ast.nodes.operands.*;
 import com.mrh0.horth.ast.nodes.operators.TBinOp;
 import com.mrh0.horth.ast.nodes.operators.TUnOp;
 import com.mrh0.horth.ast.nodes.other.TLet;
 import com.mrh0.horth.ast.nodes.other.TSeparator;
+import com.mrh0.horth.ast.nodes.other.TSysCall;
 import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
@@ -116,6 +114,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     @Override
+    public ITok visitGenString(HorthParser.GenStringContext ctx) {
+        return new TString(ctx.getText())
+                .loc(ctx.start, file);
+    }
+
+    @Override
     public ITok visitIdentifier(HorthParser.IdentifierContext ctx) {
         return new TIdentifier(ctx.getText())
                 .loc(ctx.start, file);
@@ -124,7 +128,14 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     //Keywords
     @Override
     public ITok visitKeywords(HorthParser.KeywordsContext ctx) {
-        return new TKeyword(ctx.getText()).loc(ctx.start, file);
+        return new TKeyword(ctx.getText())
+                .loc(ctx.start, file);
+    }
+
+    @Override
+    public ITok visitGenSyscall(HorthParser.GenSyscallContext ctx) {
+        return new TSysCall(ctx.sysCallName.getText())
+                .loc(ctx.start, file);
     }
 
     //Types
@@ -193,6 +204,13 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitInfixUnOp(HorthParser.InfixUnOpContext ctx) {
         return new TInfixUnOp(cvisit(ctx.infix()), cvisit(ctx.unop()))
                 .loc(ctx.start, file);
+    }
+
+    @Override
+    public ITok visitInfixTypefunc(HorthParser.InfixTypefuncContext ctx) {
+        if(ctx.identifier() == null)
+            return visit(ctx.typefunc());
+        return new TSpread(visit(ctx.identifier()), visit(ctx.typefunc()));
     }
 
     //Let

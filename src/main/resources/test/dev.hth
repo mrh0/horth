@@ -1,5 +1,6 @@
-5 10 15 is(int int int)
-let a b c in
-    (c - a)
+"Hello World" 11
+let str len in
+    1, (str unsafe cast(int) + sizeof(int)), len
+    syscall write drop
 end
-exit
+0 exit

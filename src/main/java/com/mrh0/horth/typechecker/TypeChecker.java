@@ -6,6 +6,7 @@ import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.typechecker.types.AllTypes;
 
 import java.util.List;
 
@@ -22,6 +23,6 @@ public class TypeChecker {
 
     public static void end(VirtualStack stack, Loc location) throws BreachOfContractException {
         if(stack.size() > 0)
-            throw new BreachOfContractException(location, null);
+            throw new BreachOfContractException(location, AllTypes.VOID, stack.peek(location).type());
     }
 }

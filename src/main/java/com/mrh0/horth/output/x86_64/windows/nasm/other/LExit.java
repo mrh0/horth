@@ -11,5 +11,7 @@ public class LExit implements LowInst {
     public void asm(InstructionBuilder ib, CompileData cd) {
         ib      .inst("mov").reg("rsp").vreg("init_stack", 0)
                 .inst("ret");
+
+        //Convert to syscall?
     }
 }

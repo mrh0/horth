@@ -10,5 +10,11 @@ public interface LowInst {
     String LSP = "r15";  //Local Stack Pointer
     String LS = "local_stack";
 
+    static String strLabel(int ref) {
+        return "str_"+ref;
+    }
+
+    default void collect(CompileData cd) {}
+
     void asm(InstructionBuilder ib, CompileData cd);
 }

@@ -11,19 +11,19 @@ public class InstructionBuilder {
         sb.append("\n\t");
         sb.append(inst);
         for(int i = inst.length(); i < 4; i++)
-            sb.append(" ");
-        sb.append("\t");
+            sb.append(' ');
+        sb.append('\t');
         first = true;
         return this;
     }
 
     public InstructionBuilder vreg(String reg, int offset) {
         begin();
-        sb.append("[");
+        sb.append('[');
         sb.append(reg);
         if(offset != 0)
             sb.append(offset > 0 ? " + " + offset : " - " + (-offset));
-        sb.append("]");
+        sb.append(']');
         return this;
     }
 
@@ -47,20 +47,27 @@ public class InstructionBuilder {
     public InstructionBuilder label(long id) {
         sb.append("\nlabel_");
         sb.append(id);
-        sb.append(":");
+        sb.append(':');
         return this;
     }
 
     public InstructionBuilder label(String name) {
-        sb.append("\n");
+        sb.append('\n');
         sb.append(name);
-        sb.append(":");
+        sb.append(':');
         return this;
     }
 
-    public InstructionBuilder ilabel(long id) {
+    public InstructionBuilder jlabel(long id) {
         begin();
         sb.append("label_");
+        sb.append(id);
+        return this;
+    }
+
+    public InstructionBuilder slabel(int id) {
+        begin();
+        sb.append("str_");
         sb.append(id);
         return this;
     }
@@ -68,6 +75,32 @@ public class InstructionBuilder {
     public InstructionBuilder comment(String commend) {
         sb.append("\n;; ");
         sb.append(commend);
+        return this;
+    }
+
+    public InstructionBuilder dbString(int id, String str) {
+        sb.append('\n');
+        sb.append(LowInst.strLabel(id));
+        sb.append(": db ");
+        int len = str.length();
+        byte[] bytes = {
+            (byte) len,
+            (byte) (len >>> 8),
+            (byte) (len >>> 16),
+            (byte) (len >>> 24)
+        };
+        sb.append("0x");
+        sb.append(Integer.toString(bytes[3], 16));
+        sb.append(", 0x");
+        sb.append(Integer.toString(bytes[2], 16));
+        sb.append(", 0x");
+        sb.append(Integer.toString(bytes[1], 16));
+        sb.append(", 0x");
+        sb.append(Integer.toString(bytes[0], 16));
+        sb.append(", ");
+        sb.append('"');
+        sb.append(str);
+        sb.append('"');
         return this;
     }
 

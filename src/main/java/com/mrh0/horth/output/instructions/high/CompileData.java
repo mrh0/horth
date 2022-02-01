@@ -36,12 +36,14 @@ public class CompileData {
     private List<LocalEntry> namedLocalsList;
     private List<LocalScope> localScopeList;
     private final Arch arch;
+    public final List<String> strings;
 
     public CompileData(Arch arch) {
         namedGlobalsMap = new HashMap<>();
         namedLocalsList = new ArrayList<>();
         localScopeList = new ArrayList<>();
         this.arch = arch;
+        this.strings = new ArrayList<>();
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -97,5 +99,10 @@ public class CompileData {
         if(sc == null)
             throw new CompileException(location, "Unknown System-Call function '" + name + "'.");
         return sc;
+    }
+
+    public int storeString(String str) {
+        strings.add(str);
+        return strings.size()-1;
     }
 }

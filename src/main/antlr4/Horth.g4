@@ -13,6 +13,7 @@ BIN: '0b'[0-1]*;
 CHAR: '\''.'\'' | '\'\\'('n'|'r'|'t'|'\\'|'\''|'"'|'0')'\'';
 
 STRING: '"' (~('\'' | '\\') | '\\' . )* '"';
+STRING_NT: '"' (~('\'' | '\\') | '\\' . )* '"^';
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
@@ -55,11 +56,9 @@ binop:
 keywords:
     'dup' | 'dup2'
     | 'swap' | 'swap2'
-    | 'rot'
     | 'drop' | 'drop2' | 'drop3'
     | 'out'
-    | 'throw'
-    | 'exit'
+    | 'exit' | 'terminate'
     | 'break'
     | 'syscall0' | 'syscall1' | 'syscall2'
     | 'syscall3' | 'syscall4' | 'syscall5'
@@ -67,22 +66,22 @@ keywords:
     ;
 
 typefunc:
-    'sizeof(' dataType ')'   #typefuncSizeof
-    | 'cast(' dataType ')'                      #typefuncCast
-    | 'unsafe' 'cast(' dataType ')'             #typefuncCastUnsafe
-    | 'is(' (types+=dataType)* ')'              #typefuncIs
-    //| 'alloc(' dataType /*('*' integer)?*/ ')'  #typefuncAlloc
+    'sizeof' '(' dataType ')'                       #typefuncSizeof
+    | 'cast' '(' dataType ')'                       #typefuncCast
+    | 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
+    | 'is' '(' (types+=dataType)* ')'               #typefuncIs
     ;
 
 infix:
     identifier                  #infixIdent
+    | identifier? typefunc      #infixTypefunc
     | ATOM                      #infixAtom
     | integer                   #infixInt
     | BOOL                      #infixBool
     | CHAR                      #infixChar
     | infix binop infix         #infixBinOp
     | unop infix                #infixUnOp
-    | typefunc                  #infixTypefunc
+
     | '(' infix ')'             #infixInfix
     ;
 
@@ -106,11 +105,12 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
     | '[' block ']'                                                                         #genAccessor
+    | '[' ']'                                                                               #genLength
     | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
 
     | '(' infix ')'                                                                         #genInfix
-    | 'assert(' message=STRING ')' block 'end'                                              #genAssert
-    | 'static' 'assert(' message=STRING ')' staticExpr 'end'                                #genStaticAssert
+    | 'assert' (message=STRING)? block 'end'                                              #genAssert
+    | 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
     | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
     | ('inline' | 'extern')? 'func' NAME
         (dataType)* ('->' (dataType)+)? ('throws' dataType)? 'in' block 'end'               #genFunc
@@ -138,9 +138,11 @@ general:
 
     | 'try' NAME                                                                            #genTry
     | 'throw' block 'end'                                                                   #genThrow
-    | 'catch' NAME 'passed' block 'failed' block 'end'                                      #genCatch
+    | 'catch' NAME 'passed' passBlock=block 'failed' failBlock=block 'end'                  #genCatch
+    | 'catch' NAME 'failed' failBlock=block 'passed' passBlock=block 'end'                  #genCatch
 
-    | 'syscall' NAME                                                                        #genSyscall
+    | 'syscall' sysCallName=NAME                                                            #genSyscall
+    | 'export' NAME                                                                         #genExport
     | typefunc                                                                              #genIntrfunc
     ;
 

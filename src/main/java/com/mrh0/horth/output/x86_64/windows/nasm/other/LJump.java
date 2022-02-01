@@ -22,6 +22,6 @@ public class LJump implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("jmp").ilabel(labelId);
+        ib.inst("jmp").jlabel(labelId);
     }
 }

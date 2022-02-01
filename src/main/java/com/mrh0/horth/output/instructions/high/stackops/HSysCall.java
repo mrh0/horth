@@ -12,7 +12,8 @@ import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HSysCall extends HighInst implements ISpecialCheck {
-    public final String call;
+    private final String call;
+    private Arch.SysCall syscall;
 
     public HSysCall(ITok token, String call) {
         super(token);
@@ -26,9 +27,14 @@ public class HSysCall extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        Arch.SysCall sc = cd.getSysCallByName(token.getLocation(), call);
-        for(int i = 0; i < sc.args(); i++)
+        syscall = cd.getSysCallByName(token.getLocation(), call);
+        for(int i = 0; i < syscall.args(); i++)
             stack.pop(token);
-        stack.push(AllTypes.INT64, token);
+            //stack.check(token, AllTypes.INT64);
+        stack.push(AllTypes.INT, token);
+    }
+
+    public Arch.SysCall getSysCall() {
+        return syscall;
     }
 }

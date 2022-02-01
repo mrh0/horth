@@ -61,10 +61,14 @@ public class VirtualStack {
         stack.add(se);
     }
 
-    public StackEntry peek(ITok token) throws BreachOfContractException {
+    public StackEntry peek(Loc location) throws BreachOfContractException {
         if(stack.isEmpty())
-            throw new BreachOfContractException(token.getLocation(), null);
+            throw new BreachOfContractException(location, null);
         return stack.get(last());
+    }
+
+    public StackEntry peek(ITok token) throws BreachOfContractException {
+        return peek(token.getLocation());
     }
 
     public int size() {
