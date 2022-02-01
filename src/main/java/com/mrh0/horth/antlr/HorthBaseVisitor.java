@@ -290,13 +290,6 @@ public class HorthBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitGenLength(HorthParser.GenLengthContext ctx) { return visitChildren(ctx); }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation returns the result of calling
-	 * {@link #visitChildren} on {@code ctx}.</p>
-	 */
 	@Override public T visitGenArray(HorthParser.GenArrayContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}

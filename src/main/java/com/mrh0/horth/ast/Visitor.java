@@ -3,6 +3,7 @@ package com.mrh0.horth.ast;
 import com.mrh0.horth.antlr.HorthBaseVisitor;
 import com.mrh0.horth.antlr.HorthParser;
 import com.mrh0.horth.ast.nodes.*;
+import com.mrh0.horth.ast.nodes.accessor.TAccessor;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.branching.TWhile;
 import com.mrh0.horth.ast.nodes.infix.TInfixBinOp;
@@ -17,7 +18,6 @@ import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutVar;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -218,5 +218,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitGenLet(HorthParser.GenLetContext ctx) {
         return new TLet(tvisit(ctx.names), cvisit(ctx.block()))
                 .loc(ctx.start, file);
+    }
+
+    //Accessor
+
+    @Override
+    public ITok visitGenAccessor(HorthParser.GenAccessorContext ctx) {
+        return new TAccessor(cvisit(ctx.accBlock));
     }
 }

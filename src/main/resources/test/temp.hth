@@ -3,3 +3,12 @@
         break
     end
 end
+
+
+
+1
+let fd str len in
+    fd, (str unsafe cast(int) + sizeof(int)), len
+    syscall write drop
+end
+0 exit

@@ -4,6 +4,7 @@ import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.instructions.InstructionTransformer;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.HighLabel;
+import com.mrh0.horth.output.instructions.high.accessor.HAccessorLength;
 import com.mrh0.horth.output.instructions.high.branching.HBranch;
 import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;
@@ -22,6 +23,7 @@ import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HAnd;
 import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HOr;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
+import com.mrh0.horth.output.x86_64.windows.nasm.accessor.LAccessorLength;
 import com.mrh0.horth.output.x86_64.windows.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.windows.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.windows.nasm.local.LReclaim;
@@ -62,6 +64,10 @@ public class Win64nasmIT implements InstructionTransformer<LowInst> {
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
+
+        else if(in instanceof HAccessorLength)
+            out.add(LAccessorLength.INSTANCE);
+
         else if(in instanceof HSysCall)
             out.add(new LSysCall(((HSysCall)in).getSysCall()));
 

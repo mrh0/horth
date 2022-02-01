@@ -68,7 +68,7 @@ public class AllTypes {
         }
     };
 
-    public static RefType defRef = new RefType(null);
+    public static RefType DEF_REF = new RefType(null);
 
     public static RefType ref(IType type) {return new RefType(type);}
 
@@ -93,7 +93,7 @@ public class AllTypes {
             case "void":
                 return VOID;
             case "ref":
-                return defRef;
+                return DEF_REF;
             default:
                 return null;
         }

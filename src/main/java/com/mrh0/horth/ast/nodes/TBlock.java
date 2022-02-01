@@ -31,4 +31,8 @@ public class TBlock extends Tok {
         sb.append("}");
         return sb;
     }
+
+    public int size() {
+        return list.size();
+    }
 }

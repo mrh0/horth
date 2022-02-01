@@ -60,9 +60,6 @@ keywords:
     | 'out'
     | 'exit' | 'terminate'
     | 'break'
-    | 'syscall0' | 'syscall1' | 'syscall2'
-    | 'syscall3' | 'syscall4' | 'syscall5'
-    | 'syscall6'
     ;
 
 typefunc:
@@ -104,8 +101,7 @@ general:
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
-    | '[' block ']'                                                                         #genAccessor
-    | '[' ']'                                                                               #genLength
+    | '[' accBlock=block ']'                                                                #genAccessor
     | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
 
     | '(' infix ')'                                                                         #genInfix

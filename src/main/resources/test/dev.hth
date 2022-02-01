@@ -1,6 +1,1 @@
-"Hello World" 11
-let str len in
-    1, (str unsafe cast(int) + sizeof(int)), len
-    syscall write drop
-end
-0 exit
+10 exit
