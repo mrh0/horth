@@ -94,5 +94,5 @@ exit
 let a b c in
    c b a
 end
-//Reversed stack
+//Reversed stack: 3 2 1
 ```
