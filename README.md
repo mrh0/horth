@@ -1,9 +1,9 @@
-# horth
+# Horth
  Stack-based native programming language compiler written in Java, inspired by Porth by Tsodling
  
  (C) mrh0 2022
 
-# syntax
+# Syntax
 ```
 //comment
 /*comment*/
@@ -44,11 +44,11 @@ unsafe cast(type)
 is(type...)
 ```
 ```
-
+const name value/expression end
 ```
 
 
-# examples
+# Examples
 
 ```
 //Hello World
