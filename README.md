@@ -51,7 +51,7 @@ const name /*value or expression*/ end
 //System Call
 syscall name 
 //Name is Linux System Call name in all lowcase
-//For full list of supported syscalls see com.mrh0.horth.output.x86_64.windows.Win64nasm@static.
+//For full list of supported syscalls see com.mrh0.horth.output.x86_64.windows.Win64nasm.
 ```
 
 # Examples
