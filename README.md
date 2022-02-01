@@ -71,7 +71,7 @@ end
 0
 if dup 0 == do
    1
-elif dup 1 == do
+elif 1 == do
    2
 else
    3
