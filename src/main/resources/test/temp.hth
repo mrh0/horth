@@ -6,9 +6,9 @@ end
 
 
 
-1
-let fd str len in
-    fd, (str unsafe cast(int) + sizeof(int)), len
+1 "Hello World"
+let fd str in
+    fd, str unsafe cast(int) sizeof(int) +, str[]
     syscall write drop
 end
 0 exit

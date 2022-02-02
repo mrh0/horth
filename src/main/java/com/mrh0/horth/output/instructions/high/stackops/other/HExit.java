@@ -1,4 +1,4 @@
-package com.mrh0.horth.output.instructions.high.stackops;
+package com.mrh0.horth.output.instructions.high.stackops.other;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.output.instructions.high.HighInst;

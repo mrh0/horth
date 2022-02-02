@@ -10,10 +10,11 @@ import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;
 import com.mrh0.horth.output.instructions.high.local.HLet;
 import com.mrh0.horth.output.instructions.high.local.HReclaim;
-import com.mrh0.horth.output.instructions.high.stackops.HSysCall;
+import com.mrh0.horth.output.instructions.high.stackops.other.HLength;
+import com.mrh0.horth.output.instructions.high.stackops.other.HSysCall;
 import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
 import com.mrh0.horth.output.instructions.high.stackops.base.*;
-import com.mrh0.horth.output.instructions.high.stackops.HExit;
+import com.mrh0.horth.output.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryAnd;
 import com.mrh0.horth.output.instructions.high.stackops.operands.*;
 import com.mrh0.horth.output.instructions.high.stackops.unop.binary.HBinaryNot;
@@ -27,10 +28,7 @@ import com.mrh0.horth.output.x86_64.windows.nasm.accessor.LAccessorLength;
 import com.mrh0.horth.output.x86_64.windows.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.windows.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.windows.nasm.local.LReclaim;
-import com.mrh0.horth.output.x86_64.windows.nasm.other.LExit;
-import com.mrh0.horth.output.x86_64.windows.nasm.other.LJump;
-import com.mrh0.horth.output.x86_64.windows.nasm.other.LSysCall;
-import com.mrh0.horth.output.x86_64.windows.nasm.other.Label;
+import com.mrh0.horth.output.x86_64.windows.nasm.other.*;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.base.*;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LBinary;
 import com.mrh0.horth.output.x86_64.windows.nasm.stackop.binop.LCompare;
@@ -64,6 +62,8 @@ public class Win64nasmIT implements InstructionTransformer<LowInst> {
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
+        else if(in instanceof HLength)
+            out.add(LLength.INSTANCE);
 
         else if(in instanceof HAccessorLength)
             out.add(LAccessorLength.INSTANCE);

@@ -5,6 +5,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.typechecker.types.IType;
+import com.mrh0.horth.util.Util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class CompileData {
     private List<LocalEntry> namedLocalsList;
     private List<LocalScope> localScopeList;
     private final Arch arch;
-    public final List<String> strings;
+    public final List<Util.RealString> strings;
 
     public CompileData(Arch arch) {
         namedGlobalsMap = new HashMap<>();
@@ -101,8 +102,8 @@ public class CompileData {
         return sc;
     }
 
-    public int storeString(String str) {
-        strings.add(str);
+    public int storeString(Util.RealString rstring) {
+        strings.add(rstring);
         return strings.size()-1;
     }
 }

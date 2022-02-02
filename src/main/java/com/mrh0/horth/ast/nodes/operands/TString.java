@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutString;
+import com.mrh0.horth.util.Util;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class TString extends Tok {
     public final String str;
 
     public TString(String str) {
-        this.str = str.substring(1, str.length()-1); // removes quotes
+        this.str = str;
     }
 
     @Override
@@ -24,6 +25,7 @@ public class TString extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        space.add(new HPutString(this, str));
+        var r = Util.unformatString(str.substring(1, str.length()-1), true);
+        space.add(new HPutString(this, r.str(), r.len()));
     }
 }

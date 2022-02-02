@@ -56,17 +56,23 @@ public class Win64nasm extends Arch {
         InstructionBuilder ib = new InstructionBuilder(sb);
 
         ib      .inst("global").reg("main")
+                .append("\n")
                 .inst("section .bss")
                 .label("init_stack").append(" resq 1")
                 .label(LowInst.LS).append("    resb 16 * 1024")
                 .label("local_temp_rsp").append("  resq 1");
 
-        ib      .inst("section").reg(".data");
+        ib      .append("\n")
+                .inst("section").reg(".data");
+
         for(int i = 0; i < compileData.strings.size(); i++)
             ib.dbString(i, compileData.strings.get(i));
 
-        ib      .inst("section").reg(".text")
+        ib      .append("\n")
+                .inst("section").reg(".text")
+
                 .label("main")
+
                 .inst("mov").vreg("init_stack", 0).reg("rsp")
                 .inst("mov").reg(LowInst.LSP).reg(LowInst.LS);
 

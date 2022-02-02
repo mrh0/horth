@@ -2,7 +2,6 @@ package com.mrh0.horth.output.x86_64.windows.nasm.other;
 
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.instructions.high.CompileData;
-import com.mrh0.horth.output.instructions.high.stackops.HSysCall;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
 

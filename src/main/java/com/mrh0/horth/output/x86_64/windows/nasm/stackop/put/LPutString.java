@@ -4,6 +4,7 @@ import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.stackops.operands.HPutString;
 import com.mrh0.horth.output.x86_64.windows.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.windows.nasm.LowInst;
+import com.mrh0.horth.util.Util;
 
 public class LPutString implements LowInst {
 
@@ -16,7 +17,7 @@ public class LPutString implements LowInst {
 
     @Override
     public void collect(CompileData cd) {
-        this.ref = cd.storeString(string.str);
+        this.ref = cd.storeString(new Util.RealString(string.str, string.len));
     }
 
     @Override

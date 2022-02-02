@@ -8,7 +8,8 @@ public class LAccessorLength implements LowInst {
     public final static LAccessorLength INSTANCE = new LAccessorLength();
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("mov").reg(S1).vreg(S1, 0);
-        ib.inst("and").reg(S1).imm(0xFFFF);
+        ib.inst("xor").reg(T1).reg(T1);
+        ib.inst("mov").reg(T1).vreg(S1, 0);
+        ib.inst("mov").reg(S1).reg(T1);
     }
 }

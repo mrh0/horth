@@ -1,1 +1,6 @@
-10 exit
+1 "Hello\n\n\nWorld"
+let fd str in
+    fd, str unsafe cast(int) sizeof(int) +, str[]
+    syscall write drop
+end
+0 exit

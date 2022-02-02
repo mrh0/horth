@@ -4,7 +4,7 @@ BOOL: 'true' | 'false';
 NAME: [_a-zA-Z][_a-zA-Z0-9]*;
 KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
 KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
-ATOM: '#'NAME;
+ATOM: ':'[_a-zA-Z0-9]*;
 
 INT: '0'|'-'?[1-9][0-9]*;
 HEX: '0x'[0-9a-fA-F]*;
@@ -29,18 +29,18 @@ integer:
     ;
 
 simpleDataType:
-    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref'
+    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u32' | 'u16' | 'byte'
     ;
 
 dataType:
     simpleDataType                                  #dataTypeSimple
     | 'ref<' dataType '>'                           #dataTypeRef
     | 'arr<' dataType '>'                           #dataTypeArr
-    | 'any<' NAME '>'                               #dataTypeAny
+    //| 'any<' NAME '>'                               #dataTypeAny //replaced by function overloads
     | 'func<' (dataType)* ('->' (dataType)+)? '>'   #dataTypeFunc
     | dataType '*' staticExpr                       #dataTypeMany
+    | 'atom<' (ATOM '|')* ATOM '>'                  #dataTypeAtoms
     ;
-    // | 'byte(' staticExpr ')';
 
 unop:
     'not' | '~'
@@ -60,6 +60,7 @@ keywords:
     | 'out'
     | 'exit' | 'terminate'
     | 'break'
+    | 'length'
     ;
 
 typefunc:

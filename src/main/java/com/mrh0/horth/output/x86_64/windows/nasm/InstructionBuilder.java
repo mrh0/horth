@@ -1,5 +1,7 @@
 package com.mrh0.horth.output.x86_64.windows.nasm;
 
+import com.mrh0.horth.util.Util;
+
 public class InstructionBuilder {
     private StringBuilder sb;
     private boolean first = true;
@@ -19,6 +21,17 @@ public class InstructionBuilder {
 
     public InstructionBuilder vreg(String reg, int offset) {
         begin();
+        sb.append('[');
+        sb.append(reg);
+        if(offset != 0)
+            sb.append(offset > 0 ? " + " + offset : " - " + (-offset));
+        sb.append(']');
+        return this;
+    }
+
+    public InstructionBuilder vreg_dw(String reg, int offset) {
+        begin();
+        sb.append("DWORD ");
         sb.append('[');
         sb.append(reg);
         if(offset != 0)
@@ -78,29 +91,15 @@ public class InstructionBuilder {
         return this;
     }
 
-    public InstructionBuilder dbString(int id, String str) {
+    public InstructionBuilder dbString(int id, Util.RealString str) {
         sb.append('\n');
         sb.append(LowInst.strLabel(id));
-        sb.append(": db ");
-        int len = str.length();
-        byte[] bytes = {
-            (byte) len,
-            (byte) (len >>> 8),
-            (byte) (len >>> 16),
-            (byte) (len >>> 24)
-        };
-        sb.append("0x");
-        sb.append(Integer.toString(bytes[3], 16));
-        sb.append(", 0x");
-        sb.append(Integer.toString(bytes[2], 16));
-        sb.append(", 0x");
-        sb.append(Integer.toString(bytes[1], 16));
-        sb.append(", 0x");
-        sb.append(Integer.toString(bytes[0], 16));
-        sb.append(", ");
-        sb.append('"');
-        sb.append(str);
-        sb.append('"');
+        sb.append(":\n\tdq ");
+        sb.append(str.len());
+        sb.append("\n\tdb ");
+        sb.append('`');
+        sb.append(str.str());
+        sb.append('`');
         return this;
     }
 

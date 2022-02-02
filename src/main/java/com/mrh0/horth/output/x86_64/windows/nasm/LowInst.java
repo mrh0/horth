@@ -14,6 +14,10 @@ public interface LowInst {
         return "str_"+ref;
     }
 
+    static String r32(String reg) {
+        return reg.replace('r', 'e');
+    }
+
     default void collect(CompileData cd) {}
 
     void asm(InstructionBuilder ib, CompileData cd);

@@ -18,7 +18,9 @@ public class TAccessor extends Tok {
 
     @Override
     public StringBuilder toString(StringBuilder sb) {
-        sb.append("[]");
+        sb.append('[');
+        block.toString(sb);
+        sb.append(']');
         return sb;
     }
 

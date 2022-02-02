@@ -9,7 +9,7 @@ public class AllTypes {
             return "int";
         }
         public int getSize() {
-            return 4;
+            return 8;
         }
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
@@ -19,17 +19,25 @@ public class AllTypes {
             throw new CannotCastException(location, this, to);
         }
     };
-    public static IType BOOL = new IType() {
+    public static IType U32 = new IType() {
         public String getName() {
-            return "bool";
+            return "u32";
         }
         public int getSize() {
-            return 1;
+            return 4;
         }
     };
-    public static IType CHAR = new IType() {
+    public static IType U16 = new IType() {
         public String getName() {
-            return "char";
+            return "u16";
+        }
+        public int getSize() {
+            return 2;
+        }
+    };
+    public static IType BYTE = new IType() {
+        public String getName() {
+            return "byte";
         }
         public int getSize() {
             return 1;
@@ -42,12 +50,38 @@ public class AllTypes {
             throw new CannotCastException(location, this, to);
         }
     };
+
+    public static IType CHAR = new IType() {
+        public String getName() {
+            return "char";
+        }
+        public int getSize() {
+            return 1;
+        }
+        public void cast(Loc location, IType to) throws CannotCastException {
+            if(isRedundantCast(location, to))
+                return;
+            else if(to == INT || to == U32 || to == U16 || to == BYTE)
+                return;
+            throw new CannotCastException(location, this, to);
+        }
+    };
+
+    public static IType BOOL = new IType() {
+        public String getName() {
+            return "bool";
+        }
+        public int getSize() {
+            return 1;
+        }
+    };
+
     public static IType STRING = new IType() {
         public String getName() {
             return "string";
         }
         public int getSize() {
-            return 4;
+            return 8;
         }
     };
     public static IType ATOM = new IType() {
@@ -55,7 +89,7 @@ public class AllTypes {
             return "atom";
         }
         public int getSize() {
-            return 4;
+            return 8;
         }
     };
 

@@ -5,9 +5,10 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.stackops.base.HDrop;
 import com.mrh0.horth.output.instructions.high.stackops.base.HDup;
-import com.mrh0.horth.output.instructions.high.stackops.HExit;
+import com.mrh0.horth.output.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.output.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.output.instructions.high.stackops.base.HSwap;
+import com.mrh0.horth.output.instructions.high.stackops.other.HLength;
 
 import java.util.List;
 
@@ -38,6 +39,9 @@ public class TKeyword extends Tok {
                 break;
             case "swap":
                 space.add(new HSwap(this));
+                break;
+            case "length":
+                space.add(new HLength(this));
                 break;
             default:
                 throw new ParserException();

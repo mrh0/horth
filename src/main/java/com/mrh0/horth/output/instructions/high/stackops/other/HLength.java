@@ -1,8 +1,8 @@
-package com.mrh0.horth.output.instructions.high.stackops;
+package com.mrh0.horth.output.instructions.high.stackops.other;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.Arch;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.output.instructions.high.CompileData;
 import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
@@ -10,14 +10,11 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
+import com.mrh0.horth.typechecker.types.IType;
 
-public class HSysCall extends HighInst implements ISpecialCheck {
-    private final String call;
-    private Arch.SysCall syscall;
-
-    public HSysCall(ITok token, String call) {
+public class HLength extends HighInst implements ISpecialCheck {
+    public HLength(ITok token) {
         super(token);
-        this.call = call;
     }
 
     @Override
@@ -27,14 +24,9 @@ public class HSysCall extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        syscall = cd.getSysCallByName(token.getLocation(), call);
-        for(int i = 0; i < syscall.args(); i++)
-            stack.pop(token);
-            //stack.check(token, AllTypes.INT64);
+        //TODO: Check: instanceof array
+        if(stack.peek(token).type() != AllTypes.STRING)
+            throw new BreachOfContractException(token.getLocation(), AllTypes.STRING, stack.peek(token).type());
         stack.push(AllTypes.INT, token);
-    }
-
-    public Arch.SysCall getSysCall() {
-        return syscall;
     }
 }

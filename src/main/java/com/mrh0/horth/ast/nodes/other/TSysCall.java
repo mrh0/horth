@@ -3,7 +3,7 @@ package com.mrh0.horth.ast.nodes.other;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.HSysCall;
+import com.mrh0.horth.output.instructions.high.stackops.other.HSysCall;
 
 import java.util.List;
 
