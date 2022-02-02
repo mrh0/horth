@@ -72,7 +72,7 @@ syscall <name> : 0-6 of any type -> int
 
 ```
 //Hello World
-1 "Hello World" 11
+1 "Hello World" length
 let fd str len in
     fd, (str unsafe cast(int) + sizeof(int)), len
     syscall write drop
