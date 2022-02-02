@@ -54,6 +54,20 @@ syscall name
 //For full list of supported syscalls see com.mrh0.horth.output.x86_64.windows.Win64nasm.
 ```
 
+# Keywords
+
+```
+//Where a, b is of any type
+drop    : a, b -> a
+dup     : a, b -> a, b, b
+swap    : a, b -> b, a
+over    : a, b -> a, b, a
+
+length  : array | string -> array | string, int
+exit    : int -> 
+syscall <name> : 0-6 of any type -> int
+```
+
 # Examples
 
 ```
