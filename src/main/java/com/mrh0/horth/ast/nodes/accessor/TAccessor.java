@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.output.instructions.high.accessor.HAccessor;
 import com.mrh0.horth.output.instructions.high.accessor.HAccessorLength;
 
 import java.util.List;
@@ -26,7 +27,11 @@ public class TAccessor extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        if(block.size() == 0)
+        if(block.size() == 0) {
             space.add(new HAccessorLength(this));
+            return;
+        }
+        block.expand(space);
+        space.add(new HAccessor(this));
     }
 }

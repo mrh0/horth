@@ -33,18 +33,24 @@ public class CompileData {
     }
     public record LocalEntry(String name, IType type, LocalScope scope, int offset) {}
 
+    private final Arch arch;
+
     private Map<String, NamedGlobalTypes> namedGlobalsMap;
     private List<LocalEntry> namedLocalsList;
     private List<LocalScope> localScopeList;
-    private final Arch arch;
+
     public final List<Util.RealString> strings;
+    public final Map<String, Void> atoms;
 
     public CompileData(Arch arch) {
+        this.arch = arch;
+
         namedGlobalsMap = new HashMap<>();
         namedLocalsList = new ArrayList<>();
         localScopeList = new ArrayList<>();
-        this.arch = arch;
+
         this.strings = new ArrayList<>();
+        this.atoms = new HashMap<>();
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -105,5 +111,9 @@ public class CompileData {
     public int storeString(Util.RealString rstring) {
         strings.add(rstring);
         return strings.size()-1;
+    }
+
+    public void storeAtom(String atom) {
+        atoms.put(atom, null);
     }
 }

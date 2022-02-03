@@ -40,10 +40,26 @@ public interface IType {
     default boolean isRedundantCast(Loc location, IType to) {
         if(IType.equals(this, to, null)) {
             IO.warn(
-                    "Redundant cast of '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
+                    "Redundant cast from '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
                     location);
             return true;
         }
         return false;
+    }
+
+    default boolean is64() {
+        return getSize() == 8;
+    }
+
+    default boolean is32() {
+        return getSize() == 4;
+    }
+
+    default boolean is16() {
+        return getSize() == 2;
+    }
+
+    default boolean is8() {
+        return getSize() == 1;
     }
 }

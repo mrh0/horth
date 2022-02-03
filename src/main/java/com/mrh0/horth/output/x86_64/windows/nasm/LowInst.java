@@ -10,12 +10,23 @@ public interface LowInst {
     String LSP = "r15";  //Local Stack Pointer
     String LS = "local_stack";
 
+    String S1_32 = "eax";  //Stack1
+    String S2_32 = "ebx";  //Stack2
+    String T1_32 = "ecx";  //Temp1
+    String T2_32 = "edx";  //Temp2
+
+    String S1_16 = "ax";  //Stack1
+    String S2_16 = "bx";  //Stack2
+    String T1_16 = "cx";  //Temp1
+    String T2_16 = "dx";  //Temp2
+
+    String S1_8 = "la";  //Stack1
+    String S2_8 = "lb";  //Stack2
+    String T1_8 = "lc";  //Temp1
+    String T2_8 = "ld";  //Temp2
+
     static String strLabel(int ref) {
         return "str_"+ref;
-    }
-
-    static String r32(String reg) {
-        return reg.replace('r', 'e');
     }
 
     default void collect(CompileData cd) {}

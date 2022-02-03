@@ -4,7 +4,7 @@ BOOL: 'true' | 'false';
 NAME: [_a-zA-Z][_a-zA-Z0-9]*;
 KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
 KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
-ATOM: ':'[_a-zA-Z0-9]*;
+ATOM: ':'[a-zA-Z0-9][_a-zA-Z0-9]*;
 
 INT: '0'|'-'?[1-9][0-9]*;
 HEX: '0x'[0-9a-fA-F]*;
@@ -29,7 +29,7 @@ integer:
     ;
 
 simpleDataType:
-    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u32' | 'u16' | 'byte'
+    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'byte'
     ;
 
 dataType:
@@ -57,7 +57,7 @@ keywords:
     'dup' | 'dup2'
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
-    | 'out'
+    | 'out' | 'log' | 'log^' //^ for ntstring
     | 'exit' | 'terminate'
     | 'break'
     | 'length'
@@ -103,6 +103,7 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
     | '[' accBlock=block ']'                                                                #genAccessor
+    | '[' accBlock=block ']^'                                                               #genAccessorStrict
     | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
 
     | '(' infix ')'                                                                         #genInfix

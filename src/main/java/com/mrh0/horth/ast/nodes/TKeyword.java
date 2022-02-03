@@ -44,7 +44,7 @@ public class TKeyword extends Tok {
                 space.add(new HLength(this));
                 break;
             default:
-                throw new ParserException();
+                throw new ParserException(this.getLocation(), "Unimplemented keyword: " + text + ".");
         }
     }
 

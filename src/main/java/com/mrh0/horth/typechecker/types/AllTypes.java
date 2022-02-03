@@ -14,9 +14,17 @@ public class AllTypes {
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
                 return;
-            else if(to == CHAR)
+            else if(isUnsigned(to) || isByte(to))
                 return;
             throw new CannotCastException(location, this, to);
+        }
+    };
+    public static IType U64 = new IType() {
+        public String getName() {
+            return "u64";
+        }
+        public int getSize() {
+            return 8;
         }
     };
     public static IType U32 = new IType() {
@@ -61,7 +69,7 @@ public class AllTypes {
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
                 return;
-            else if(to == INT || to == U32 || to == U16 || to == BYTE)
+            else if(isNumber(to) || to == BYTE)
                 return;
             throw new CannotCastException(location, this, to);
         }
@@ -73,6 +81,13 @@ public class AllTypes {
         }
         public int getSize() {
             return 1;
+        }
+        public void cast(Loc location, IType to) throws CannotCastException {
+            if(isRedundantCast(location, to))
+                return;
+            else if(isNumber(to) || isByte(to))
+                return;
+            throw new CannotCastException(location, this, to);
         }
     };
 
@@ -90,6 +105,13 @@ public class AllTypes {
         }
         public int getSize() {
             return 8;
+        }
+        public void cast(Loc location, IType to) throws CannotCastException {
+            if(isRedundantCast(location, to))
+                return;
+            else if(to == STRING) //Atom value is string pointer
+                return;
+            throw new CannotCastException(location, this, to);
         }
     };
 
@@ -131,5 +153,17 @@ public class AllTypes {
             default:
                 return null;
         }
+    }
+
+    public static boolean isNumber(IType type) {
+        return type == U64 || type == U32 || type == U16 || type == INT;
+    }
+
+    public static boolean isUnsigned(IType type) {
+        return type == U64 || type == U32 || type == U16;
+    }
+
+    public static boolean isByte(IType type) {
+        return type == BYTE || type == CHAR;
     }
 }

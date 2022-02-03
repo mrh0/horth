@@ -85,6 +85,13 @@ public class InstructionBuilder {
         return this;
     }
 
+    public InstructionBuilder alabel(String atom) {
+        begin();
+        sb.append("atom_");
+        sb.append(atom);
+        return this;
+    }
+
     public InstructionBuilder comment(String commend) {
         sb.append("\n;; ");
         sb.append(commend);

@@ -1,4 +1,4 @@
-0:RAX, 1:RBX, tmp0:R10, tmp1: R11, stackstart: R12
+0:RAX, 1:RBX, tmp0:RCX, tmp1:RDX, stackstart: R12
 
 //Manipulators
 swap:
@@ -99,31 +99,63 @@ and:
     and     rax, rbx
     pop     rbx
 
-local variables defined with let in a func will be put on a 'local stack' (not real rsp stack). Local variable sizes are summed and stored, when a func return it will pop the size from the 'local stack'.
+accessor64:
+    add     rbx, rax
+    mov     rax, [rbx + 8]
+    pop     rbx
 
-error handling:
-func test1 int int -> int throws string in
-    -
-    if 0 == do
-        throw "This is a error" end
-    end
-end
+accessor32:
+    add     rbx, rax
+    xor     rax, rax
+    mov     eax, [rbx + 8]
+    pop     rbx
 
-func test2 int int -> int throws string in
-    try test1 end
-end
-//ending the return list with a 'throws' declares that this function can throw an error
-//if the top of the local stack is non-zero when test2 completes, test1 will throw the error further
-//the top of the local stack could potentially be an error code or a pointer to an error string or exception struct
+accessor16:
+    add     rbx, rax
+    xor     rax, rax
+    mov     bx, [rbx + 8]
+    pop     rbx
 
-func test3 in
-    catch test2 passed
-        ...
-    failed
-        let error in
-            error eputs
-        end
-    end
-end
+accessor8:
+    add     rbx, rax
+    xor     rax, rax
+    mov     lx, [rbx + 8]
+    pop     rbx
 
-//a throws chain must at some point end with a catch (passed/threw)
+read64:
+    mov     rax, [rax]
+
+write64:
+    mov     [rax], rbx
+    pop     rax
+    pop     rbx
+
+read32:
+    xor     rcx, rcx
+    mov     ecx, [rax]
+    mov     rax, rcx
+
+write32:
+    mov     [rax], ebx
+    pop     rax
+    pop     rbx
+
+read16:
+    xor     rcx, rcx
+    mov     cx, [rax]
+    mov     rax, rcx
+
+write16:
+    mov     [rax], bx
+    pop     rax
+    pop     rbx
+
+read8:
+    xor     rcx, rcx
+    mov     lc, [rax]
+    mov     rax, rcx
+
+write8:
+    mov     [rax], lb
+    pop     rax
+    pop     rbx

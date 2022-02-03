@@ -12,7 +12,7 @@ public class TString extends Tok {
     public final String str;
 
     public TString(String str) {
-        this.str = str;
+        this.str = str.substring(1, str.length()-1);
     }
 
     @Override
@@ -25,7 +25,7 @@ public class TString extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        var r = Util.unformatString(str.substring(1, str.length()-1), true);
+        var r = Util.unformatString(this.getLocation(), str, true);
         space.add(new HPutString(this, r.str(), r.len()));
     }
 }
