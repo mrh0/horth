@@ -57,8 +57,8 @@ keywords:
     'dup' | 'dup2'
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
-    | 'out' | 'log' | 'log^' //^ for ntstring
-    | 'exit' | 'terminate'
+    | 'out' | 'log' 'error' | 'log^' 'error' | 'log' | 'log^' //^ for ntstring
+    | 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'break'
     | 'length'
     ;

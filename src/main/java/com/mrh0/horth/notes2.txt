@@ -27,3 +27,7 @@ func test3 in
 end
 
 //a throws chain must at some point end with a catch (passed/threw)
+
+//Lambda?:
+x: y: x + y
+puts two on stack, lambda ends when nothing is left on the stack, takes argument types from what consumes it

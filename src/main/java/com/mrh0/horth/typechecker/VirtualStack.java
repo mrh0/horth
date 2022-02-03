@@ -9,6 +9,7 @@ import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
 public class VirtualStack {
     public record StackEntry(IType type, ITok token) {
@@ -50,6 +51,14 @@ public class VirtualStack {
             throw new BreachOfContractException(token.getLocation(), type);
         if(!IType.equals(stack.get(last()).type(), type, null))
             throw new BreachOfContractException(token.getLocation(), type, stack.get(last()).type());
+        return stack.remove(last());
+    }
+
+    public StackEntry check(ITok token, Function<IType, Boolean> func) throws BreachOfContractException {
+        if(stack.isEmpty())
+            throw new BreachOfContractException(token.getLocation(), null);
+        if(func.apply(stack.get(last()).type()))
+            throw new BreachOfContractException(token.getLocation(), null, stack.get(last()).type());
         return stack.remove(last());
     }
 

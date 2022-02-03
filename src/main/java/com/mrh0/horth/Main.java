@@ -7,9 +7,8 @@ import com.mrh0.horth.ast.Visitor;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.IDataChecked;
 import com.mrh0.horth.output.instructions.high.IExpanding;
-import com.mrh0.horth.output.x86_64.windows.Win64nasm;
+import com.mrh0.horth.output.x86_64.linux.ArchElf64nasm;
 import com.mrh0.horth.typechecker.TypeChecker;
 import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.util.IO;
@@ -33,7 +32,7 @@ public class Main {
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
 
         //Register win64nasm
-        Arch.register(new Win64nasm());
+        Arch.register(new ArchElf64nasm());
 
         //Select Arch
         Arch arch = Arch.get("win64nasm");
