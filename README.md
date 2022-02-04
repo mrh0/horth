@@ -98,7 +98,7 @@ syscall <name> : 0-6 of any type -> int
 "Hello World" log
 0 exit
 
-//Hello World (Manual)
+//Hello World (using syscall)
 1 "Hello World" length
 let fd str len in
     fd, (str unsafe cast(int) + sizeof(int)), len
@@ -117,7 +117,7 @@ elif 1 == do
 else
    3
 end
-exit
+exit //Exitcode: 1
 ```
 
 ```
@@ -126,7 +126,7 @@ exit
 while 10 < do
    1 +
 end
-exit
+exit //Exitcode: 10
 ```
 
 ```
