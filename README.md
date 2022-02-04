@@ -32,6 +32,17 @@
 //UnOps:
 not ~
 ```
+
+```
+//Accessor
+"Hello World" []   // Returns string length (11)
+"Hello World" [1]  // Returns char at index 1 ('e')
+
+{5, 8, 3, 1} []    // Returns array length (4)
+{5, 8, 3, 1} [2]   // Returns int at index 2 (3)
+
+```
+
 ```
 //Primitive types:
 int string char bool ref
