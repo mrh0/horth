@@ -125,4 +125,5 @@ end
 :atom :ATom ==    // True
 :atom1 :atom2 ==  // False
 :Hello_World log  // "hello_world"
+:_atom            // Invalid Syntax
 ```
