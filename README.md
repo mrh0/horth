@@ -20,6 +20,10 @@
 
 //Integer
 0 1 42 -10 0xA0 0b1100
+
+//Atom
+:atom :test_atom :TestAtom :a :b :8 :100
+
 ```
 ```
 //BinOps:
@@ -72,6 +76,10 @@ syscall <name> : 0-6 of any type -> int
 
 ```
 //Hello World
+"Hello World" log
+0 exit
+
+//Hello World (Manual)
 1 "Hello World" length
 let fd str len in
     fd, (str unsafe cast(int) + sizeof(int)), len
@@ -109,4 +117,12 @@ let a b c in
    c b a
 end
 //Reversed stack: 3 2 1
+```
+
+```
+//Atoms
+:atom :atom ==    // True
+:atom :ATom ==    // True
+:atom1 :atom2 ==  // False
+:Hello_World log  // "hello_world"
 ```
