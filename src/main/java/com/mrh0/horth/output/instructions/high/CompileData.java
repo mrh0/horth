@@ -104,7 +104,7 @@ public class CompileData {
     public Arch.SysCall getSysCallByName(Loc location, String name) throws HorthException {
         Arch.SysCall sc = arch.getSysCallByName(name);
         if(sc == null)
-            throw new CompileException(location, "Unknown System-Call function '" + name + "'.");
+            throw new CompileException(location, "Unknown System-Call '" + name + "'.");
         return sc;
     }
 

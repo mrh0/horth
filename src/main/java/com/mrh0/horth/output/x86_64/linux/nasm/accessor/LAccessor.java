@@ -14,8 +14,7 @@ public class LAccessor implements LowInst {
     }
 
     public LAccessor(HAccessor inst) {
-        this.size = inst.size;
-        this.offset = inst.offset;
+        this(inst.size, inst.offset);
     }
 
     @Override

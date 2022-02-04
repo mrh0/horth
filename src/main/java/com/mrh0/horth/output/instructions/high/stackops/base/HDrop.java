@@ -5,7 +5,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.IContract;
 
 public class HDrop extends HighInst {
-    private static IContract contract = (s, t) -> s.pop();
+    private static IContract contract = (s, t) -> s.pop(t);
 
     public HDrop(ITok token) {
         super(token);

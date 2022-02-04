@@ -8,7 +8,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
-import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HSysCall extends HighInst implements ISpecialCheck {
@@ -26,7 +26,7 @@ public class HSysCall extends HighInst implements ISpecialCheck {
     }
 
     @Override
-    public void check(VirtualStack stack, CompileData cd) throws HorthException {
+    public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
         syscall = cd.getSysCallByName(token.getLocation(), call);
         for(int i = 0; i < syscall.args(); i++)
             stack.pop(token);

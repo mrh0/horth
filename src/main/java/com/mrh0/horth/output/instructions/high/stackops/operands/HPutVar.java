@@ -7,7 +7,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
-import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.typechecker.VirtualTypeStack;
 
 public class HPutVar extends HighInst implements ISpecialCheck {
     private final String name;
@@ -24,7 +24,7 @@ public class HPutVar extends HighInst implements ISpecialCheck {
     }
 
     @Override
-    public void check(VirtualStack stack, CompileData cd) throws HorthException {
+    public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
         CompileData.LocalEntry le = cd.findNamedLocal(token.getLocation(), this.name);
         stack.push(le.type(), token);
         this.offset = le.offset();

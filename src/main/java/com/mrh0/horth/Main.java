@@ -10,7 +10,7 @@ import com.mrh0.horth.output.instructions.high.HighInst;
 import com.mrh0.horth.output.instructions.high.IExpanding;
 import com.mrh0.horth.output.x86_64.linux.ArchElf64nasm;
 import com.mrh0.horth.typechecker.TypeChecker;
-import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.util.IO;
 import com.mrh0.horth.util.Util;
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -56,7 +56,7 @@ public class Main {
         System.out.println(HLIR);
 
         //TypeChecking
-        VirtualStack stack = new VirtualStack();
+        VirtualTypeStack stack = new VirtualTypeStack();
         TypeChecker.check(stack, compileData, HLIR);
         TypeChecker.end(stack, Util.lastOf(HLIR).token.getLocation());
 

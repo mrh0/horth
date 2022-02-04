@@ -1,1 +1,1 @@
-"Hello World" [1] cast(int) exit
+:test :atom == as int exit

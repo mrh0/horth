@@ -8,8 +8,8 @@ import com.mrh0.horth.typechecker.types.AllTypes;
 
 public class HOver extends HighInst {
     private static IContract contract = (s, t) -> {
-        var a = s.pop();
-        var b = s.pop();
+        var a = s.pop(t);
+        var b = s.pop(t);
         s.push(a);
         s.push(b);
         s.push(a);

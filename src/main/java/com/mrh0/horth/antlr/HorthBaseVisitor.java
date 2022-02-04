@@ -73,14 +73,14 @@ public class HorthBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDataTypeAny(HorthParser.DataTypeAnyContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDataTypeMany(HorthParser.DataTypeManyContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitDataTypeMany(HorthParser.DataTypeManyContext ctx) { return visitChildren(ctx); }
+	@Override public T visitDataTypeAtoms(HorthParser.DataTypeAtomsContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -284,6 +284,13 @@ public class HorthBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitGenAccessor(HorthParser.GenAccessorContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitGenAccessorStrict(HorthParser.GenAccessorStrictContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

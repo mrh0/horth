@@ -2,6 +2,7 @@ grammar Horth;
 
 BOOL: 'true' | 'false';
 NAME: [_a-zA-Z][_a-zA-Z0-9]*;
+ADDR_IDENTIFIER: '@'?[_a-zA-Z][_a-zA-Z0-9]*;
 KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
 KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
 ATOM: ':'[a-zA-Z0-9][_a-zA-Z0-9]*;
@@ -20,6 +21,7 @@ BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 identifier:
     NAME
+    | ADDR_IDENTIFIER
     ;
 
 integer:
@@ -29,7 +31,11 @@ integer:
     ;
 
 simpleDataType:
-    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'byte'
+    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'u8' | 'byte'
+    ;
+
+userDefinedDataType:
+    'type' NAME 'as' (NAME dataType '|')* NAME dataType 'end'
     ;
 
 dataType:
@@ -65,9 +71,12 @@ keywords:
 
 typefunc:
     'sizeof' '(' dataType ')'                       #typefuncSizeof
+    | 'sizeof' dataType                             #typefuncSizeof
     | 'cast' '(' dataType ')'                       #typefuncCast
+    | 'as' dataType                                 #typefuncCast
     | 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
     | 'is' '(' (types+=dataType)* ')'               #typefuncIs
+    | 'is' types+=dataType                          #typefuncIs
     ;
 
 infix:

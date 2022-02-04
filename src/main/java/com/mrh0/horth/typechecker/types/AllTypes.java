@@ -1,6 +1,9 @@
 package com.mrh0.horth.typechecker.types;
 
 import com.mrh0.horth.ast.Loc;
+import com.mrh0.horth.ast.nodes.ITok;
+import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 
 public class AllTypes {
@@ -99,6 +102,7 @@ public class AllTypes {
             return 8;
         }
     };
+
     public static IType ATOM = new IType() {
         public String getName() {
             return "atom";
@@ -109,7 +113,7 @@ public class AllTypes {
         public void cast(Loc location, IType to) throws CannotCastException {
             if(isRedundantCast(location, to))
                 return;
-            else if(to == STRING) //Atom value is string pointer
+            else if(to == STRING) //Atom value is a string pointer
                 return;
             throw new CannotCastException(location, this, to);
         }
@@ -138,32 +142,54 @@ public class AllTypes {
         switch(name) {
             case "int":
                 return INT;
-            case "bool":
-                return BOOL;
+            case "u64":
+                return U64;
+            case "u32":
+                return U32;
+            case "u16":
+                return U16;
+            case "u8":
+            case "byte":
+                return BYTE;
+
             case "char":
                 return CHAR;
+
+            case "bool":
+                return BOOL;
+
             case "string":
                 return STRING;
             case "atom":
                 return ATOM;
-            case "void":
-                return VOID;
+
             case "ref":
                 return DEF_REF;
+
+            case "void":
+                return VOID;
             default:
                 return null;
         }
     }
 
     public static boolean isNumber(IType type) {
-        return type == U64 || type == U32 || type == U16 || type == INT;
+        return type == U64 || type == U32 || type == U16 || type == BYTE || type == INT;
     }
 
     public static boolean isUnsigned(IType type) {
-        return type == U64 || type == U32 || type == U16;
+        return type == U64 || type == U32 || type == U16 || type == BYTE;
     }
 
     public static boolean isByte(IType type) {
         return type == BYTE || type == CHAR;
+    }
+
+    public static void canCast(ITok token, IType type, IType to) throws BreachOfContractException {
+        try {
+            type.cast(token.getLocation(), to);
+        } catch (CannotCastException e) {
+            throw new BreachOfContractException(token.getLocation(), to, type);
+        }
     }
 }

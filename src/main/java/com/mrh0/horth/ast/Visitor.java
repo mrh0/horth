@@ -120,6 +120,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     @Override
+    public ITok visitGenAtom(HorthParser.GenAtomContext ctx) {
+        return new TAtom(ctx.getText())
+                .loc(ctx.start, file);
+    }
+
+    @Override
     public ITok visitIdentifier(HorthParser.IdentifierContext ctx) {
         return new TIdentifier(ctx.getText())
                 .loc(ctx.start, file);
@@ -221,7 +227,6 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     //Accessor
-
     @Override
     public ITok visitGenAccessor(HorthParser.GenAccessorContext ctx) {
         return new TAccessor(cvisit(ctx.accBlock));

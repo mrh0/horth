@@ -72,13 +72,13 @@ public class HBIf extends HighInst implements ISpecialCheck, IExpanding {
     }
 
     @Override
-    public void check(VirtualStack stack, CompileData cd) throws HorthException {
-        VirtualStack snapshot1 = stack.snapshot();
+    public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
+        VirtualTypeStack snapshot1 = stack.snapshot();
 
         for(List<HighInst> cond : conditions) {
             TypeChecker.check(stack, cd, cond);
             stack.check(token, AllTypes.BOOL);
-            VirtualStack.match(snapshot1, stack, token.getLocation());
+            VirtualTypeStack.match(snapshot1, stack, token.getLocation());
         }
 
         if(elseBlock == null) {
@@ -86,25 +86,25 @@ public class HBIf extends HighInst implements ISpecialCheck, IExpanding {
                 List<HighInst> dos = doBlocks.get(i);
 
                 TypeChecker.check(stack, cd, dos);
-                VirtualStack.match(snapshot1, stack, token.getLocation());
+                VirtualTypeStack.match(snapshot1, stack, token.getLocation());
                 stack.load(snapshot1);
             }
         }
         else {
             TypeChecker.check(stack, cd, doBlocks.get(0));
-            VirtualStack snapshot2 = stack.snapshot();
+            VirtualTypeStack snapshot2 = stack.snapshot();
             stack.load(snapshot1);
 
             for(int i = 1; i < doBlocks.size(); i++) {
                 List<HighInst> dos = doBlocks.get(i);
 
                 TypeChecker.check(stack, cd, dos);
-                VirtualStack.match(snapshot2, stack, token.getLocation());
+                VirtualTypeStack.match(snapshot2, stack, token.getLocation());
                 stack.load(snapshot1);
             }
 
             TypeChecker.check(stack, cd, elseBlock);
-            VirtualStack.match(snapshot2, stack, token.getLocation());
+            VirtualTypeStack.match(snapshot2, stack, token.getLocation());
             stack.load(snapshot2);
         }
     }

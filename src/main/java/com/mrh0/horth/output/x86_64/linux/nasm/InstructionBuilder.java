@@ -80,15 +80,13 @@ public class InstructionBuilder {
 
     public InstructionBuilder slabel(int id) {
         begin();
-        sb.append("str_");
-        sb.append(id);
+        sb.append(LowInst.strLabel(id));
         return this;
     }
 
     public InstructionBuilder alabel(String atom) {
         begin();
-        sb.append("atom_");
-        sb.append(atom);
+        sb.append(LowInst.atomLabel(atom));
         return this;
     }
 
@@ -107,6 +105,18 @@ public class InstructionBuilder {
         sb.append('`');
         sb.append(str.str());
         sb.append('`');
+        return this;
+    }
+
+    public InstructionBuilder dbAtom(String atom) {
+        sb.append('\n');
+        sb.append(LowInst.atomLabel(atom));
+        sb.append(":\n\tdq ");
+        sb.append(atom.length());
+        sb.append("\n\tdb ");
+        sb.append('"');
+        sb.append(atom);
+        sb.append('"');
         return this;
     }
 

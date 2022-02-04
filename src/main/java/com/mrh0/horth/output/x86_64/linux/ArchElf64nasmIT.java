@@ -9,6 +9,7 @@ import com.mrh0.horth.output.instructions.high.accessor.HAccessorLength;
 import com.mrh0.horth.output.instructions.high.branching.HBranch;
 import com.mrh0.horth.output.instructions.high.branching.HBreak;
 import com.mrh0.horth.output.instructions.high.branching.HJump;
+import com.mrh0.horth.output.instructions.high.io.HLog;
 import com.mrh0.horth.output.instructions.high.local.HLet;
 import com.mrh0.horth.output.instructions.high.local.HReclaim;
 import com.mrh0.horth.output.instructions.high.stackops.other.HLength;
@@ -28,6 +29,7 @@ import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorLength;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
+import com.mrh0.horth.output.x86_64.linux.nasm.io.LLog;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LReclaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.other.*;
@@ -39,6 +41,7 @@ import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LBinary;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LCompare;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LAdd;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LSub;
+import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutAtom;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutInt;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutString;
@@ -61,7 +64,8 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutInt((HPutChar) in));
         else if(in instanceof HPutString)
             out.add(new LPutString((HPutString) in));
-
+        else if(in instanceof HPutAtom)
+            out.add(new LPutAtom((HPutAtom) in));
         else if(in instanceof HPutVar)
             out.add(new LPutVar(((HPutVar) in).offset));
 
@@ -69,6 +73,9 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(LExit.INSTANCE);
         else if(in instanceof HLength)
             out.add(LLength.INSTANCE);
+
+        else if(in instanceof HLog)
+            out.add(LLog.INSTANCE);
 
         else if(in instanceof HAccessorLength)
             out.add(LAccessorLength.INSTANCE);

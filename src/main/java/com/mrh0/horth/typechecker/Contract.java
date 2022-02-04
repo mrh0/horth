@@ -5,7 +5,6 @@ import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +48,10 @@ public class Contract implements IContract{
     }
 
     @Override
-    public void apply(VirtualStack stack, ITok tok) throws BreachOfContractException {
-        Map<String, IType> genMap = new HashMap<>();
-
+    public void apply(VirtualTypeStack stack, ITok tok) throws BreachOfContractException {
         for(IType t : pop) {
-            VirtualStack.StackEntry se = stack.pop(tok);
-            if(!IType.equals(t, se.type(), genMap))
+            VirtualTypeStack.StackEntry se = stack.pop(tok);
+            if(!IType.equals(t, se.type()))
                 throw new BreachOfContractException(tok.getLocation(), t, se.type());
         }
         for(IType t : push) {

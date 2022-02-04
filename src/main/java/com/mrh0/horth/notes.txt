@@ -159,3 +159,13 @@ write8:
     mov     [rax], lb
     pop     rax
     pop     rbx
+
+log:
+    mov 	rdi, 1
+	mov 	rdx, [rax]
+	add		rax, 8
+	mov 	rsi, rax
+	mov 	rax, 1
+	syscall
+	mov 	rax, rbx
+	pop 	rbx

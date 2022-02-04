@@ -29,6 +29,10 @@ public interface LowInst {
         return "str_"+ref;
     }
 
+    static String atomLabel(String atom) {
+        return "atom_"+atom;
+    }
+
     default void collect(CompileData cd) {}
 
     void asm(InstructionBuilder ib, CompileData cd);

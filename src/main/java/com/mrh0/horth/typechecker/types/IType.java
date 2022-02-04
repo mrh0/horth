@@ -8,13 +8,16 @@ import java.util.List;
 import java.util.Map;
 
 public interface IType {
-    public static boolean equals(IType a, IType b, Map<String, IType> generics) {
+    public record TypeProperty(String name, IType type, int offset) {}
+
+    static boolean equals(IType a, IType b) {
         if(a instanceof NestedType && b instanceof NestedType)
-            return equals(a.getNested(), b.getNested(), generics);
+            return equals(a.getNested(), b.getNested());
         return a == b;
     }
 
-    public static void addGenerics(List<GenericType> list, IType type) {
+    @Deprecated
+    static void addGenerics(List<GenericType> list, IType type) {
         if(type instanceof NestedType)
             addGenerics(list, type.getNested());
         else if(type instanceof GenericType)
@@ -24,7 +27,7 @@ public interface IType {
             return;
     }
 
-    public default IType getNested() {
+    default IType getNested() {
         return ((NestedType) this).nested;
     }
 
@@ -32,13 +35,15 @@ public interface IType {
 
     int getSize();
 
+    default TypeProperty getProperty(String name) {}
+
     default void cast(Loc location, IType to) throws CannotCastException {
         if(!isRedundantCast(location, to))
             throw new CannotCastException(location, this, to);
     }
 
     default boolean isRedundantCast(Loc location, IType to) {
-        if(IType.equals(this, to, null)) {
+        if(IType.equals(this, to)) {
             IO.warn(
                     "Redundant cast from '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
                     location);

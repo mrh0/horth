@@ -1,11 +1,11 @@
 package com.mrh0.horth.exceptions.typechecker;
 
 import com.mrh0.horth.ast.Loc;
-import com.mrh0.horth.typechecker.VirtualStack;
+import com.mrh0.horth.typechecker.VirtualTypeStack;
 
 public class TypeStackMismatch extends TypeCheckerException {
-    private final VirtualStack expected, actual;
-    public TypeStackMismatch(Loc location, VirtualStack expected, VirtualStack actual) {
+    private final VirtualTypeStack expected, actual;
+    public TypeStackMismatch(Loc location, VirtualTypeStack expected, VirtualTypeStack actual) {
         super(location);
         this.expected = expected;
         this.actual = actual;

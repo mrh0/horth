@@ -1,8 +1,6 @@
 package com.mrh0.horth.exceptions.typechecker;
 
 import com.mrh0.horth.ast.Loc;
-import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.typechecker.VirtualStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.typechecker.types.IType;
 

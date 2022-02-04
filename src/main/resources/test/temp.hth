@@ -12,3 +12,5 @@ let fd str in
     syscall write drop
 end
 0 exit
+
+"Hello World" [2] cast(int) exit

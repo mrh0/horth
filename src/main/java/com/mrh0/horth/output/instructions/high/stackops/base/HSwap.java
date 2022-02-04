@@ -6,8 +6,8 @@ import com.mrh0.horth.typechecker.IContract;
 
 public class HSwap extends HighInst {
     private static IContract contract = (s, t) -> {
-        var a = s.pop();
-        var b = s.pop();
+        var a = s.pop(t);
+        var b = s.pop(t);
         s.push(a);
         s.push(b);
     };

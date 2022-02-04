@@ -65,7 +65,12 @@ public class ArchElf64nasm extends Arch {
                 .inst("section").reg(".data");
 
         for(int i = 0; i < compileData.strings.size(); i++)
-            ib.dbString(i, compileData.strings.get(i));
+            ib  .dbString(i, compileData.strings.get(i));
+
+        ib      .append("\n");
+
+        for(String atom : compileData.atoms.keySet())
+            ib  .dbAtom(atom);
 
         ib      .append("\n")
                 .inst("section").reg(".text")
