@@ -44,6 +44,14 @@ not ~
 ```
 
 ```
+//Infix syntax
+(1 - (5 + 2))  //Compiles into: 1 5 2 + -
+let a b in
+   (a - b + 1) //Compiles into: a b - 1 +
+end
+```
+
+```
 //Primitive types:
 int string char bool ref
 
