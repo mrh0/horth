@@ -89,6 +89,7 @@ over    : a, b -> a, b, a
 length  : array | string -> array | string, int
 exit    : int -> 
 syscall <name> : 0-6 of any type -> int
+log     : string | atom ->
 ```
 
 # Examples
