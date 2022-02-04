@@ -20,6 +20,10 @@
 
 //Integer
 0 1 42 -10 0xA0 0b1100
+
+//Atom
+:atom :test_atom :TestAtom :a :b :8 :100
+
 ```
 ```
 //BinOps:
@@ -28,6 +32,25 @@
 //UnOps:
 not ~
 ```
+
+```
+//Accessor
+"Hello World" []   // Returns string length (11)
+"Hello World" [1]  // Returns char at index 1 ('e')
+
+{5, 8, 3, 1} []    // Returns array length (4)
+{5, 8, 3, 1} [2]   // Returns int at index 2 (3)
+
+```
+
+```
+//Infix syntax
+(1 - (5 + 2))  //Compiles into: 1 5 2 + -
+let a b in
+   (a - b + 1) //Compiles into: a b - 1 +
+end
+```
+
 ```
 //Primitive types:
 int string char bool ref
@@ -66,12 +89,17 @@ over    : a, b -> a, b, a
 length  : array | string -> array | string, int
 exit    : int -> 
 syscall <name> : 0-6 of any type -> int
+log     : string | atom ->
 ```
 
 # Examples
 
 ```
 //Hello World
+"Hello World" log
+0 exit
+
+//Hello World (using syscall)
 1 "Hello World" length
 let fd str len in
     fd, (str unsafe cast(int) + sizeof(int)), len
@@ -90,7 +118,7 @@ elif 1 == do
 else
    3
 end
-exit
+exit //Exitcode: 1
 ```
 
 ```
@@ -99,7 +127,7 @@ exit
 while 10 < do
    1 +
 end
-exit
+exit //Exitcode: 10
 ```
 
 ```
@@ -109,4 +137,13 @@ let a b c in
    c b a
 end
 //Reversed stack: 3 2 1
+```
+
+```
+//Atoms
+:atom :atom ==    // True
+:atom :ATom ==    // True
+:atom1 :atom2 ==  // False
+:Hello_World log  // "hello_world"
+:_atom            // Invalid Syntax
 ```
