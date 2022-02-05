@@ -2,9 +2,9 @@ grammar Horth;
 
 BOOL: 'true' | 'false';
 NAME: [_a-zA-Z][_a-zA-Z0-9]*;
-ADDR_IDENTIFIER: '@'?[_a-zA-Z][_a-zA-Z0-9]*;
-KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
-KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
+//IDENTIFIER: '@'+[_a-zA-Z][_a-zA-Z0-9]*;
+//KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
+//KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
 ATOM: ':'[a-zA-Z0-9][_a-zA-Z0-9]*;
 
 INT: '0'|'-'?[1-9][0-9]*;
@@ -20,8 +20,8 @@ COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 identifier:
-    NAME
-    | ADDR_IDENTIFIER
+    '@' NAME ('.'* NAME)*
+    | NAME ('.'* NAME)* ('.')*
     ;
 
 integer:
@@ -67,6 +67,7 @@ keywords:
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'break'
     | 'length'
+    | 'void'
     ;
 
 typefunc:
@@ -119,10 +120,10 @@ general:
     | 'assert' (message=STRING)? block 'end'                                              #genAssert
     | 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
     | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
-    | ('inline' | 'extern')? 'func' NAME
-        (dataType)* ('->' (dataType)+)? ('throws' dataType)? 'in' block 'end'               #genFunc
-    | ('inline' | 'extern')? 'func' NAME
-        (dataType)* ('->' (dataType)+)? 'let' (names+=NAME)+ 'in' block 'end'               #genFuncLet
+    | ('inline' | 'extern')? 'func' name=NAME
+        (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #genFunc
+    | ('inline' | 'extern')? 'func' NAME 'let' (names+=NAME)+ 'as'
+        (dataType)* ('->' (dataType)+)? 'in' block 'end'               #genFuncLet
     | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
@@ -145,8 +146,8 @@ general:
 
     | 'try' NAME                                                                            #genTry
     | 'throw' block 'end'                                                                   #genThrow
-    | 'catch' NAME 'passed' passBlock=block 'failed' failBlock=block 'end'                  #genCatch
-    | 'catch' NAME 'failed' failBlock=block 'passed' passBlock=block 'end'                  #genCatch
+    | 'try' NAME 'pass' passBlock=block 'catch' failBlock=block 'end'                  #genCatch
+    | 'try' NAME 'catch' failBlock=block 'pass' passBlock=block 'end'                  #genCatch
 
     | 'syscall' sysCallName=NAME                                                            #genSyscall
     | 'export' NAME                                                                         #genExport

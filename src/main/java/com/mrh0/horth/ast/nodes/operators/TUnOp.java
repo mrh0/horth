@@ -2,9 +2,9 @@ package com.mrh0.horth.ast.nodes.operators;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.unop.binary.HBinaryNot;
-import com.mrh0.horth.output.instructions.high.stackops.unop.logical.HNot;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.stackops.unop.binary.HBinaryNot;
+import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
 
 import java.util.List;
 import java.util.function.Function;

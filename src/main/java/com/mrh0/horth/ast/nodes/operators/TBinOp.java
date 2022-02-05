@@ -2,14 +2,14 @@ package com.mrh0.horth.ast.nodes.operators;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.ast.nodes.Tok;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.binop.HAdd;
-import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HAnd;
-import com.mrh0.horth.output.instructions.high.stackops.binop.logical.HOr;
-import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryAnd;
-import com.mrh0.horth.output.instructions.high.stackops.binop.binary.HBinaryOr;
-import com.mrh0.horth.output.instructions.high.stackops.binop.compare.*;
-import com.mrh0.horth.output.instructions.high.stackops.binop.HSub;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.stackops.binop.HAdd;
+import com.mrh0.horth.instructions.high.stackops.binop.compare.*;
+import com.mrh0.horth.instructions.high.stackops.binop.logical.HAnd;
+import com.mrh0.horth.instructions.high.stackops.binop.logical.HOr;
+import com.mrh0.horth.instructions.high.stackops.binop.binary.HBinaryAnd;
+import com.mrh0.horth.instructions.high.stackops.binop.binary.HBinaryOr;
+import com.mrh0.horth.instructions.high.stackops.binop.HSub;
 
 import java.util.List;
 import java.util.function.Function;

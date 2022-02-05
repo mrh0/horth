@@ -1,8 +1,8 @@
 package com.mrh0.horth.ast.nodes.operands;
 
 import com.mrh0.horth.ast.nodes.Tok;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.stackops.operands.HPutInt;
 
 import java.util.List;
 

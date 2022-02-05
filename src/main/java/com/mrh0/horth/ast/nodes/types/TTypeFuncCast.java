@@ -2,9 +2,9 @@ package com.mrh0.horth.ast.nodes.types;
 
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.types.HCast;
-import com.mrh0.horth.output.instructions.high.types.HCastUnsafe;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.types.HCast;
+import com.mrh0.horth.instructions.high.types.HCastUnsafe;
 import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.typechecker.types.IType;
 

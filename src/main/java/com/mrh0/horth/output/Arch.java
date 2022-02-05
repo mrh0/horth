@@ -1,10 +1,9 @@
 package com.mrh0.horth.output;
 
-import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
-import com.mrh0.horth.output.instructions.high.CompileData;
-import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.HighInst;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.mrh0.horth.output.x86_64.linux.nasm;
 
-import com.mrh0.horth.output.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.CompileData;
 
 public interface LowInst {
     String S1 = "rax";  //Stack1

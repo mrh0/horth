@@ -44,6 +44,12 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HorthParser#userDefinedDataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUserDefinedDataType(HorthParser.UserDefinedDataTypeContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code dataTypeSimple}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree

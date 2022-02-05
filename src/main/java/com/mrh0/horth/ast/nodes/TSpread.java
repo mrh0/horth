@@ -1,7 +1,7 @@
 package com.mrh0.horth.ast.nodes;
 
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.HighInst;
 
 import java.util.List;
 

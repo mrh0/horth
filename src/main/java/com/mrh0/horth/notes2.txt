@@ -33,3 +33,15 @@ x: y: x y +;
 lambda ends with ';'?. Takes argument types from what consumes it.
 
 fn x y in x y + end
+
+//Define
+func test int int -> int in ... end //1
+//Overload
+func test int void -> int in ... end //2
+func test string int -> int in ... end //3
+//Call 1
+1 1 test
+//Call 2
+1 void test
+//Call 3
+"hello" 2 test

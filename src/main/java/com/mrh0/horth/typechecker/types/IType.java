@@ -2,6 +2,7 @@ package com.mrh0.horth.typechecker.types;
 
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
+import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
 import com.mrh0.horth.util.IO;
 
 import java.util.List;
@@ -35,7 +36,9 @@ public interface IType {
 
     int getSize();
 
-    default TypeProperty getProperty(String name) {}
+    default TypeProperty getProperty(Loc location, String name) throws UndefinedPropertyException {
+        throw new UndefinedPropertyException(location, name, this);
+    }
 
     default void cast(Loc location, IType to) throws CannotCastException {
         if(!isRedundantCast(location, to))
@@ -45,7 +48,7 @@ public interface IType {
     default boolean isRedundantCast(Loc location, IType to) {
         if(IType.equals(this, to)) {
             IO.warn(
-                    "Redundant cast from '" + AllTypes.stringOf(this) + "' to '" + AllTypes.stringOf(to) + "'.",
+                    "Redundant cast from " + AllTypes.stringOf(this) + " to " + AllTypes.stringOf(to) + ".",
                     location);
             return true;
         }

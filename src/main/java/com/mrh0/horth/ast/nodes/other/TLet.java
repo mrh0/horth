@@ -3,8 +3,8 @@ package com.mrh0.horth.ast.nodes.other;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.local.HLet;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.local.HLet;
 
 import java.util.ArrayList;
 import java.util.List;

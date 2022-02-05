@@ -76,6 +76,18 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterUserDefinedDataType(HorthParser.UserDefinedDataTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUserDefinedDataType(HorthParser.UserDefinedDataTypeContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
 	/**
 	 * {@inheritDoc}

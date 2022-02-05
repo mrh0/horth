@@ -1,9 +1,9 @@
 package com.mrh0.horth.output.x86_64.linux.nasm.other;
 
-import com.mrh0.horth.output.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
-import com.mrh0.horth.output.instructions.high.branching.HBreak;
-import com.mrh0.horth.output.instructions.high.branching.HJump;
+import com.mrh0.horth.instructions.high.branching.HBreak;
+import com.mrh0.horth.instructions.high.branching.HJump;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 

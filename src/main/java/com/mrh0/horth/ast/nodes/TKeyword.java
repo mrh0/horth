@@ -1,17 +1,15 @@
 package com.mrh0.horth.ast.nodes;
 
 import com.mrh0.horth.exceptions.parser.ParserException;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.branching.HBreak;
-import com.mrh0.horth.output.instructions.high.io.HLog;
-import com.mrh0.horth.output.instructions.high.stackops.base.HDrop;
-import com.mrh0.horth.output.instructions.high.stackops.base.HDup;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutInt;
-import com.mrh0.horth.output.instructions.high.stackops.other.HExit;
-import com.mrh0.horth.output.instructions.high.stackops.base.HOver;
-import com.mrh0.horth.output.instructions.high.stackops.base.HSwap;
-import com.mrh0.horth.output.instructions.high.stackops.other.HLength;
-import com.mrh0.horth.output.instructions.high.stackops.other.HSysCall;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.branching.HBreak;
+import com.mrh0.horth.instructions.high.io.HLog;
+import com.mrh0.horth.instructions.high.stackops.base.HDrop;
+import com.mrh0.horth.instructions.high.stackops.base.HDup;
+import com.mrh0.horth.instructions.high.stackops.other.HExit;
+import com.mrh0.horth.instructions.high.stackops.base.HOver;
+import com.mrh0.horth.instructions.high.stackops.base.HSwap;
+import com.mrh0.horth.instructions.high.stackops.other.HLength;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.mrh0.horth.output.x86_64.linux.nasm.stackop.put;
 
-import com.mrh0.horth.output.instructions.high.CompileData;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutString;
+import com.mrh0.horth.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.stackops.operands.HPutString;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 import com.mrh0.horth.util.Util;

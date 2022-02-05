@@ -1,10 +1,10 @@
 package com.mrh0.horth.output.x86_64.linux;
 
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.output.Arch;
-import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 import com.mrh0.horth.util.IO;

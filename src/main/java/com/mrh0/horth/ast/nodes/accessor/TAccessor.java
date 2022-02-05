@@ -3,9 +3,9 @@ package com.mrh0.horth.ast.nodes.accessor;
 import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.accessor.HAccessor;
-import com.mrh0.horth.output.instructions.high.accessor.HAccessorLength;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.accessor.HAccessor;
+import com.mrh0.horth.instructions.high.accessor.HAccessorLength;
 
 import java.util.List;
 

@@ -3,8 +3,8 @@ package com.mrh0.horth.typechecker;
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
-import com.mrh0.horth.output.instructions.high.CompileData;
-import com.mrh0.horth.output.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.types.AllTypes;
 
 import java.util.List;

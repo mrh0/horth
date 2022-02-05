@@ -2,10 +2,8 @@ package com.mrh0.horth.ast.nodes.operands;
 
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.output.instructions.high.HighInst;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutAtom;
-import com.mrh0.horth.output.instructions.high.stackops.operands.HPutString;
-import com.mrh0.horth.util.Util;
+import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.stackops.operands.HPutAtom;
 
 import java.util.List;
 
