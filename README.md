@@ -38,8 +38,8 @@ not ~
 "Hello World" []   // Returns string length (11)
 "Hello World" [1]  // Returns char at index 1 ('e')
 
-{5, 8, 3, 1} []    // Returns array length (4)
-{5, 8, 3, 1} [2]   // Returns int at index 2 (3)
+{5, 8, 3, 1} []    // Returns array length (4) [WIP]
+{5, 8, 3, 1} [2]   // Returns int at index 2 (3) [WIP]
 
 ```
 
@@ -50,31 +50,45 @@ let a b in
    (a - b + 1) //Compiles into: a b - 1 +
 end
 ```
-
 ```
-//Primitive types:
-int string char bool ref
-
-//Pointer type
-ref<type>
-arr<type>
-func<type... -> type...>
-
-//Type Functions
-sizeof(type)
-cast(type)
-unsafe cast(type)
-is(type...)
-```
-```
-//Constants
+//Constants [WIP]
 const name /*value or expression*/ end
 ```
+
 ```
 //System Call
 syscall name 
 //Name is Linux System Call name in all lowcase
 //For full list of supported syscalls see com.mrh0.horth.output.x86_64.linux.ArchElf64nasm.
+```
+
+# Types
+
+```
+//Primitive types
+int string char bool ref u64 u32 u16 u8 byte atom void
+
+//Pointer types
+ref<type>
+arr<type>
+func<type... -> type...>
+```
+```
+//Type Functions
+sizeof(type)
+sizeof type
+
+cast(type)
+as type
+unsafe cast(type)
+as unsafe type
+
+is(type...)
+is type
+```
+```
+//UserTypes (structs) [WIP]
+type typename as name type | name type | ... end
 ```
 
 # Keywords
