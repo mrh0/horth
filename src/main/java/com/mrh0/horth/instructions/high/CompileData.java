@@ -3,6 +3,7 @@ package com.mrh0.horth.instructions.high;
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.function.Func;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.typechecker.types.IType;
 import com.mrh0.horth.util.Util;
@@ -41,16 +42,18 @@ public class CompileData {
 
     public final List<Util.RealString> strings;
     public final Map<String, Void> atoms;
+    public final Map<String, List<Func>> functions;
 
     public CompileData(Arch arch) {
         this.arch = arch;
 
-        namedGlobalsMap = new HashMap<>();
-        namedLocalsList = new ArrayList<>();
-        localScopeList = new ArrayList<>();
+        this.namedGlobalsMap = new HashMap<>();
+        this.namedLocalsList = new ArrayList<>();
+        this.localScopeList = new ArrayList<>();
 
         this.strings = new ArrayList<>();
         this.atoms = new HashMap<>();
+        this.functions = new HashMap<>();
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -115,5 +118,13 @@ public class CompileData {
 
     public void storeAtom(String atom) {
         atoms.put(atom, null);
+    }
+
+    public void storeFunction(Func func) {
+        List<Func> funcs = functions.get(func.getName());
+        if(funcs == null)
+            functions.put(func.getName(), funcs = new ArrayList<>());
+
+        funcs.add(func);
     }
 }

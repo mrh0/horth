@@ -31,21 +31,22 @@ integer:
     ;
 
 simpleDataType:
-    'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'u8' | 'byte'
-    ;
-
-userDefinedDataType:
-    'type' NAME 'as' (NAME dataType '|')* NAME dataType 'end'
+    NAME//'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'u8' | 'byte'
     ;
 
 dataType:
     simpleDataType                                  #dataTypeSimple
-    | 'ref<' dataType '>'                           #dataTypeRef
-    | 'arr<' dataType '>'                           #dataTypeArr
+    | NAME '<' dataType+ '>'                        #dataTypeGeneral
+    //| 'ref<' dataType '>'                           #dataTypeRef
+    //| 'arr<' dataType '>'                           #dataTypeArr
     //| 'any<' NAME '>'                               #dataTypeAny //replaced by function overloads
     | 'func<' (dataType)* ('->' (dataType)+)? '>'   #dataTypeFunc
-    | dataType '*' staticExpr                       #dataTypeMany
+    //| dataType '*' staticExpr                       #dataTypeMany
     | 'atom<' (ATOM '|')* ATOM '>'                  #dataTypeAtoms
+    ;
+
+userDefinedDataType:
+    'type' NAME 'as' (NAME dataType '|')* NAME dataType 'end'
     ;
 
 unop:
@@ -122,8 +123,7 @@ general:
     | 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
     //| ('inline' | 'extern' | 'start')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
 
-    | ('inline' | 'extern' | 'start')? 'func' name=NAME
-        (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #genFunc
+
 
     //| ('inline' | 'extern')? 'func' NAME 'let' (names+=NAME)+ 'as'
     //    (dataType)* ('->' (dataType)+)? 'in' block 'end'               #genFuncLet
@@ -157,6 +157,11 @@ general:
     | typefunc                                                                              #genIntrfunc
     ;
 
+mainBlock:
+    'export'? funcPrefix=('inline' | 'extern' | 'start')? 'func' name=NAME
+            (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #mainFunc
+    ;
+
 block:
     (contents+=general)*
     ;
@@ -166,5 +171,5 @@ include:
     ;
 
 program:
-    ('module' STRING)? (includes+=include)* main=block EOF
+    ('module' STRING)? (includes+=include)* main+=mainBlock* EOF
     ;

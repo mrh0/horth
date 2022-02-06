@@ -6,6 +6,7 @@ import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +65,7 @@ public class Contract implements IContract{
         }
     }
 
-    public static IContract from(List<TType> pop, List<TType> push) {
+    public static Contract from(List<TType> pop, List<TType> push) {
         IType[] pop2 = new IType[pop.size()];
         IType[] push2 = new IType[push.size()];
 
@@ -75,5 +76,18 @@ public class Contract implements IContract{
             push2[i] = push.get(i).type;
 
         return new Contract(pop2, push2);
+    }
+
+    public IType[] getPushList() {
+        return this.push;
+    }
+
+    public IType[] getPopList() {
+        return this.pop;
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(pop) + " -> " + Arrays.toString(push);
     }
 }

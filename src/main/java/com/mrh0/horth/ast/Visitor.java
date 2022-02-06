@@ -19,6 +19,7 @@ import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
+import com.mrh0.horth.function.Func;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -234,9 +235,11 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     }
 
     //Function
-
     @Override
-    public ITok visitGenFunc(HorthParser.GenFuncContext ctx) {
-        return new TFunc(ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody));
+    public ITok visitMainFunc(HorthParser.MainFuncContext ctx) {
+        Func.Prefix prefix = Func.Prefix.NONE;
+        if(ctx.funcPrefix != null)
+            prefix = Func.Prefix.from(ctx.funcPrefix.getText());
+        return new TFunc(ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody), prefix);
     }
 }
