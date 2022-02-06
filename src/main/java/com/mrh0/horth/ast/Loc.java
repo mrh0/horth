@@ -1,5 +1,6 @@
 package com.mrh0.horth.ast;
 
+import com.mrh0.horth.util.Util;
 import org.antlr.v4.runtime.Token;
 
 import java.io.File;
@@ -19,7 +20,15 @@ public class Loc {
     }
 
     public String getFileName() {
-        return file == null ? "unknown file" : file.getAbsolutePath();
+        return file == null ? "unknown file" : Util.formatPath(file.getAbsolutePath());
+    }
+
+    public int getLine() {
+        return token.getLine();
+    }
+
+    public int getPosOnLine() {
+        return token.getCharPositionInLine();
     }
 
     @Override

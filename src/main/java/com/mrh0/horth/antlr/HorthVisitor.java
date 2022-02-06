@@ -319,33 +319,12 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenStaticAssert(HorthParser.GenStaticAssertContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code genFuncInfer}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGenFuncInfer(HorthParser.GenFuncInferContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code genFunc}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitGenFunc(HorthParser.GenFuncContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code genFuncLet}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGenFuncLet(HorthParser.GenFuncLetContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code genFuncSignature}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGenFuncSignature(HorthParser.GenFuncSignatureContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code genAllocStatic}
 	 * labeled alternative in {@link HorthParser#general}.

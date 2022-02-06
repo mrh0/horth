@@ -22,6 +22,6 @@ public class TypeChecker {
 
     public static void end(VirtualTypeStack stack, Loc location) throws BreachOfContractException {
         if(stack.size() > 0)
-            throw new BreachOfContractException(location, AllTypes.VOID, stack.peek(location).type());
+            throw new BreachOfContractException(location, AllTypes.EOF, stack.peek(location).type());
     }
 }

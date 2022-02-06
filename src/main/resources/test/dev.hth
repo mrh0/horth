@@ -1,1 +1,3 @@
-:test :atom == as int exit
+func name int int -> int in
+    1 1 +
+end

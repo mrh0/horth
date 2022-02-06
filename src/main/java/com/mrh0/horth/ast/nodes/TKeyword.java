@@ -6,10 +6,13 @@ import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.io.HLog;
 import com.mrh0.horth.instructions.high.stackops.base.HDrop;
 import com.mrh0.horth.instructions.high.stackops.base.HDup;
+import com.mrh0.horth.instructions.high.stackops.operands.HPutInt;
+import com.mrh0.horth.instructions.high.stackops.operands.HPutString;
 import com.mrh0.horth.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.instructions.high.stackops.base.HSwap;
 import com.mrh0.horth.instructions.high.stackops.other.HLength;
+import com.mrh0.horth.instructions.high.stackops.other.HVoid;
 
 import java.util.List;
 
@@ -46,7 +49,16 @@ public class TKeyword extends Tok {
                 break;
             case "log":
                 space.add(new HLog(this));
+                break;
+            case "here":
+                var fs = this.getLocation().getFileName();
+                space.add(new HPutString(this, fs, fs.length()));
+                space.add(new HPutInt(this.getLocation().getLine(),this));
+                space.add(new HPutInt(this.getLocation().getPosOnLine(),this));
             break;
+            case "void":
+                space.add(new HVoid(this));
+                break;
             default:
                 throw new ParserException(this.getLocation(), "Unimplemented keyword: " + text + ".");
         }

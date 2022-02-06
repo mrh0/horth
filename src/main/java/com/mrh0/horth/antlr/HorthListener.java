@@ -534,18 +534,6 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenStaticAssert(HorthParser.GenStaticAssertContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code genFuncInfer}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void enterGenFuncInfer(HorthParser.GenFuncInferContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code genFuncInfer}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void exitGenFuncInfer(HorthParser.GenFuncInferContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code genFunc}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -557,30 +545,6 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenFunc(HorthParser.GenFuncContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code genFuncLet}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void enterGenFuncLet(HorthParser.GenFuncLetContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code genFuncLet}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void exitGenFuncLet(HorthParser.GenFuncLetContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code genFuncSignature}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void enterGenFuncSignature(HorthParser.GenFuncSignatureContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code genFuncSignature}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 */
-	void exitGenFuncSignature(HorthParser.GenFuncSignatureContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genAllocStatic}
 	 * labeled alternative in {@link HorthParser#general}.

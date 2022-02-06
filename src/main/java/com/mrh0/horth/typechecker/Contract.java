@@ -1,6 +1,7 @@
 package com.mrh0.horth.typechecker;
 
 import com.mrh0.horth.ast.nodes.ITok;
+import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
@@ -12,13 +13,17 @@ import java.util.Map;
 public class Contract implements IContract{
     private IType[] pop;
     private IType[] push;
-    private List<GenericType> generics;
 
     public static IContract VOID = (s, t) -> {};
 
     private Contract() {
-        pop = new IType[0];
-        push = new IType[0];
+        this.pop = new IType[0];
+        this.push = new IType[0];
+    }
+
+    private Contract(IType[] pop, IType[] push) {
+        this.pop = pop;
+        this.push = push;
     }
 
     public static class Builder {
@@ -57,5 +62,18 @@ public class Contract implements IContract{
         for(IType t : push) {
             stack.push(t, tok);
         }
+    }
+
+    public static IContract from(List<TType> pop, List<TType> push) {
+        IType[] pop2 = new IType[pop.size()];
+        IType[] push2 = new IType[push.size()];
+
+        for(int i = 0; i < pop.size(); i++)
+            pop2[i] = pop.get(i).type;
+
+        for(int i = 0; i < push.size(); i++)
+            push2[i] = push.get(i).type;
+
+        return new Contract(pop2, push2);
     }
 }

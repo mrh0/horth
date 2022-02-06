@@ -55,6 +55,9 @@ public class Main {
 
         System.out.println(HLIR);
 
+        if(HLIR.size() == 0)
+            return;
+
         //TypeChecking
         VirtualTypeStack stack = new VirtualTypeStack();
         TypeChecker.check(stack, compileData, HLIR);

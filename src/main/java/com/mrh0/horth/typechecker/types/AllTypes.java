@@ -128,6 +128,15 @@ public class AllTypes {
         }
     };
 
+    public static IType EOF = new IType() {
+        public String getName() {
+            return "Empty Stack";
+        }
+        public int getSize() {
+            return 0;
+        }
+    };
+
     public static RefType DEF_REF = new RefType(null);
 
     public static RefType ref(IType type) {return new RefType(type);}
@@ -135,6 +144,8 @@ public class AllTypes {
     public static String stringOf(IType type) {
         if(type == STRING)
             return "string";
+        else if(type instanceof NestedType)
+            return type.toString();
         return type.getName();
     }
 

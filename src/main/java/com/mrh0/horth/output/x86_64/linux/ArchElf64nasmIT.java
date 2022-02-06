@@ -44,11 +44,8 @@ import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LBinary;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LCompare;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LAdd;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LSub;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutAtom;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutInt;
+import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.*;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutString;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.put.LPutVar;
 
 import java.util.List;
 
@@ -69,8 +66,13 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutString((HPutString) in));
         else if(in instanceof HPutAtom)
             out.add(new LPutAtom((HPutAtom) in));
-        else if(in instanceof HPutVar)
-            out.add(new LPutVar(((HPutVar) in).offset));
+        else if(in instanceof HPutVar) {
+            var v = ((HPutVar) in);
+            if (v.name.charAt(0) == '@')
+                out.add(new LPutVarAddr(v.offset));
+            else
+                out.add(new LPutVar(v.offset));
+        }
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);

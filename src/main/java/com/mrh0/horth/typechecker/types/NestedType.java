@@ -6,4 +6,9 @@ public abstract class NestedType implements IType {
     public NestedType(IType nested) {
         this.nested = nested;
     }
+
+    @Override
+    public String toString() {
+        return getName() + "<" + AllTypes.stringOf(getNested()) + ">";
+    }
 }

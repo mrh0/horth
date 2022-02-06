@@ -79,4 +79,8 @@ public class Util {
         }
         return new RealString(sb.toString(), len);
     }
+
+    public static String formatPath(String path) {
+        return path.replace("\\", "/");
+    }
 }

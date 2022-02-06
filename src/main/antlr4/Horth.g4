@@ -66,7 +66,7 @@ keywords:
     | 'out' | 'log' 'error' | 'log^' 'error' | 'log' | 'log^' //^ for ntstring
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'break'
-    | 'length'
+    | 'length' | 'here'
     | 'void'
     ;
 
@@ -76,6 +76,7 @@ typefunc:
     | 'cast' '(' dataType ')'                       #typefuncCast
     | 'as' dataType                                 #typefuncCast
     | 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
+    | 'as' 'unsafe' dataType                        #typefuncCastUnsafe
     | 'is' '(' (types+=dataType)* ')'               #typefuncIs
     | 'is' types+=dataType                          #typefuncIs
     ;
@@ -119,16 +120,18 @@ general:
     | '(' infix ')'                                                                         #genInfix
     | 'assert' (message=STRING)? block 'end'                                              #genAssert
     | 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
-    | ('inline' | 'extern')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
-    | ('inline' | 'extern')? 'func' name=NAME
+    //| ('inline' | 'extern' | 'start')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
+
+    | ('inline' | 'extern' | 'start')? 'func' name=NAME
         (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #genFunc
-    | ('inline' | 'extern')? 'func' NAME 'let' (names+=NAME)+ 'as'
-        (dataType)* ('->' (dataType)+)? 'in' block 'end'               #genFuncLet
-    | ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
+
+    //| ('inline' | 'extern')? 'func' NAME 'let' (names+=NAME)+ 'as'
+    //    (dataType)* ('->' (dataType)+)? 'in' block 'end'               #genFuncLet
+    //| ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
-    | 'static' 'alloc' NAME dataType ('*' staticExpr)* 'end'                                #genAllocStatic
-    | 'alloc' NAME dataType ('*' block)? 'in' block 'end'                                   #genAlloc
+    | 'const' NAME 'alloc' dataType ('*' staticExpr)* 'end'                                #genAllocStatic
+    | 'alloc' dataType ('*' block)? 'in' block 'end'                                   #genAlloc
 
     | 'if' conds+=block 'do' doBlock+=block
     ('elif' conds+=block 'do' doBlock+=block)*

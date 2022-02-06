@@ -5,7 +5,6 @@
 end
 
 
-
 1 "Hello World"
 let fd str in
     fd, str unsafe cast(int) sizeof(int) +, str[]
@@ -13,4 +12,14 @@ let fd str in
 end
 0 exit
 
+
 "Hello World" [2] cast(int) exit
+
+
+6
+let n in
+	n '0' as int +
+	let c in
+		1 @c 1 syscall write drop
+	end
+end

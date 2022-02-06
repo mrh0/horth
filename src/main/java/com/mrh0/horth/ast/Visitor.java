@@ -6,6 +6,7 @@ import com.mrh0.horth.ast.nodes.*;
 import com.mrh0.horth.ast.nodes.accessor.TAccessor;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.branching.TWhile;
+import com.mrh0.horth.ast.nodes.function.TFunc;
 import com.mrh0.horth.ast.nodes.infix.TInfixBinOp;
 import com.mrh0.horth.ast.nodes.infix.TInfixUnOp;
 import com.mrh0.horth.ast.nodes.operands.*;
@@ -230,5 +231,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitGenAccessor(HorthParser.GenAccessorContext ctx) {
         return new TAccessor(cvisit(ctx.accBlock));
+    }
+
+    //Function
+
+    @Override
+    public ITok visitGenFunc(HorthParser.GenFuncContext ctx) {
+        return new TFunc(ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody));
     }
 }
