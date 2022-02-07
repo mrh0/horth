@@ -13,7 +13,7 @@ BIN: '0b'[0-1]*;
 
 CHAR: '\''.'\'' | '\'\\'('n'|'r'|'t'|'\\'|'\''|'"'|'0')'\'';
 
-STRING: '"' (~('\'' | '\\') | '\\' . )* '"';
+STRING: '"' .*? '"';
 STRING_NT: '"' (~('\'' | '\\') | '\\' . )* '"^';
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
@@ -103,14 +103,7 @@ staticExpr:
     ;
 
 general:
-    ATOM                                                                                    #genAtom
-    | integer                                                                               #genInt
-    | identifier                                                                            #genIdentifier
-    | STRING                                                                                #genString
-    | BOOL                                                                                  #genBool
-    | CHAR                                                                                  #genChar
-    | ','                                                                                   #genSeparator
-
+    ','                                                                                   #genSeparator
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
@@ -155,6 +148,13 @@ general:
     | 'syscall' sysCallName=NAME                                                            #genSyscall
     | 'export' NAME                                                                         #genExport
     | typefunc                                                                              #genIntrfunc
+
+    | ATOM                                                                                    #genAtom
+    | integer                                                                               #genInt
+    | identifier                                                                            #genIdentifier
+    | STRING                                                                                #genString
+    | BOOL                                                                                  #genBool
+    | CHAR                                                                                  #genChar
     ;
 
 mainBlock:

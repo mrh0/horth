@@ -5,6 +5,7 @@ import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
+import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
 
 public class AllTypes {
     public static IType INT = new IType() {
@@ -100,6 +101,15 @@ public class AllTypes {
         }
         public int getSize() {
             return 8;
+        }
+
+        @Override
+        public TypeProperty getProperty(Loc location, String name) throws UndefinedPropertyException {
+            switch(name) {
+                case "length":
+                    return new TypeProperty(name, INT, 0);
+            }
+            return IType.super.getProperty(location, name);
         }
     };
 
@@ -197,6 +207,8 @@ public class AllTypes {
     }
 
     public static void canCast(ITok token, IType type, IType to) throws BreachOfContractException {
+        if(IType.equals(type, to))
+            return;
         try {
             type.cast(token.getLocation(), to);
         } catch (CannotCastException e) {

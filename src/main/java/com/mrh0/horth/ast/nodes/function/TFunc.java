@@ -6,6 +6,7 @@ import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.function.HBFunc;
 import com.mrh0.horth.typechecker.Contract;
 
 import java.util.ArrayList;
@@ -50,6 +51,6 @@ public class TFunc extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        System.err.println("Should never get here!");
+        space.add(new HBFunc(this, getFunction()));
     }
 }
