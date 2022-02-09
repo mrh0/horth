@@ -5,6 +5,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.HighLabel;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.TypeChecker;
@@ -20,6 +21,7 @@ public class Func {
     private final List<HighInst> body;
     private final Prefix prefix;
     private final ITok token;
+    public final HighLabel label;
 
     public enum Prefix {
         INLINE, EXTERN, START, NONE;
@@ -43,6 +45,8 @@ public class Func {
         this.contract = contract;
         this.body = body;
         this.prefix = prefix;
+
+        this.label = new HighLabel();
     }
 
     public String getName() {

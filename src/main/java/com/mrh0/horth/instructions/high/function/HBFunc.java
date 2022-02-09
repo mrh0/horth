@@ -33,7 +33,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        var label = new HighLabel();
+        var label = func.label;
         space.add(new HFunc(token, func, label));
         space.add(label);
         space.addAll(func.getBody());
