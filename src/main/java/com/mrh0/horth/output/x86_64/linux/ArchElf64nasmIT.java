@@ -68,7 +68,7 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutAtom((HPutAtom) in));
         else if(in instanceof HPutVar) {
             var v = ((HPutVar) in);
-            if (v.name.charAt(0) == '@')
+            if (v.isAddr)
                 out.add(new LPutVarAddr(v.offset));
             else
                 out.add(new LPutVar(v.offset));

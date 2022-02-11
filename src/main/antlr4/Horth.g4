@@ -132,7 +132,7 @@ general:
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
-
+    //| 'for' 'each' NAME 'in' block 'do' block 'end'
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
     | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                      #genLet

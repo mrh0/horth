@@ -8,9 +8,14 @@ import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 public class LCallFunc implements LowInst {
     private HCallFunc hcf;
 
+    public LCallFunc(HCallFunc hcf) {
+        this.hcf = hcf;
+    }
+
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("add").reg(LSP).imm(8)
-                .inst("mov").reg(LSP).jlabel(hcf.func.label.id);
+        ib      .inst("add").reg(LSP).imm(8)
+                .inst("mov").vreg(LSP, 0).jlabel(hcf.after.id)
+                .inst("jmp").jlabel(hcf.func.label.id);
     }
 }
