@@ -3,9 +3,11 @@ package com.mrh0.horth.instructions.high.stackops.operands;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.IExpanding;
+import com.mrh0.horth.instructions.high.function.HCallFunc;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
@@ -18,6 +20,7 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
     public final String name;
     public int offset = 0;
     public final boolean isAddr;
+    private Func func;
 
     private enum IdentifierType {
         VAR, VAR_REF, FUNC, FUNC_REF, CONST, SIGNATURE, UNDEFINED;
@@ -63,7 +66,10 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 this.offset = le.offset();
                 break;
             case FUNC:
-
+                //TODO: Overloads
+                var funcs = cd.getFunctions(token.getLocation(), this.name);
+                func = funcs.get(0);
+                func.getContract().apply(stack, token);
                 break;
         }
         throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
@@ -77,6 +83,9 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 break;
             case VAR_REF:
                 space.add(new HPutVar(token, name, offset, true));
+                break;
+            case FUNC:
+                space.add(new HCallFunc(token, func, func.label));
                 break;
         }
         throw new CompileException(token.getLocation(), "Unimplemented identifier type.");

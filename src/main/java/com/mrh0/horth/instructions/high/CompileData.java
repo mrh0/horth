@@ -5,6 +5,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.output.Arch;
+import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.typechecker.types.IType;
 import com.mrh0.horth.util.Util;
 
@@ -126,5 +127,15 @@ public class CompileData {
             functions.put(func.getName(), funcs = new ArrayList<>());
 
         funcs.add(func);
+    }
+
+    public List<Func> getFunctions(Loc location, String name) throws HorthException {
+        if(!functions.containsKey(name))
+            throw new CompileException(location, "Unknown function '" + name + "'.");
+        return functions.get(name);
+    }
+
+    public Func getFunction(Loc location, String name, VirtualTypeStack stack) throws HorthException {
+        return null;
     }
 }

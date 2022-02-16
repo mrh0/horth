@@ -1,9 +1,10 @@
-func init -> int in
-    "Hello World" log
-    0
-end
-
 func name -> int in
     "Hello World" log
     0
 end
+
+func init -> int in
+    "Hello World" log
+    name
+end
+

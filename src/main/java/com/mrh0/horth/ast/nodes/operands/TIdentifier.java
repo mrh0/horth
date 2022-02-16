@@ -2,6 +2,7 @@ package com.mrh0.horth.ast.nodes.operands;
 
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.stackops.operands.HBPutIdentifier;
 import com.mrh0.horth.instructions.high.stackops.operands.HPutVar;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class TIdentifier extends Tok {
 
     @Override
     public void expand(List<HighInst> space) {
-        space.add(new HPutVar(this, name));
+        space.add(new HBPutIdentifier(this, name));
     }
 
     @Override

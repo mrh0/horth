@@ -9,6 +9,7 @@ import com.mrh0.horth.instructions.high.accessor.HAccessorLength;
 import com.mrh0.horth.instructions.high.branching.HBranch;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.branching.HJump;
+import com.mrh0.horth.instructions.high.function.HCallFunc;
 import com.mrh0.horth.instructions.high.io.HLog;
 import com.mrh0.horth.instructions.high.local.HLet;
 import com.mrh0.horth.instructions.high.local.HReclaim;
@@ -32,6 +33,7 @@ import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorLength;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
+import com.mrh0.horth.output.x86_64.linux.nasm.function.LCallFunc;
 import com.mrh0.horth.output.x86_64.linux.nasm.io.LLog;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LReclaim;
@@ -66,13 +68,16 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutString((HPutString) in));
         else if(in instanceof HPutAtom)
             out.add(new LPutAtom((HPutAtom) in));
+
         else if(in instanceof HPutVar) {
             var v = ((HPutVar) in);
-            if (v.isAddr)
+            if(v.isAddr)
                 out.add(new LPutVarAddr(v.offset));
             else
                 out.add(new LPutVar(v.offset));
         }
+        else if(in instanceof HCallFunc)
+            out.add(new LCallFunc((HCallFunc) in));
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);

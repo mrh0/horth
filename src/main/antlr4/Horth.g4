@@ -137,6 +137,7 @@ general:
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
     | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                      #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
+    //| 'let' (names+=NAME)+ 'in' #genLetFuncScope
     | 'with' NAME 'do' block 'end'                                                          #genWith
     | 'const' NAME staticExpr 'end'                                                         #genConst
 
