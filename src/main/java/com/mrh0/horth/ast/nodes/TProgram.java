@@ -31,11 +31,4 @@ public class TProgram extends Tok {
         sb.append(")");
         return sb;
     }
-
-    public List<Func> getFunctions() throws HorthException {
-        List<Func> functions = new ArrayList<>();
-        for(TFunc func : main)
-            functions.add(func.getFunction());
-        return functions;
-    }
 }

@@ -80,8 +80,8 @@ public class ArchElf64nasm extends Arch {
                 .inst("mov").vreg("init_stack", 0).reg("rsp")
                 .inst("mov").reg(LowInst.LSP).reg(LowInst.LS)
 
-                .inst("call").append("label_0")
-                .inst("jmp").append("terminate");
+                .inst("push").append("terminate")
+                .inst("call").append("label_0");
 
         for(LowInst li : LLIR)
             li.asm(ib, compileData);

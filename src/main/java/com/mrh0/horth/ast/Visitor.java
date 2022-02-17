@@ -20,6 +20,7 @@ import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
 import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
 import com.mrh0.horth.function.Func;
+import com.mrh0.horth.instructions.high.CompileData;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 
@@ -29,9 +30,11 @@ import java.util.List;
 
 public class Visitor extends HorthBaseVisitor<ITok> {
     private File file;
+    private CompileData cd;
 
-    public Visitor(File file) {
+    public Visitor(File file, CompileData cd) {
         this.file = file;
+        this.cd = cd;
     }
 
     public <T extends ParserRuleContext, O extends ITok> List<O> visit(List<T> list) {
@@ -218,7 +221,8 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     public ITok visitInfixTypefunc(HorthParser.InfixTypefuncContext ctx) {
         if(ctx.identifier() == null)
             return visit(ctx.typefunc());
-        return new TSpread(visit(ctx.identifier()), visit(ctx.typefunc()));
+        return new TSpread(visit(ctx.identifier()), visit(ctx.typefunc()))
+                .loc(ctx.start, file);
     }
 
     //Let
@@ -231,7 +235,8 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     //Accessor
     @Override
     public ITok visitGenAccessor(HorthParser.GenAccessorContext ctx) {
-        return new TAccessor(cvisit(ctx.accBlock));
+        return new TAccessor(cvisit(ctx.accBlock))
+                .loc(ctx.start, file);
     }
 
     //Function
@@ -240,6 +245,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
         Func.Prefix prefix = Func.Prefix.NONE;
         if(ctx.funcPrefix != null)
             prefix = Func.Prefix.from(ctx.funcPrefix.getText());
-        return new TFunc(ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody), prefix);
+        return new TFunc(cd, ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody), prefix)
+                .loc(ctx.start, file);
     }
 }

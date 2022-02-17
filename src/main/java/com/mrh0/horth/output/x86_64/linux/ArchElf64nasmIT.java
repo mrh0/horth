@@ -10,6 +10,8 @@ import com.mrh0.horth.instructions.high.branching.HBranch;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.branching.HJump;
 import com.mrh0.horth.instructions.high.function.HCallFunc;
+import com.mrh0.horth.instructions.high.function.HFunc;
+import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.instructions.high.io.HLog;
 import com.mrh0.horth.instructions.high.local.HLet;
 import com.mrh0.horth.instructions.high.local.HReclaim;
@@ -34,6 +36,8 @@ import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorLength;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LCallFunc;
+import com.mrh0.horth.output.x86_64.linux.nasm.function.LFuncInit;
+import com.mrh0.horth.output.x86_64.linux.nasm.function.LRet;
 import com.mrh0.horth.output.x86_64.linux.nasm.io.LLog;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LReclaim;
@@ -78,6 +82,10 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
         }
         else if(in instanceof HCallFunc)
             out.add(new LCallFunc((HCallFunc) in));
+        else if(in instanceof HFunc)
+            out.add(new LFuncInit());
+        else if(in instanceof HRet)
+            out.add(new LRet());
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);

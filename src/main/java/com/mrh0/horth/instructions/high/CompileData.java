@@ -61,7 +61,7 @@ public class CompileData {
         if(name.equals("_"))
             throw new CompileException(location, "Global name for " + inType.name() + " cannot be '_'.");
         NamedGlobalTypes type = getNamedGlobal(name);
-        if(inType == NamedGlobalTypes.FUNC && type != NamedGlobalTypes.SIGNATURE)
+        if(inType != NamedGlobalTypes.FUNC && type != NamedGlobalTypes.SIGNATURE)
             throw new CompileException(location, "Overwritten function '" + name + "' is not a signature.");
         else if(type.isDefined())
             throw new CompileException(location, "'" + name + "' is already a defined " + type.name() + ".");
@@ -125,7 +125,6 @@ public class CompileData {
         List<Func> funcs = functions.get(func.getName());
         if(funcs == null)
             functions.put(func.getName(), funcs = new ArrayList<>());
-
         funcs.add(func);
     }
 

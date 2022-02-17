@@ -5,6 +5,7 @@ import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.function.Func;
+import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.function.HBFunc;
 import com.mrh0.horth.typechecker.Contract;
@@ -19,12 +20,16 @@ public class TFunc extends Tok {
     private final TBlock funcBody;
     private Func.Prefix prefix;
 
-    public TFunc(String name, List<TType> args, List<TType> rets, TBlock funcBody, Func.Prefix prefix) {
+    private final CompileData cd;
+
+    public TFunc(CompileData cd, String name, List<TType> args, List<TType> rets, TBlock funcBody, Func.Prefix prefix) {
         this.name = name;
         this.args = args;
         this.rets = rets;
         this.funcBody = funcBody;
         this.prefix = prefix;
+
+        this.cd = cd;
     }
 
     @Override
@@ -43,14 +48,17 @@ public class TFunc extends Tok {
         return sb;
     }
 
-    public Func getFunction() throws HorthException {
+    private Func createFunction() throws HorthException {
         List<HighInst> body = new ArrayList<>();
         funcBody.expand(body);
-        return new Func(this, name, Contract.from(args, rets), body, prefix);
+        var func = new Func(this, name, Contract.from(args, rets), body, prefix);
+        cd.defineNamedGlobal(getLocation(), func.getName(), CompileData.NamedGlobalTypes.FUNC);
+        cd.storeFunction(func);
+        return func;
     }
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        space.add(new HBFunc(this, getFunction()));
+        space.add(new HBFunc(this, createFunction()));
     }
 }

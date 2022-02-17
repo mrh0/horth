@@ -69,9 +69,6 @@ public class Func {
             return false;
 
 
-
-
-
         return true;
     }
 
@@ -81,6 +78,7 @@ public class Func {
         TypeChecker.check(stack, cd, body);
         for(IType push : getContract().getPushList())
             stack.check(token, push);
-        TypeChecker.end(stack, Util.lastOf(body).token.getLocation());
+        if(body.size() > 0)
+            TypeChecker.end(stack, Util.lastOf(body).token.getLocation());
     }
 }

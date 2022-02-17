@@ -8,12 +8,10 @@ import com.mrh0.horth.typechecker.IContract;
 
 public class HCallFunc extends HighInst {
     public final Func func;
-    public final HighLabel after;
 
-    public HCallFunc(ITok token, Func func, HighLabel after) {
+    public HCallFunc(ITok token, Func func) {
         super(token);
         this.func = func;
-        this.after = after;
     }
 
     @Override

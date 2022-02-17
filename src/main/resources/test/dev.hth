@@ -1,10 +1,8 @@
-func name -> int in
-    "Hello World" log
-    0
+func fun1 in
+    fun2
 end
 
-func init -> int in
+func fun2 in
     "Hello World" log
-    name
 end
 

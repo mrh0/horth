@@ -46,7 +46,7 @@ public class Main {
         CompileData compileData = new CompileData(arch);
 
         var tree = parser.program();
-        var t = new Visitor(inputFile).visitProgram(tree);
+        var t = new Visitor(inputFile, compileData).visitProgram(tree);
         System.out.println(t.toString());
 
         //PreTypeCheckExpanding
@@ -68,7 +68,7 @@ public class Main {
         IExpanding.expandAll(HLIR, newHLIR);
 
         HLIR = newHLIR;
-        System.out.println(HLIR);
+        System.out.println("Post: " + HLIR);
 
 
         //IDataChecked.checkAll(cd, HLIR);

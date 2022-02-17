@@ -90,6 +90,10 @@ public class InstructionBuilder {
         return this;
     }
 
+    public InstructionBuilder qword() {
+        return this.append("QWORD ");
+    }
+
     public InstructionBuilder comment(String commend) {
         sb.append("\n;; ");
         sb.append(commend);

@@ -71,8 +71,9 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 func = funcs.get(0);
                 func.getContract().apply(stack, token);
                 break;
+            default:
+                throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
         }
-        throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
     }
 
     @Override
@@ -85,9 +86,10 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 space.add(new HPutVar(token, name, offset, true));
                 break;
             case FUNC:
-                space.add(new HCallFunc(token, func, func.label));
+                space.add(new HCallFunc(token, func));
                 break;
+            default:
+                throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
         }
-        throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
     }
 }

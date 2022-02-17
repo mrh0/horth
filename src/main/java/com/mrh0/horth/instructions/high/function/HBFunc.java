@@ -36,7 +36,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
         var label = func.label;
         space.add(new HFunc(token, func, label));
         space.add(label);
-        space.addAll(func.getBody());
+        IExpanding.expandAll(func.getBody(), space);
         space.add(new HRet(token));
     }
 }
