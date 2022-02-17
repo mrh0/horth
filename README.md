@@ -7,6 +7,9 @@
 ```
 //comment
 /*comment*/
+Symbols can be separated with a comma ',' but has no effect on the compilation or execution, it can be seen as a comment.
+1, 2, 3 + +
+
 ```
 ```
 //String
