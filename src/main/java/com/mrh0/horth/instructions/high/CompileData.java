@@ -40,6 +40,7 @@ public class CompileData {
     private Map<String, NamedGlobalTypes> namedGlobalsMap;
     private List<LocalEntry> namedLocalsList;
     private List<LocalScope> localScopeList;
+    private List<Func> startFunctions;
 
     public final List<Util.RealString> strings;
     public final Map<String, Void> atoms;
@@ -55,6 +56,7 @@ public class CompileData {
         this.strings = new ArrayList<>();
         this.atoms = new HashMap<>();
         this.functions = new HashMap<>();
+        this.startFunctions = new ArrayList<>();
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -125,6 +127,8 @@ public class CompileData {
         List<Func> funcs = functions.get(func.getName());
         if(funcs == null)
             functions.put(func.getName(), funcs = new ArrayList<>());
+        if(func.getPrefix() == Func.Prefix.START)
+            startFunctions.add(func);
         funcs.add(func);
     }
 
@@ -136,5 +140,9 @@ public class CompileData {
 
     public Func getFunction(Loc location, String name, VirtualTypeStack stack) throws HorthException {
         return null;
+    }
+
+    public List<Func> getStartFunctions() {
+        return this.startFunctions;
     }
 }

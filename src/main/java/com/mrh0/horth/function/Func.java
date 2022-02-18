@@ -81,4 +81,8 @@ public class Func {
         if(body.size() > 0)
             TypeChecker.end(stack, Util.lastOf(body).token.getLocation());
     }
+
+    public Prefix getPrefix() {
+        return this.prefix;
+    }
 }

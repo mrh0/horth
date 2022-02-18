@@ -15,6 +15,6 @@ public class LCallFunc implements LowInst {
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
         ib      .comment("FUNC_CALL " + hcf.func.getName())
-                ;
+                .inst("call").jlabel(hcf.func.label.id);
     }
 }

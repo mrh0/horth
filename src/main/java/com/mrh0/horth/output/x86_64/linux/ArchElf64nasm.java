@@ -51,6 +51,9 @@ public class ArchElf64nasm extends Arch {
             li.collect(compileData);
         }
 
+        if(compileData.getStartFunctions().size() == 0)
+            throw new CompileException(null, "Missing start function.");
+
         StringBuilder sb = new StringBuilder();
         InstructionBuilder ib = new InstructionBuilder(sb);
 
@@ -80,8 +83,8 @@ public class ArchElf64nasm extends Arch {
                 .inst("mov").vreg("init_stack", 0).reg("rsp")
                 .inst("mov").reg(LowInst.LSP).reg(LowInst.LS)
 
-                .inst("push").append("terminate")
-                .inst("call").append("label_0");
+                .inst("call").jlabel(compileData.getStartFunctions().get(0).label.id)
+                .inst("jmp").append("terminate");
 
         for(LowInst li : LLIR)
             li.asm(ib, compileData);
@@ -89,9 +92,10 @@ public class ArchElf64nasm extends Arch {
         sb.append('\n');
         ib      .label("terminate")
                 .inst("mov").reg("rsp").vreg("init_stack", 0)
-                .inst("mov").reg("rsi").reg(LowInst.S1)
-                .inst("mov").reg("rax").imm(0x3c)
-                .inst("syscall");
+                .inst("ret");
+                //.inst("mov").reg("rsi").reg(LowInst.S1)
+                //.inst("mov").reg("rax").imm(0x3c)
+                //.inst("syscall");
         sb.append('\n');
         return sb;
     }

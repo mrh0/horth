@@ -23,7 +23,7 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
     private Func func;
 
     private enum IdentifierType {
-        VAR, VAR_REF, FUNC, FUNC_REF, CONST, SIGNATURE, UNDEFINED;
+        VAR, VAR_REF, FUNC, FUNC_INLINE, FUNC_REF, CONST, SIGNATURE, UNDEFINED;
     }
 
     private IdentifierType idt;
@@ -70,6 +70,8 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 var funcs = cd.getFunctions(token.getLocation(), this.name);
                 func = funcs.get(0);
                 func.getContract().apply(stack, token);
+                if(func.getPrefix() == Func.Prefix.INLINE)
+                    idt = IdentifierType.FUNC_INLINE;
                 break;
             default:
                 throw new CompileException(token.getLocation(), "Unimplemented identifier type.");
@@ -87,6 +89,9 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 break;
             case FUNC:
                 space.add(new HCallFunc(token, func));
+                break;
+            case FUNC_INLINE:
+                IExpanding.expandAll(func.getBody(), space);
                 break;
             default:
                 throw new CompileException(token.getLocation(), "Unimplemented identifier type.");

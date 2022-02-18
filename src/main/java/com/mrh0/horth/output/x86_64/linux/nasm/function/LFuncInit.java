@@ -8,6 +8,6 @@ public class LFuncInit implements LowInst {
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
         ib      .inst("add").reg(LSP).imm(8)
-                .inst("pop").reg(LowInst.LSP);
+                .inst("pop").qword().vreg(LowInst.LSP, 0);
     }
 }

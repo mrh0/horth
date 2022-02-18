@@ -23,3 +23,31 @@ let n in
 		1 @c 1 syscall write drop
 	end
 end
+
+
+start func fun1 in
+    fun2 log
+end
+
+func fun2 -> string in
+    "Hello World"
+end
+//Prints "Hello World" to std out
+
+start func main -> int in
+    10 20 add
+end
+
+func add int int -> int in
+    +
+end
+//Exit code: 30
+
+start func main -> int in
+    10 20 add
+end
+
+inline func add int int -> int in
+    +
+end
+//Exit code: 30

@@ -8,7 +8,10 @@ public class LRet implements LowInst {
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
         ib      .comment("FUNC_RET")
+                .inst("push").qword().vreg(LSP, 0)
                 .inst("sub").reg(LSP).imm(8)
-                .inst("jmp").vreg(LSP, 0);
+                .inst("ret");
+
+        //Alternative, sub 8 + offset for all lets in func and then add 8 offset to vreg
     }
 }

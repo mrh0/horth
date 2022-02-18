@@ -1,8 +1,7 @@
-func fun1 in
-    fun2
+start func main -> int in
+    rec 0
 end
 
-func fun2 in
-    "Hello World" log
+func rec in
+    rec
 end
-

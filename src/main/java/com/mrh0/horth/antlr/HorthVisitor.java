@@ -65,13 +65,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitDataTypeFunc(HorthParser.DataTypeFuncContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code dataTypeAtoms}
-	 * labeled alternative in {@link HorthParser#dataType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDataTypeAtoms(HorthParser.DataTypeAtomsContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HorthParser#userDefinedDataType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
