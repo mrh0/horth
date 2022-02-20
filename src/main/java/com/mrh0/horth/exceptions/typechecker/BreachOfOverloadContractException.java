@@ -2,7 +2,6 @@ package com.mrh0.horth.exceptions.typechecker;
 
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.typechecker.Contract;
-import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.util.Util;
 
 public class BreachOfOverloadContractException extends TypeCheckerException {

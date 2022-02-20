@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfOverloadContractException;
+import com.mrh0.horth.exceptions.typechecker.DuplicateFunctionOverloadException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
@@ -30,11 +31,15 @@ public class TypeChecker {
     }
 
     public static void validOverload(Loc location, List<Func> existing, Func func) throws TypeCheckerException {
-        if(existing.size() == 0)
+        if(existing.size() <= 1)
+            return;
+
+        if(existing.get(0) == func)
             return;
 
         var ec = existing.get(0).getContract();
         var fc = func.getContract();
+
         if(ec.getPopList().length != fc.getPopList().length)
             throw new BreachOfOverloadContractException(location, ec, fc, BreachOfOverloadContractException.Type.ARG_NUM);
 
@@ -45,6 +50,20 @@ public class TypeChecker {
             if(!IType.equals(ec.getPushList()[i], fc.getPushList()[i])) {
                 throw new BreachOfOverloadContractException(location, ec, fc, BreachOfOverloadContractException.Type.PUSH_TYPES);
             }
+        }
+
+        boolean match = true;
+        for(int k = 0; k < existing.size(); k++) {
+            if(existing.get(k) == func)
+                continue;
+            match = true;
+            var eck = existing.get(k).getContract();
+            for (int i = 0; i < eck.getPopList().length; i++) {
+                if (!IType.equals(eck.getPopList()[i], fc.getPopList()[i]))
+                    match = false;
+            }
+            if(match)
+                throw new DuplicateFunctionOverloadException(location, existing.get(k), func);
         }
     }
 }

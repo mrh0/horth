@@ -3,6 +3,8 @@ package com.mrh0.horth.instructions.high;
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
+import com.mrh0.horth.exceptions.typechecker.NoMatchingFunctionOverloadException;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
@@ -139,8 +141,23 @@ public class CompileData {
     }
 
     public Func getFunction(Loc location, String name, VirtualTypeStack stack) throws HorthException {
-        getFunctions(location, name);
-        return null;
+        var funcs = getFunctions(location, name);
+        for(Func f : funcs) {
+            var popList = f.getContract().getPopList();
+            var matching = true;
+            for(int i = 0; i < popList.length; i++) {
+                var stackIndex = stack.stack.size() - popList.length + i;
+                if(!IType.equals(popList[i], stack.stack.get(stackIndex).type())) {
+                    matching = false;
+                    break;
+                }
+            }
+            if(matching) {
+                System.out.println("FOUND: " + f.toString());
+                return f;
+            }
+        }
+        throw new NoMatchingFunctionOverloadException(location, name, stack, funcs.get(0).getContract().getPopList().length, funcs.get(0).getContract().getPushList());
     }
 
     public List<Func> getStartFunctions() {

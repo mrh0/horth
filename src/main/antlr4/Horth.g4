@@ -20,8 +20,8 @@ COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 identifier:
-    '@' NAME ('.'* NAME)*
-    | NAME ('.'* NAME)* ('.')*
+    '@' NAME// ('.'* NAME)*
+    //| NAME ('.'* NAME)* ('.')*
     ;
 
 integer:
@@ -148,6 +148,9 @@ general:
 
     | 'syscall' sysCallName=NAME                                                            #genSyscall
     | 'export' NAME                                                                         #genExport
+
+    //TODO: should . mean .value? i.e: "" == "value"
+    | '.' (props+=NAME) ('.' (props+=NAME))*                                                #genProps
     | typefunc                                                                              #genIntrfunc
 
     | ATOM                                                                                    #genAtom

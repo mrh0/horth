@@ -67,8 +67,8 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 break;
             case FUNC:
                 //TODO: Overloads
-                var funcs = cd.getFunctions(token.getLocation(), this.name);
-                func = funcs.get(0);
+                //var funcs = cd.getFunctions(token.getLocation(), this.name);
+                func = cd.getFunction(token.getLocation(), this.name, stack);
                 func.getContract().apply(stack, token);
                 if(func.getPrefix() == Func.Prefix.INLINE)
                     idt = IdentifierType.FUNC_INLINE;

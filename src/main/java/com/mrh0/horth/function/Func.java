@@ -1,5 +1,6 @@
 package com.mrh0.horth.function;
 
+import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfOverloadContractException;
@@ -77,5 +78,14 @@ public class Func {
 
     public Prefix getPrefix() {
         return this.prefix;
+    }
+
+    public Loc getLocation() {
+        return this.token.getLocation();
+    }
+
+    @Override
+    public String toString() {
+        return getName() + getContract();
     }
 }

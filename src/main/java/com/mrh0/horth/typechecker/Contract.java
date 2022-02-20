@@ -5,6 +5,7 @@ import com.mrh0.horth.ast.nodes.types.TType;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.typechecker.types.GenericType;
 import com.mrh0.horth.typechecker.types.IType;
+import com.mrh0.horth.util.Util;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -88,6 +89,6 @@ public class Contract implements IContract{
 
     @Override
     public String toString() {
-        return Arrays.toString(pop) + " -> " + Arrays.toString(push);
+        return "(" + Util.list(pop) + " -> " + Util.list(push) + ")";
     }
 }

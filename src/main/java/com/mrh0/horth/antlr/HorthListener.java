@@ -570,6 +570,18 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenExport(HorthParser.GenExportContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genProps}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenProps(HorthParser.GenPropsContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genProps}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenProps(HorthParser.GenPropsContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree

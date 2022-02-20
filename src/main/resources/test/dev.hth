@@ -1,5 +1,5 @@
 start func main -> int in
-    1 1 f1
+    '1' '1' f1
 end
 
 func f1 int int -> int in

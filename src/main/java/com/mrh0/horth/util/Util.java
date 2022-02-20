@@ -98,6 +98,8 @@ public class Util {
 
     public static String list(IType[] types) {
         StringBuilder sb = new StringBuilder();
+        if(types.length == 0)
+            sb.append("void");
         for(int i = 0; i < types.length; i++) {
             sb.append(AllTypes.stringOf(types[i]));
             if(i+1 < types.length)
