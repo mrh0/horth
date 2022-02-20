@@ -2,6 +2,7 @@ package com.mrh0.horth.function;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.exceptions.typechecker.BreachOfOverloadContractException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
@@ -24,7 +25,7 @@ public class Func {
     public final HighLabel label;
 
     public enum Prefix {
-        INLINE, EXTERN, START, NONE;
+        INLINE, EXTERN, START, REC, NONE;
 
         public static Prefix from(String prefix) {
             switch(prefix) {
@@ -34,6 +35,8 @@ public class Func {
                     return EXTERN;
                 case "start":
                     return START;
+                case "rec":
+                    return REC;
             }
             return NONE;
         }
@@ -61,18 +64,8 @@ public class Func {
         return this.body;
     }
 
-    public static boolean insertOverload(List<Func> existing, Func func) throws TypeCheckerException {
-        if(existing.size() == 0)
-            return true;
-
-        if(existing.get(0).getContract().getPopList().length != func.getContract().getPopList().length)
-            return false;
-
-
-        return true;
-    }
-
     public void validate(VirtualTypeStack stack, CompileData cd) throws HorthException {
+        TypeChecker.validOverload(token.getLocation(), cd.getFunctions(token.getLocation(), this.getName()), this);
         for(IType pop : getContract().getPopList())
             stack.push(pop, token);
         TypeChecker.check(stack, cd, body);

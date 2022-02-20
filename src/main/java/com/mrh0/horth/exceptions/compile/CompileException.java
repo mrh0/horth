@@ -12,6 +12,6 @@ public class CompileException extends HorthException {
 
     @Override
     public String additional() {
-        return info;
+        return "\t"+info;
     }
 }

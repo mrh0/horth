@@ -65,7 +65,7 @@ public class CompileData {
         NamedGlobalTypes type = getNamedGlobal(name);
         if(inType != NamedGlobalTypes.FUNC && type != NamedGlobalTypes.SIGNATURE)
             throw new CompileException(location, "Overwritten function '" + name + "' is not a signature.");
-        else if(type.isDefined())
+        else if(type.isDefined() && type != inType)
             throw new CompileException(location, "'" + name + "' is already a defined " + type.name() + ".");
         namedGlobalsMap.put(name, inType);
     }
@@ -139,6 +139,7 @@ public class CompileData {
     }
 
     public Func getFunction(Loc location, String name, VirtualTypeStack stack) throws HorthException {
+        getFunctions(location, name);
         return null;
     }
 

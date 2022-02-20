@@ -1,7 +1,11 @@
 start func main -> int in
-    rec 0
+    1 1 f1
 end
 
-func rec in
-    rec
+func f1 int int -> int in
+    drop drop 1
+end
+
+func f1 char char -> char in
+    drop drop 1
 end

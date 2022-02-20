@@ -159,7 +159,7 @@ general:
     ;
 
 mainBlock:
-    'export'? funcPrefix=('inline' | 'extern' | 'start' | 'rec')? 'func' name=NAME
+    funcPrefix=('inline' | 'extern' | 'start' | 'rec')? 'func' name=NAME
             (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #mainFunc
     ;
 

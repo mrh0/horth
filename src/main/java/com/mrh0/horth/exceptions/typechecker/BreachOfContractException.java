@@ -29,6 +29,6 @@ public class BreachOfContractException extends TypeCheckerException {
     public String additional() {
         return  "\tUnexpected type on the stack: " +
                 "\n\t\tExpected: " + (expected == null ? "any" : AllTypes.stringOf(expected)) +
-                "\n\t\tGot: " +  AllTypes.stringOf(actual);
+                "\n\t\tGot:      " +  AllTypes.stringOf(actual);
     }
 }

@@ -2,6 +2,8 @@ package com.mrh0.horth.util;
 
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.parser.ParserException;
+import com.mrh0.horth.typechecker.types.AllTypes;
+import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.List;
 
@@ -82,5 +84,25 @@ public class Util {
 
     public static String formatPath(String path) {
         return path.replace("\\", "/");
+    }
+
+    public static <T> String list(T[] array) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < array.length; i++) {
+            sb.append(array[i]);
+            if(i+1 < array.length)
+                sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+    public static String list(IType[] types) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < types.length; i++) {
+            sb.append(AllTypes.stringOf(types[i]));
+            if(i+1 < types.length)
+                sb.append(" ");
+        }
+        return sb.toString();
     }
 }
