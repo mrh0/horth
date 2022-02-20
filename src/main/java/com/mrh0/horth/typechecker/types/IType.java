@@ -1,15 +1,19 @@
 package com.mrh0.horth.typechecker.types;
 
 import com.mrh0.horth.ast.Loc;
+import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
+import com.mrh0.horth.exceptions.typechecker.CannotConstructException;
 import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
+import com.mrh0.horth.typechecker.Contract;
+import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.util.IO;
 
 import java.util.List;
 import java.util.Map;
 
 public interface IType {
-    public record TypeProperty(String name, IType type, int offset) {}
+    record TypeProperty(String name, IType type, int offset) {}
 
     static boolean equals(IType a, IType b) {
         if(a instanceof NestedType && b instanceof NestedType)
@@ -53,6 +57,14 @@ public interface IType {
             return true;
         }
         return false;
+    }
+
+    default int constructor(Loc location) throws HorthException {
+        throw new CannotConstructException(location, this);
+    }
+
+    default IContract getConstructorContract() {
+        return Contract.VOID;
     }
 
     default boolean is64() {
