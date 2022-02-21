@@ -109,6 +109,7 @@ public class InstructionBuilder {
         sb.append('`');
         sb.append(str.str());
         sb.append('`');
+        sb.append("\n\tdb 0");
         return this;
     }
 

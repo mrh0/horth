@@ -3,6 +3,7 @@ package com.mrh0.horth.ast.nodes.accessor;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.accessor.HProps;
 
 import java.util.List;
 
@@ -21,6 +22,6 @@ public class TProps extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-
+        space.add(new HProps(this, props));
     }
 }

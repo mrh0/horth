@@ -51,3 +51,16 @@ inline func add int int -> int in
     +
 end
 //Exit code: 30
+
+
+start func main -> int in
+    '1' '1' f1
+end
+
+func f1 int int -> int in
+    drop drop 1
+end
+
+func f1 char char -> int in
+    drop drop 1
+end

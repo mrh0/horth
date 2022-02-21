@@ -108,6 +108,8 @@ public class AllTypes {
             switch(name) {
                 case "length":
                     return new TypeProperty(name, INT, 0);
+                case "nt":
+                    return new TypeProperty(name, ref(CHAR), INT.getSize());
             }
             return IType.super.getProperty(location, name);
         }

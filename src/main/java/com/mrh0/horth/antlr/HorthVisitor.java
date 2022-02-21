@@ -214,6 +214,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenKeyword(HorthParser.GenKeywordContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genProps}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenProps(HorthParser.GenPropsContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genAccessor}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree
@@ -339,13 +346,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitGenExport(HorthParser.GenExportContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code genProps}
-	 * labeled alternative in {@link HorthParser#general}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitGenProps(HorthParser.GenPropsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code genIntrfunc}
 	 * labeled alternative in {@link HorthParser#general}.

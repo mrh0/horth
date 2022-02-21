@@ -21,6 +21,7 @@ BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 identifier:
     '@' NAME// ('.'* NAME)*
+    | NAME
     //| NAME ('.'* NAME)* ('.')*
     ;
 
@@ -107,6 +108,9 @@ general:
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
+
+    | '.' (props+=NAME) ('.' (props+=NAME))*                                                #genProps
+
     | '[' accBlock=block ']'                                                                #genAccessor
     | '[' accBlock=block ']^'                                                               #genAccessorStrict
     | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
@@ -150,7 +154,8 @@ general:
     | 'export' NAME                                                                         #genExport
 
     //TODO: should . mean .value? i.e: "" == "value"
-    | '.' (props+=NAME) ('.' (props+=NAME))*                                                #genProps
+
+    //| 'new' dataType                                                                        #genNew
     | typefunc                                                                              #genIntrfunc
 
     | ATOM                                                                                    #genAtom

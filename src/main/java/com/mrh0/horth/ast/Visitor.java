@@ -4,6 +4,7 @@ import com.mrh0.horth.antlr.HorthBaseVisitor;
 import com.mrh0.horth.antlr.HorthParser;
 import com.mrh0.horth.ast.nodes.*;
 import com.mrh0.horth.ast.nodes.accessor.TAccessor;
+import com.mrh0.horth.ast.nodes.accessor.TProps;
 import com.mrh0.horth.ast.nodes.branching.TIf;
 import com.mrh0.horth.ast.nodes.branching.TWhile;
 import com.mrh0.horth.ast.nodes.function.TFunc;
@@ -239,11 +240,17 @@ public class Visitor extends HorthBaseVisitor<ITok> {
                 .loc(ctx.start, file);
     }
 
+    @Override
+    public ITok visitGenProps(HorthParser.GenPropsContext ctx) {
+        return new TProps(tvisit(ctx.props))
+                .loc(ctx.start, file);
+    }
+
     //Function
     @Override
     public ITok visitMainFunc(HorthParser.MainFuncContext ctx) {
         Func.Prefix prefix = Func.Prefix.NONE;
-        if(ctx.funcPrefix != null)
+        if (ctx.funcPrefix != null)
             prefix = Func.Prefix.from(ctx.funcPrefix.getText());
         return new TFunc(cd, ctx.name.getText(), visit(ctx.args), visit(ctx.rets), cvisit(ctx.funcBody), prefix)
                 .loc(ctx.start, file);

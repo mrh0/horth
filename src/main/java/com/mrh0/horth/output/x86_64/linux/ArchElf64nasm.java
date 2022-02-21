@@ -65,8 +65,7 @@ public class ArchElf64nasm extends Arch {
                 .label(LowInst.LS).append("    resb " + localStackMemory)
                 .label("local_temp_rsp").append("  resq 1");
 
-        ib      .append("\n")
-                .inst("section").reg(".data");
+        ib      .inst("section").reg(".data");
 
         for(int i = 0; i < compileData.strings.size(); i++)
             ib  .dbString(i, compileData.strings.get(i));
