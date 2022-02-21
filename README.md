@@ -126,6 +126,20 @@ end
 //Call
 1 1 add //Returns 2
 
+//Define function overload
+func add string string -> int in
+   let a b in [] [] + end
+end
+
+//Call with int int
+1 1 add //Returns 2
+
+//Call with string string
+"Hello" "World" add //Returns 10
+
+//Function overloads offers an alternative to generic types in function arguments.
+A function overload must return the same types as the function it is overloading.
+
 //Define inline functions
 inline func inlineAdd int int -> int in
    +
