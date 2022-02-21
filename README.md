@@ -139,7 +139,7 @@ start func main -> int in
    "Hello World" log
 end
 
-//Start functions can have any name but must return one number (anything castable to byte).
+//Start functions can have any name but must return one number (anything castable to byte) which is the exit code.
 //arguments to a start function can be anything and will match based on the start arguments given when running the program [WIP].
 //If none match the main function with no arguments is used.
 
