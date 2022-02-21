@@ -110,6 +110,41 @@ log     : string | atom ->
 here    : -> string, int int //filename line column
 ```
 
+# Functions
+
+```
+//Syntax
+/*prefix*/ func /*name*/ /*type...*/ -> /*type...*/ in
+   /*function body*/
+end
+
+//Define
+func add int int -> int in
+   +
+end
+
+//Call
+1 1 add //Returns 2
+
+//Define inline functions
+inline func inlineAdd int int -> int in
+   +
+end
+
+//Use
+1 1 add //Will compile into: '1 1 +' and wont call the function
+
+//Define start functions
+start func main -> int in
+   "Hello World" log
+end
+
+//Start functions can have any name but must return one number (anything castable to byte).
+//arguments to a start function can be anything and will match based on the start arguments given when running the program [WIP].
+//If none match the main function with no arguments is used.
+
+```
+
 # Examples
 
 ```
