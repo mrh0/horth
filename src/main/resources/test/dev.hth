@@ -1,3 +1,3 @@
 start func main -> int in
-    "Hello World" .nt 0
+    "Hello World".nt.value as int
 end

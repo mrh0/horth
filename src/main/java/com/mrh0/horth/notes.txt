@@ -169,3 +169,9 @@ log:
 	syscall
 	mov 	rax, rbx
 	pop 	rbx
+
+prop:
+    mov     rax, [rax + <offset>]
+
+propAddr:
+    add     rax, <offset>

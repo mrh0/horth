@@ -47,7 +47,7 @@ dataType:
     ;
 
 userDefinedDataType:
-    'type' NAME 'as' (NAME dataType '|')* NAME dataType 'end'
+    'type' NAME 'as' (NAME dataType ',')* NAME dataType 'end'
     ;
 
 unop:
