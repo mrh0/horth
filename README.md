@@ -15,9 +15,6 @@ Symbols can be separated with a comma ',' but has no effect on the compilation o
 //String
 "Hello World"
 
-//Null terminated String
-"Hello World"^
-
 //Character
 'a' '5' 'Z' '\n' '\r' '\r' '\0' '\\' '\''
 
@@ -79,6 +76,7 @@ func<type... -> type...>
 ```
 //Type Functions
 sizeof(type)
+sizeof(type...) //[WIP]
 sizeof type
 
 cast(type)
@@ -159,20 +157,33 @@ end
 
 ```
 
+# Properties
+
+```
+//Type properties are named references to pointers within the datastructure of the type.
+//Some types define properties which can be accessed using the '.' (dot) operator.
+"Hello World".length  //Will return the length of the string which is 11.
+"Hello World".nt@     //Wil return a reference ref<char> (char*) to the first char in the null terminated string.
+```
+
 # Examples
 
 ```
 //Hello World
-"Hello World" log
-0 exit
+start func main -> int in
+   "Hello World" log
+   0
+end
 
 //Hello World (using syscall)
-1 "Hello World" length
-let fd str len in
-    fd, (str unsafe cast(int) + sizeof(int)), len
-    syscall write drop
+start func main -> int in
+    1 "Hello World" dup .nt@
+    let fd str len in
+        fd, (str as unsafe int + sizeof int), len
+        syscall write drop
+    end
+    0
 end
-0 exit
 ```
 
 ```
