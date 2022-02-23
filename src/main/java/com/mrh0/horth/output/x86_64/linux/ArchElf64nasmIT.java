@@ -6,6 +6,7 @@ import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
 import com.mrh0.horth.instructions.high.accessor.HAccessor;
 import com.mrh0.horth.instructions.high.accessor.HAccessorLength;
+import com.mrh0.horth.instructions.high.accessor.HProp;
 import com.mrh0.horth.instructions.high.branching.HBranch;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.branching.HJump;
@@ -21,7 +22,6 @@ import com.mrh0.horth.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.instructions.high.stackops.base.HSwap;
 import com.mrh0.horth.instructions.high.stackops.binop.compare.*;
 import com.mrh0.horth.instructions.high.stackops.operands.*;
-import com.mrh0.horth.instructions.high.stackops.other.HLength;
 import com.mrh0.horth.instructions.high.stackops.other.HSysCall;
 import com.mrh0.horth.instructions.high.stackops.binop.HAdd;
 import com.mrh0.horth.instructions.high.stackops.other.HExit;
@@ -34,6 +34,8 @@ import com.mrh0.horth.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorLength;
+import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LOffset;
+import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LRead;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LCallFunc;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LFuncInit;
@@ -89,8 +91,14 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
-        else if(in instanceof HLength)
-            out.add(LLength.INSTANCE);
+
+        else if(in instanceof HProp) {
+            var v = (HProp) in;
+            if(v.isAddr())
+                out.add(new LOffset(v.getOffset()));
+            else
+                out.add(new LRead(v));
+        }
 
         else if(in instanceof HLog)
             out.add(LLog.INSTANCE);

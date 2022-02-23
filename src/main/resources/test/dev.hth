@@ -1,3 +1,8 @@
 start func main -> int in
-    "Hello World".nt.value as int
+    1 "Hello World" dup .nt@
+    let fd str len in
+        fd, (str as unsafe int + sizeof int), len
+        syscall write drop
+    end
+    0
 end

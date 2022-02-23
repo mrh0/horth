@@ -376,13 +376,25 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterGenProps(HorthParser.GenPropsContext ctx) { }
+	@Override public void enterGenProp(HorthParser.GenPropContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitGenProps(HorthParser.GenPropsContext ctx) { }
+	@Override public void exitGenProp(HorthParser.GenPropContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterGenPropAddr(HorthParser.GenPropAddrContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGenPropAddr(HorthParser.GenPropAddrContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

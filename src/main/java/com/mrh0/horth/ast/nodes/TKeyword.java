@@ -11,7 +11,6 @@ import com.mrh0.horth.instructions.high.stackops.operands.HPutString;
 import com.mrh0.horth.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.instructions.high.stackops.base.HSwap;
-import com.mrh0.horth.instructions.high.stackops.other.HLength;
 import com.mrh0.horth.instructions.high.stackops.other.HVoid;
 
 import java.util.List;
@@ -43,9 +42,6 @@ public class TKeyword extends Tok {
                 break;
             case "swap":
                 space.add(new HSwap(this));
-                break;
-            case "length":
-                space.add(new HLength(this));
                 break;
             case "log":
                 space.add(new HLog(this));

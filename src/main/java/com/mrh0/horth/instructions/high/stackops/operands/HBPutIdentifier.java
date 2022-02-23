@@ -31,7 +31,7 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
     public HBPutIdentifier(ITok token, String name) {
         super(token);
         this.name = name;
-        this.isAddr = name.charAt(0) == '@';
+        this.isAddr = name.charAt(name.length()-1) == '@';
         this.idt = IdentifierType.UNDEFINED;
     }
 
@@ -61,7 +61,7 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
                 this.offset = le.offset();
                 break;
             case VAR_REF:
-                le = cd.findNamedLocal(token.getLocation(), this.name.substring(1));
+                le = cd.findNamedLocal(token.getLocation(), this.name.substring(0, this.name.length()-1));
                 stack.push(AllTypes.ref(le.type()), token);
                 this.offset = le.offset();
                 break;

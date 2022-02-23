@@ -1,6 +1,7 @@
 package com.mrh0.horth.output.x86_64.linux.nasm.accessor;
 
 import com.mrh0.horth.instructions.high.CompileData;
+import com.mrh0.horth.instructions.high.accessor.HProp;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 
@@ -10,6 +11,11 @@ public class LRead implements LowInst {
     public LRead(int offset, int size) {
         this.offset = offset;
         this.size = size;
+    }
+
+    public LRead(HProp prop) {
+        this.offset = prop.getOffset();
+        this.size = prop.getSize();
     }
 
     @Override

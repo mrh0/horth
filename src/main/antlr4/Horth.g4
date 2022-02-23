@@ -20,9 +20,8 @@ COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
 
 identifier:
-    '@' NAME// ('.'* NAME)*
+    NAME '@'
     | NAME
-    //| NAME ('.'* NAME)* ('.')*
     ;
 
 integer:
@@ -68,17 +67,19 @@ keywords:
     | 'out' | 'log' 'error' | 'log^' 'error' | 'log' | 'log^' //^ for ntstring
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'break'
-    | 'length' | 'here'
+    | 'here'
     | 'void'
     ;
 
 typefunc:
     'sizeof' '(' dataType ')'                       #typefuncSizeof
     | 'sizeof' dataType                             #typefuncSizeof
-    | 'cast' '(' dataType ')'                       #typefuncCast
+    //| 'cast' '(' dataType ')'                       #typefuncCast
     | 'as' dataType                                 #typefuncCast
-    | 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
+    //| 'as' '(' (types+=dataType)* ')'               #typefuncCast
+    //| 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
     | 'as' 'unsafe' dataType                        #typefuncCastUnsafe
+    //| 'as' '(' ('unsafe'? types+=dataType)* ')'     #typefuncCastUnsafe
     | 'is' '(' (types+=dataType)* ')'               #typefuncIs
     | 'is' types+=dataType                          #typefuncIs
     ;
@@ -109,7 +110,8 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
 
-    | '.' (props+=NAME) ('.' (props+=NAME))*                                                #genProps
+    | '.' prop=NAME                                                                         #genProp
+    | '.' prop=NAME '@'                                                                     #genPropAddr
 
     | '[' accBlock=block ']'                                                                #genAccessor
     | '[' accBlock=block ']^'                                                               #genAccessorStrict
