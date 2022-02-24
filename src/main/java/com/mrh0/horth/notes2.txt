@@ -45,3 +45,30 @@ func test string int -> int in ... end //3
 1 void test
 //Call 3
 "hello" 2 test
+
+//Boxed types
+func makeBox int -> boxed atom in
+    if dup 0 == do
+        "Hello World" box
+    elif dup 1 == do
+        500 box
+    elif dup 2 == do
+        'A' box
+    else
+        void box
+end
+
+func openBox int in
+    makeBox
+    let boxed type in
+        if type :string == do
+            boxed as string
+            //Is string...
+        if type :int == do
+            boxed as int
+            //Is int...
+        if type :char == do
+            boxed as char
+            //Is char...
+    end
+end

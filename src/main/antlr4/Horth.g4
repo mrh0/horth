@@ -64,10 +64,11 @@ keywords:
     'dup' | 'dup2'
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
-    | 'out' | 'log' 'error' | 'log^' 'error' | 'log' | 'log^' //^ for ntstring
+    | 'out' | 'log' 'error' | 'log'
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'break'
     | 'here'
+    | 'box'
     | 'void'
     ;
 

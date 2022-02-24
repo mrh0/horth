@@ -8,7 +8,7 @@ import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
 
 public class AllTypes {
-    public static IType INT = new IType() {
+    public static final IType INT = new IType() {
         public String getName() {
             return "int";
         }
@@ -23,7 +23,7 @@ public class AllTypes {
             throw new CannotCastException(location, this, to);
         }
     };
-    public static IType U64 = new IType() {
+    public static final IType U64 = new IType() {
         public String getName() {
             return "u64";
         }
@@ -31,7 +31,7 @@ public class AllTypes {
             return 8;
         }
     };
-    public static IType U32 = new IType() {
+    public static final IType U32 = new IType() {
         public String getName() {
             return "u32";
         }
@@ -39,7 +39,7 @@ public class AllTypes {
             return 4;
         }
     };
-    public static IType U16 = new IType() {
+    public static final IType U16 = new IType() {
         public String getName() {
             return "u16";
         }
@@ -47,7 +47,7 @@ public class AllTypes {
             return 2;
         }
     };
-    public static IType BYTE = new IType() {
+    public static final IType BYTE = new IType() {
         public String getName() {
             return "byte";
         }
@@ -63,7 +63,7 @@ public class AllTypes {
         }
     };
 
-    public static IType CHAR = new IType() {
+    public static final IType CHAR = new IType() {
         public String getName() {
             return "char";
         }
@@ -79,7 +79,7 @@ public class AllTypes {
         }
     };
 
-    public static IType BOOL = new IType() {
+    public static final IType BOOL = new IType() {
         public String getName() {
             return "bool";
         }
@@ -95,7 +95,7 @@ public class AllTypes {
         }
     };
 
-    public static IType STRING = new IType() {
+    public static final IType STRING = new IType() {
         public String getName() {
             return "string";
         }
@@ -115,7 +115,7 @@ public class AllTypes {
         }
     };
 
-    public static IType ATOM = new IType() {
+    public static final IType ATOM = new IType() {
         public String getName() {
             return "atom";
         }
@@ -131,7 +131,7 @@ public class AllTypes {
         }
     };
 
-    public static IType VOID = new IType() {
+    public static final IType VOID = new IType() {
         public String getName() {
             return "void";
         }
@@ -140,7 +140,7 @@ public class AllTypes {
         }
     };
 
-    public static IType EOF = new IType() {
+    public static final IType EOF = new IType() {
         public String getName() {
             return "Empty Stack";
         }
@@ -149,9 +149,11 @@ public class AllTypes {
         }
     };
 
-    public static RefType DEF_REF = new RefType(null);
+    public static final RefType DEF_REF = new RefType(null);
 
-    public static RefType ref(IType type) {return new RefType(type);}
+    public static final RefType ref(IType type) {return new RefType(type);}
+
+    public static final BoxedType BOXED = new BoxedType();
 
     public static String stringOf(IType type) {
         if(type == STRING)
@@ -191,6 +193,9 @@ public class AllTypes {
 
             case "void":
                 return VOID;
+
+            case "boxed":
+                return BOXED;
             default:
                 return null;
         }
