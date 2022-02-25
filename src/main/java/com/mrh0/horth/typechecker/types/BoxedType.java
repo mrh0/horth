@@ -5,16 +5,18 @@ import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
 
 class BoxedType implements IType {
-        @Override
-        public String getName() {
-            return "boxed";
-        }
+    protected BoxedType() {}
 
-        @Override
-        public int getSize() {
-            return 8;
-        }
+    @Override
+    public String getName() {
+        return "boxed";
+    }
 
-        @Override
-        public void cast(Loc location, IType to) throws CannotCastException {}
+    @Override
+    public int getSize() {
+        return 8;
+    }
+
+    @Override
+    public void cast(Loc location, IType to) throws CannotCastException {}
 }

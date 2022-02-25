@@ -26,6 +26,7 @@ import com.mrh0.horth.instructions.high.stackops.other.HSysCall;
 import com.mrh0.horth.instructions.high.stackops.binop.HAdd;
 import com.mrh0.horth.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.instructions.high.stackops.binop.binary.HBinaryAnd;
+import com.mrh0.horth.instructions.high.stackops.other.HVoid;
 import com.mrh0.horth.instructions.high.stackops.unop.binary.HBinaryNot;
 import com.mrh0.horth.instructions.high.stackops.binop.binary.HBinaryOr;
 import com.mrh0.horth.instructions.high.stackops.binop.logical.HAnd;
@@ -74,6 +75,8 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LPutString((HPutString) in));
         else if(in instanceof HPutAtom)
             out.add(new LPutAtom((HPutAtom) in));
+        if(in instanceof HVoid)
+            out.add(new LPutInt(0));
 
         else if(in instanceof HPutVar) {
             var v = ((HPutVar) in);

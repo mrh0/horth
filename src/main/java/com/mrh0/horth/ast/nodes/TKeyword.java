@@ -12,6 +12,7 @@ import com.mrh0.horth.instructions.high.stackops.other.HExit;
 import com.mrh0.horth.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.instructions.high.stackops.base.HSwap;
 import com.mrh0.horth.instructions.high.stackops.other.HVoid;
+import com.mrh0.horth.instructions.high.types.HBBox;
 
 import java.util.List;
 
@@ -54,6 +55,9 @@ public class TKeyword extends Tok {
             break;
             case "void":
                 space.add(new HVoid(this));
+                break;
+            case "box":
+                space.add(new HBBox(this));
                 break;
             default:
                 throw new ParserException(this.getLocation(), "Unimplemented keyword: " + text + ".");

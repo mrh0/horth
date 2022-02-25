@@ -5,6 +5,7 @@ import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.typechecker.types.IType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Util {
@@ -106,5 +107,12 @@ public class Util {
                 sb.append(" ");
         }
         return sb.toString();
+    }
+
+    public static <T> List<T> reverse(List<T> list) {
+        List<T> out = new ArrayList<>();
+        for(int i = list.size()-1; i >= 0; i--)
+            out.add(list.get(i));
+        return out;
     }
 }

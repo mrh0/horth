@@ -34,9 +34,11 @@ public class HIs extends HighInst implements ISpecialCheck {
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
         List<TType> types = ((TTypeFuncIs)token).types;
-        for(int i = types.size()-1; i >= 0; i--) {
-            var shouldBe = types.get(i).type;
-            var onStack = stack.peek(token).type();
+        for(int i = 0; i < types.size(); i++) {
+            var shouldBe = types.get(types.size()-i-1).type;
+            var onStack = stack.stack.get(stack.size()-i-1).type();
+            System.out.println(i + " Is: " + AllTypes.stringOf(onStack) + " ShouldBe: " + AllTypes.stringOf(shouldBe));
+            System.out.println(onStack == shouldBe);
             if(!IType.equals(onStack, shouldBe))
                 throw new CompileException(token.getLocation(),
                         "Static type check 'is(" + AllTypes.stringOf(shouldBe) + ")' failed, was of type '"

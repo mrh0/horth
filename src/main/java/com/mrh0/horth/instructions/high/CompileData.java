@@ -146,7 +146,7 @@ public class CompileData {
             var popList = f.getContract().getPopList();
             var matching = true;
             for(int i = 0; i < popList.length; i++) {
-                var stackIndex = stack.stack.size() - popList.length + i;
+                var stackIndex = stack.stack.size() - i-1;
                 if(!IType.equals(popList[i], stack.stack.get(stackIndex).type())) {
                     matching = false;
                     break;

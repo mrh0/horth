@@ -2,6 +2,8 @@ package com.mrh0.horth.typechecker;
 
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.ast.nodes.ITok;
+import com.mrh0.horth.exceptions.HorthException;
+import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.exceptions.typechecker.TypeStackMismatch;
@@ -137,6 +139,14 @@ public class VirtualTypeStack {
                         actual.stack.get(i).token.getLocation(),
                         expected, actual);
         }
+    }
+
+    public int lock() {
+        return stack.size();
+    }
+
+    public void unlock(Loc location) throws HorthException {
+
     }
 
     @Override

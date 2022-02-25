@@ -137,6 +137,10 @@ general:
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
+    | 'switch' inBlock=block 'in'
+    ((integer | BOOL | CHAR | ATOM) 'case' doBlock+=block 'break')*
+    ('else' defBlock=block)? 'end'                                                          #genSwitch
+
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
     //| 'for' 'each' NAME 'in' block 'do' block 'end'

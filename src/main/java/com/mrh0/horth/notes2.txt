@@ -47,28 +47,49 @@ func test string int -> int in ... end //3
 "hello" 2 test
 
 //Boxed types
-func makeBox int -> boxed atom in
-    if dup 0 == do
-        "Hello World" box
-    elif dup 1 == do
-        500 box
-    elif dup 2 == do
-        'A' box
-    else
-        void box
+start func main -> int in
+    2 makeBox
+    openBox
+    0
 end
 
-func openBox int in
-    makeBox
-    let boxed type in
-        if type :string == do
-            boxed as string
-            //Is string...
-        if type :int == do
-            boxed as int
-            //Is int...
-        if type :char == do
-            boxed as char
-            //Is char...
+func makeBox int -> boxed atom in
+    if dup 0 == do
+        drop "Hello World" box
+    elif dup 1 == do
+        drop 500 box
+    elif dup 2 == do
+        drop 'A' box
+    else
+        drop void box
     end
+end
+
+func openBox boxed atom in
+    let b t in
+        if t :string == do
+            b as string drop
+            "Was String" log
+        elif t :int == do
+            b as int drop
+            "Was Int" log
+        elif t :char == do
+            b as char drop
+            "Was Char" log
+        end
+    end
+end
+
+
+start func main -> int in
+    1 :test is (int atom) test1 is (char string)
+    test2 is (int)
+end
+
+func test1 int atom -> char string in
+    drop drop 'A' "Hello"
+end
+
+func test2 char string -> int in
+    drop drop 0
 end

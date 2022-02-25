@@ -70,11 +70,16 @@ public class Contract implements IContract{
         IType[] pop2 = new IType[pop.size()];
         IType[] push2 = new IType[push.size()];
 
+        System.out.println("Pop: " + pop + " Push: " + push);
+
         for(int i = 0; i < pop.size(); i++)
             pop2[i] = pop.get(i).type;
 
         for(int i = 0; i < push.size(); i++)
             push2[i] = push.get(i).type;
+
+        System.out.println("Pop2: " + Util.list(pop2) + " Push2: " + Util.list(push2));
+        System.out.println();
 
         return new Contract(pop2, push2);
     }

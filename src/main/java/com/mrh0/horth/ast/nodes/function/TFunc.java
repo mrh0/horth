@@ -9,6 +9,7 @@ import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.function.HBFunc;
 import com.mrh0.horth.typechecker.Contract;
+import com.mrh0.horth.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +52,7 @@ public class TFunc extends Tok {
     private Func createFunction() throws HorthException {
         List<HighInst> body = new ArrayList<>();
         funcBody.expand(body);
-        var func = new Func(this, name, Contract.from(args, rets), body, prefix);
+        var func = new Func(this, name, Contract.from(Util.reverse(args), rets), body, prefix);
         cd.defineNamedGlobal(getLocation(), func.getName(), CompileData.NamedGlobalTypes.FUNC);
         cd.storeFunction(func);
         return func;
