@@ -66,6 +66,7 @@ keywords:
     | 'drop' | 'drop2' | 'drop3'
     | 'out' | 'log' 'error' | 'log'
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
+    | 'return'
     | 'break'
     | 'here'
     | 'box'
@@ -138,7 +139,7 @@ general:
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
     | 'switch' inBlock=block 'in'
-    ((integer | BOOL | CHAR | ATOM) 'case' doBlock+=block 'break')*
+    ('case' (integer | BOOL | CHAR | ATOM) 'do' doBlock+=block 'break')*
     ('else' defBlock=block)? 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
@@ -146,7 +147,7 @@ general:
     //| 'for' 'each' NAME 'in' block 'do' block 'end'
     //| 'let' IDENTIFIER (TYPE | 'infer') ('pop')?                                            #genLet
     //| 'let' ('.'IDENTIFIER)* (IDENTIFIER)* 'in' block 'end'                                 #genLet
-    | 'let' (names+=NAME)+ 'in' localBlock=block 'end'                                      #genLet
+    | 'let' (names+=NAME)+ 'in' localBlock=block                                              #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     //| 'let' (names+=NAME)+ 'in' #genLetFuncScope
     | 'with' NAME 'do' block 'end'                                                          #genWith

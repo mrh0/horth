@@ -291,6 +291,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitGenIf(HorthParser.GenIfContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code genSwitch}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGenSwitch(HorthParser.GenSwitchContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code genWhile}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree

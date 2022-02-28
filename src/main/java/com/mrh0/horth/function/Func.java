@@ -65,21 +65,17 @@ public class Func {
         return this.body;
     }
 
-    private static final VirtualTypeStack TEMP_STACK = new VirtualTypeStack();
     public void validate(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        stack.lock();
-        var tempStack = TEMP_STACK;
         TypeChecker.validOverload(token.getLocation(), cd.getFunctions(token.getLocation(), this.getName()), this);
         for(int i = getContract().getPopList().length-1; i >= 0; i--) {
-            tempStack.push(getContract().getPopList()[i], token);
+            stack.push(getContract().getPopList()[i], token);
         }
-        TypeChecker.check(tempStack, cd, body);
+        TypeChecker.check(stack, cd, body);
         for(int i = getContract().getPushList().length-1; i >= 0; i--) {
-            tempStack.check(token, getContract().getPushList()[i]);
+            stack.check(token, getContract().getPushList()[i]);
         }
-        stack.unlock(token.getLocation());
         if(body.size() > 0)
-            TypeChecker.end(tempStack, Util.lastOf(body).token.getLocation());
+            TypeChecker.end(stack, Util.lastOf(body).token.getLocation());
     }
 
     public Prefix getPrefix() {

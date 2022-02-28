@@ -22,6 +22,7 @@ public class VirtualTypeStack {
         }
     }
     public List<StackEntry> stack;
+    private int lockIndex = 0;
 
     public VirtualTypeStack() {
         stack = new ArrayList<>();
@@ -139,14 +140,6 @@ public class VirtualTypeStack {
                         actual.stack.get(i).token.getLocation(),
                         expected, actual);
         }
-    }
-
-    public int lock() {
-        return stack.size();
-    }
-
-    public void unlock(Loc location) throws HorthException {
-
     }
 
     @Override

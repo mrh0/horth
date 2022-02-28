@@ -486,6 +486,18 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitGenIf(HorthParser.GenIfContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code genSwitch}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void enterGenSwitch(HorthParser.GenSwitchContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code genSwitch}
+	 * labeled alternative in {@link HorthParser#general}.
+	 * @param ctx the parse tree
+	 */
+	void exitGenSwitch(HorthParser.GenSwitchContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code genWhile}
 	 * labeled alternative in {@link HorthParser#general}.
 	 * @param ctx the parse tree

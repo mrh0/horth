@@ -1,32 +1,5 @@
 start func main -> int in
-    2 makeBox
-    openBox
+    "Hello"
+    let a in a let b in b log
     0
-end
-
-func makeBox int -> boxed atom in
-    if dup 0 == do
-        drop "Hello World" box
-    elif dup 1 == do
-        drop 500 box
-    elif dup 2 == do
-        drop 'A' box
-    else
-        drop void box
-    end
-end
-
-func openBox boxed atom in
-    let b t in
-        if t :string == do
-            b as string drop
-            "Was String" log
-        elif t :int == do
-            b as int drop
-            "Was Int" log
-        elif t :char == do
-            b as char drop
-            "Was Char" log
-        end
-    end
 end
