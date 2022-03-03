@@ -18,7 +18,7 @@ public interface IExpanding {
         }
     }
 
-    static void expandBlock(List<TBlock> blocks, List<List<HighInst>> lists) throws HorthException {
+    static void expandBlocks(List<TBlock> blocks, List<List<HighInst>> lists) throws HorthException {
         for(TBlock block : blocks) {
             List<HighInst> insts = new ArrayList<>();
             block.expand(insts);

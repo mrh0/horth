@@ -48,6 +48,8 @@ public class CompileData {
     public final Map<String, Void> atoms;
     public final Map<String, List<Func>> functions;
 
+    private LocalContext local;
+
     public CompileData(Arch arch) {
         this.arch = arch;
 
@@ -59,6 +61,10 @@ public class CompileData {
         this.atoms = new HashMap<>();
         this.functions = new HashMap<>();
         this.startFunctions = new ArrayList<>();
+    }
+
+    public void createLocalContext() {
+        local = new LocalContext();
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -76,37 +82,8 @@ public class CompileData {
         return namedGlobalsMap.getOrDefault(name, NamedGlobalTypes.NONE);
     }
 
-    public void claimLocal() {
-        localScopeList.add(new LocalScope());
-    }
-
-    public LocalScope reclaimLocal() {
-        return localScopeList.remove(localScopeList.size()-1);
-    }
-
-    public LocalScope getCurrentLocalScope() {
-        return localScopeList.get(localScopeList.size()-1);
-    }
-
-    public void defineNamedLocal(Loc location, String name, IType type) throws CompileException {
-        NamedGlobalTypes globalType = getNamedGlobal(name);
-        if(globalType.isDefined())
-            throw new CompileException(location, "Name '" + name + "' is already a defined " + globalType.name() + ".");
-        LocalScope scope = getCurrentLocalScope();
-        namedLocalsList.add(new LocalEntry(name, type, scope, scope.offset));
-        scope.incrementOffset(8);
-    }
-
-    public LocalEntry findNamedLocal(Loc location, String name) throws CompileException {
-        for(int i = namedLocalsList.size()-1; i >= 0; i--) {
-            LocalEntry le = namedLocalsList.get(i);
-            if(le.name().equals(name)) {
-                if(le.scope() != getCurrentLocalScope())
-                    throw new CompileException(location, "Out of scope local variable '" + name + "'.");
-                return namedLocalsList.get(i);
-            }
-        }
-        throw new CompileException(location, "Unknown local variable '" + name + "'.");
+    public LocalContext local() {
+        return local;
     }
 
     public Arch.SysCall getSysCallByName(Loc location, String name) throws HorthException {

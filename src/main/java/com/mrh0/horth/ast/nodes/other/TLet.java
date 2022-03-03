@@ -4,6 +4,7 @@ import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.local.HBLet;
 import com.mrh0.horth.instructions.high.local.HLet;
 
 import java.util.ArrayList;
@@ -35,11 +36,12 @@ public class TLet extends Tok {
 
     @Override
     public void expand(List<HighInst> space) throws HorthException {
-        var let = new HLet(this);
+        /*var let = new HLet(this);
         space.add(let);
         List<HighInst> lb =  new ArrayList<>();
         localBlock.expand(lb);
         space.addAll(lb);
-        space.add(let.getReclaim());
+        space.add(let.getReclaim());*/
+        space.add(new HBLet(this));
     }
 }

@@ -12,16 +12,15 @@ import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.List;
 
-public class HLet extends HighInst implements ISpecialCheck {
+public class HLet extends HighInst {
 
-    private List<String> names;
-    private HReclaim reclaim;
     public int count;
+    public int offset;
 
-    public HLet(TLet tok) throws HorthException {
-        super(tok);
-        this.names = tok.names;
-        this.reclaim = new HReclaim(token);
+    public HLet(HBLet let) {
+        super(let.token);
+        this.count = let.getCount();
+        this.offset = let.getOffset();
     }
 
     @Override
@@ -30,17 +29,7 @@ public class HLet extends HighInst implements ISpecialCheck {
     }
 
     @Override
-    public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        cd.claimLocal();
-        for(int i = names.size()-1; i >= 0; i--) { // Reversed or not?
-            IType type = stack.pop(token).type();
-            cd.defineNamedLocal(token.getLocation(), names.get(i), type);
-        }
-        this.reclaim.set(names.size());
-        count = names.size();
-    }
-
-    public HReclaim getReclaim() {
-        return this.reclaim;
+    public String toString() {
+        return "HLet(" + count + ", " + offset + ')';
     }
 }

@@ -14,6 +14,7 @@ import com.mrh0.horth.instructions.high.function.HCallFunc;
 import com.mrh0.horth.instructions.high.function.HFunc;
 import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.instructions.high.io.HLog;
+import com.mrh0.horth.instructions.high.local.HClaim;
 import com.mrh0.horth.instructions.high.local.HLet;
 import com.mrh0.horth.instructions.high.local.HReclaim;
 import com.mrh0.horth.instructions.high.stackops.base.HDrop;
@@ -43,6 +44,7 @@ import com.mrh0.horth.output.x86_64.linux.nasm.function.LFuncInit;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LRet;
 import com.mrh0.horth.output.x86_64.linux.nasm.io.LLog;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LClaim;
+import com.mrh0.horth.output.x86_64.linux.nasm.local.LLet;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LReclaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.other.*;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.LDrop;
@@ -165,8 +167,10 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LJump((HBreak) in));
 
         else if(in instanceof HLet)
-            out.add(new LClaim(((HLet)in).count));
+            out.add(new LLet((HLet)in));
+        else if(in instanceof HClaim)
+            out.add(new LClaim(((HClaim)in).bytes));
         else if(in instanceof HReclaim)
-            out.add(new LReclaim(((HReclaim)in).count));
+            out.add(new LReclaim(((HReclaim)in).bytes));
     }
 }

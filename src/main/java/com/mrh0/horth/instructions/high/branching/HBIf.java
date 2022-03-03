@@ -20,9 +20,9 @@ public class HBIf extends HighInst implements ISpecialCheck, IExpanding {
     public HBIf(TIf tok) throws HorthException {
         super(tok);
         this.conditions =  new ArrayList<>();
-        IExpanding.expandBlock(tok.conditions, this.conditions);
+        IExpanding.expandBlocks(tok.conditions, this.conditions);
         this.doBlocks = new ArrayList<>();
-        IExpanding.expandBlock(tok.doBlocks, this.doBlocks);
+        IExpanding.expandBlocks(tok.doBlocks, this.doBlocks);
         if(tok.elseBlock != null) {
             elseBlock = new ArrayList<>();
             tok.elseBlock.expand(elseBlock);

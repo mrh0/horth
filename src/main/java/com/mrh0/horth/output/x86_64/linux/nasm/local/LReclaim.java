@@ -5,14 +5,14 @@ import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 
 public class LReclaim implements LowInst {
-    private final int size;
+    private final int bytes;
 
-    public LReclaim(int size) {
-        this.size = size;
+    public LReclaim(int bytes) {
+        this.bytes = bytes;
     }
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("sub").reg(LSP).imm(size*8);
+        ib.inst("sub").reg(LSP).imm(bytes);
     }
 }

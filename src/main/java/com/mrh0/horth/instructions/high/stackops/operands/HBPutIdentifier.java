@@ -7,6 +7,7 @@ import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.IExpanding;
+import com.mrh0.horth.instructions.high.LocalContext;
 import com.mrh0.horth.instructions.high.function.HCallFunc;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
@@ -53,17 +54,17 @@ public class HBPutIdentifier extends HighInst implements ISpecialCheck, IExpandi
             idt = IdentifierType.VAR;
         }
 
-        CompileData.LocalEntry le;
+        LocalContext.NamedEntry ne;
         switch(idt) {
             case VAR:
-                le = cd.findNamedLocal(token.getLocation(), this.name);
-                stack.push(le.type(), token);
-                this.offset = le.offset();
+                ne = cd.local().getNamed(token.getLocation(), this.name);
+                stack.push(ne.type(), token);
+                this.offset = ne.offset();
                 break;
             case VAR_REF:
-                le = cd.findNamedLocal(token.getLocation(), this.name.substring(0, this.name.length()-1));
-                stack.push(AllTypes.ref(le.type()), token);
-                this.offset = le.offset();
+                ne = cd.local().getNamed(token.getLocation(), this.name.substring(0, this.name.length()-1));
+                stack.push(AllTypes.ref(ne.type()), token);
+                this.offset = ne.offset();
                 break;
             case FUNC:
                 //TODO: Overloads

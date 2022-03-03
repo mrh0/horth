@@ -9,6 +9,8 @@ import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
 import com.mrh0.horth.instructions.high.IExpanding;
+import com.mrh0.horth.instructions.high.local.HClaim;
+import com.mrh0.horth.instructions.high.local.HReclaim;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
@@ -18,6 +20,7 @@ import java.util.List;
 
 public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
     private final Func func;
+    private int localBytes = 0;
 
     public HBFunc(ITok token, Func func) {
         super(token);
@@ -31,6 +34,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
 
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
+        cd.createLocalContext();
         if(func.getPrefix() == Func.Prefix.START) {
             if (func.getContract().getPushList().length != 1)
                 throw new CompileException(token.getLocation(), "Start function must conform to contract <any... -> byte>.");
@@ -42,6 +46,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
             }
         }
         func.validate(stack, cd);
+        localBytes = cd.local().getClaimedBytes();
     }
 
     @Override
@@ -51,8 +56,10 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
         var label = func.label;
         space.add(label);
         space.add(new HFunc(token, func, label));
+        space.add(new HClaim(token, localBytes));
         IExpanding.expandAll(func.getBody(), space);
 
+        space.add(new HReclaim(token, localBytes));
         space.add(new HRet(token));
     }
 }
