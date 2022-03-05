@@ -3,6 +3,7 @@ package com.mrh0.horth.ast.nodes;
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.branching.HBreak;
+import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.instructions.high.io.HLog;
 import com.mrh0.horth.instructions.high.stackops.base.HDrop;
 import com.mrh0.horth.instructions.high.stackops.base.HDup;
@@ -31,6 +32,8 @@ public class TKeyword extends Tok {
                 break;
             case "break":
                 space.add(new HBreak(this));
+            case "ret":
+                space.add(new HRet(this));
                 break;
             case "dup":
                 space.add(new HDup(this));

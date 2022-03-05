@@ -39,7 +39,7 @@ null
 'error'
 'exit'
 'halt'
-'return'
+'ret'
 'break'
 'here'
 'box'

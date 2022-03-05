@@ -34,7 +34,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
 
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        cd.createLocalContext();
+        cd.createLocalContext(this.func);
         if(func.getPrefix() == Func.Prefix.START) {
             if (func.getContract().getPushList().length != 1)
                 throw new CompileException(token.getLocation(), "Start function must conform to contract <any... -> byte>.");
@@ -59,7 +59,7 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
         space.add(new HClaim(token, localBytes));
         IExpanding.expandAll(func.getBody(), space);
 
-        space.add(new HReclaim(token, localBytes));
-        space.add(new HRet(token));
+        //space.add(new HReclaim(token, localBytes));
+        //space.add(new HRet(token));
     }
 }

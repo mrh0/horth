@@ -66,8 +66,8 @@ keywords:
     | 'drop' | 'drop2' | 'drop3'
     | 'out' | 'log' 'error' | 'log'
     | 'exit' | 'halt' // | 'ret' //| 'terminate'
-    | 'return'
-    | 'break'
+    | 'ret'
+    | 'break' //brk?
     | 'here'
     | 'box'
     | 'void'

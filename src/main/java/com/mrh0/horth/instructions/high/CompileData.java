@@ -63,8 +63,8 @@ public class CompileData {
         this.startFunctions = new ArrayList<>();
     }
 
-    public void createLocalContext() {
-        local = new LocalContext();
+    public void createLocalContext(Func func) {
+        local = new LocalContext(func);
     }
 
     public void defineNamedGlobal(Loc location, String name, NamedGlobalTypes inType) throws CompileException {
@@ -124,6 +124,10 @@ public class CompileData {
             var matching = true;
             for(int i = 0; i < popList.length; i++) {
                 var stackIndex = stack.stack.size() - i-1;
+                if(stackIndex < 0) {
+                    matching = false;
+                    break;
+                }
                 if(!IType.equals(popList[i], stack.stack.get(stackIndex).type())) {
                     matching = false;
                     break;

@@ -8,6 +8,7 @@ import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.function.HBFunc;
+import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.util.Util;
 
@@ -61,5 +62,6 @@ public class TFunc extends Tok {
     @Override
     public void expand(List<HighInst> space) throws HorthException {
         space.add(new HBFunc(this, createFunction()));
+        //space.add(new HRet(this));
     }
 }

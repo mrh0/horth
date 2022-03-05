@@ -50,7 +50,7 @@ public class HorthParser extends Parser {
 			"'end'", "'not'", "'~'", "'+'", "'-'", "'*'", "'/'", "'%'", "'<='", "'>='", 
 			"'=='", "'!='", "'&'", "'|'", "'and'", "'or'", "'<<'", "'>>'", "'='", 
 			"'dup'", "'dup2'", "'swap'", "'swap2'", "'drop'", "'drop2'", "'drop3'", 
-			"'out'", "'log'", "'error'", "'exit'", "'halt'", "'return'", "'break'", 
+			"'out'", "'log'", "'error'", "'exit'", "'halt'", "'ret'", "'break'", 
 			"'here'", "'box'", "'void'", "'sizeof'", "'('", "')'", "'unsafe'", "'is'", 
 			"'.'", "'['", "']'", "']^'", "'{'", "'}'", "'assert'", "'static'", "'const'", 
 			"'alloc'", "'in'", "'if'", "'do'", "'elif'", "'else'", "'switch'", "'case'", 

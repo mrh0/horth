@@ -92,7 +92,7 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
         else if(in instanceof HFunc)
             out.add(new LFuncInit());
         else if(in instanceof HRet)
-            out.add(new LRet());
+            out.add(new LRet(((HRet) in).getLocalContext().getClaimedBytes()));
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);

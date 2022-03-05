@@ -2,6 +2,7 @@ package com.mrh0.horth.instructions.high;
 
 import com.mrh0.horth.ast.Loc;
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.function.Func;
 import com.mrh0.horth.typechecker.types.IType;
 
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ public class LocalContext {
     public record NamedEntry(String name, IType type, int offset) {}
 
     private List<NamedEntry> namedLocalsList;
+    public final Func func;
 
-    public LocalContext() {
+    public LocalContext(Func func) {
         totalSize = 0;
         namedLocalsList = new ArrayList<>();
+        this.func = func;
     }
 
     public int claim(int bytes) {

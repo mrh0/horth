@@ -1,5 +1,14 @@
 start func main -> int in
-    "Hello"
-    let a in a let b in b log
-    0
+    0 str log
+    0 ret
+end
+
+
+func str int -> string in
+    let i in
+    if (i == 0) do
+        "Hello" ret
+    end
+    "World"
+    ret
 end

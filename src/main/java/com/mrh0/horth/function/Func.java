@@ -8,6 +8,7 @@ import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
+import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.TypeChecker;
@@ -70,7 +71,12 @@ public class Func {
         for(int i = getContract().getPopList().length-1; i >= 0; i--) {
             stack.push(getContract().getPopList()[i], token);
         }
+        if(body.size() == 0)
+            return;
         TypeChecker.check(stack, cd, body);
+    }
+
+    public void validateRet(VirtualTypeStack stack, CompileData cd) throws HorthException {
         for(int i = getContract().getPushList().length-1; i >= 0; i--) {
             stack.check(token, getContract().getPushList()[i]);
         }
