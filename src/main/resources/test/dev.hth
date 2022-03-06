@@ -1,5 +1,5 @@
 start func main -> int in
-    0 str log
+    1 str log
     0 ret
 end
 
@@ -9,6 +9,5 @@ func str int -> string in
     if (i == 0) do
         "Hello" ret
     end
-    "World"
-    ret
+    "World"  ret
 end

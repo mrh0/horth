@@ -53,6 +53,7 @@ public class TFunc extends Tok {
     private Func createFunction() throws HorthException {
         List<HighInst> body = new ArrayList<>();
         funcBody.expand(body);
+
         var func = new Func(this, name, Contract.from(Util.reverse(args), rets), body, prefix);
         cd.defineNamedGlobal(getLocation(), func.getName(), CompileData.NamedGlobalTypes.FUNC);
         cd.storeFunction(func);
@@ -62,6 +63,5 @@ public class TFunc extends Tok {
     @Override
     public void expand(List<HighInst> space) throws HorthException {
         space.add(new HBFunc(this, createFunction()));
-        //space.add(new HRet(this));
     }
 }

@@ -3,14 +3,11 @@ package com.mrh0.horth.instructions.high.function;
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.compile.CompileException;
-import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
-import com.mrh0.horth.instructions.high.HighLabel;
 import com.mrh0.horth.instructions.high.IExpanding;
 import com.mrh0.horth.instructions.high.local.HClaim;
-import com.mrh0.horth.instructions.high.local.HReclaim;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
@@ -58,6 +55,9 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
         space.add(new HFunc(token, func, label));
         space.add(new HClaim(token, localBytes));
         IExpanding.expandAll(func.getBody(), space);
+
+        if(!(space.get(space.size()-1) instanceof HRet))
+            throw new CompileException(space.get(space.size()-1).token.getLocation(), "Missing return ('ret') at end of function '" + func.getName() + "'.");
 
         //space.add(new HReclaim(token, localBytes));
         //space.add(new HRet(token));

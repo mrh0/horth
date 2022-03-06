@@ -61,7 +61,7 @@ public class Main {
         //TypeChecking
         VirtualTypeStack stack = new VirtualTypeStack();
         TypeChecker.check(stack, compileData, HLIR);
-        TypeChecker.end(stack, Util.lastOf(HLIR).token.getLocation());
+        //TypeChecker.end(stack, Util.lastOf(HLIR).token.getLocation());
 
         //PostTypeCheckExpanding
         List<HighInst> newHLIR = new ArrayList<>();
