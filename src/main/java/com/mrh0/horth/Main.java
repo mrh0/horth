@@ -68,8 +68,6 @@ public class Main {
         IExpanding.expandAll(HLIR, newHLIR);
 
         HLIR = newHLIR;
-        System.out.println("Post: " + HLIR);
-
 
         //IDataChecked.checkAll(cd, HLIR);
 

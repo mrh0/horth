@@ -29,7 +29,8 @@ public class HorthParser extends Parser {
 		T__66=67, T__67=68, T__68=69, T__69=70, T__70=71, T__71=72, T__72=73, 
 		T__73=74, T__74=75, T__75=76, T__76=77, T__77=78, T__78=79, T__79=80, 
 		T__80=81, T__81=82, BOOL=83, NAME=84, ATOM=85, INT=86, HEX=87, BIN=88, 
-		CHAR=89, STRING=90, STRING_NT=91, WHITESPACE=92, COMMENT=93, BLOCKCOMMENT=94;
+		CHAR=89, STRING=90, STRING_NT=91, MODULE_NAME=92, WHITESPACE=93, COMMENT=94, 
+		BLOCKCOMMENT=95;
 	public static final int
 		RULE_identifier = 0, RULE_integer = 1, RULE_simpleDataType = 2, RULE_dataType = 3, 
 		RULE_userDefinedDataType = 4, RULE_unop = 5, RULE_binop = 6, RULE_keywords = 7, 
@@ -69,8 +70,8 @@ public class HorthParser extends Parser {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, null, 
 			null, null, null, null, null, null, null, null, null, null, null, "BOOL", 
-			"NAME", "ATOM", "INT", "HEX", "BIN", "CHAR", "STRING", "STRING_NT", "WHITESPACE", 
-			"COMMENT", "BLOCKCOMMENT"
+			"NAME", "ATOM", "INT", "HEX", "BIN", "CHAR", "STRING", "STRING_NT", "MODULE_NAME", 
+			"WHITESPACE", "COMMENT", "BLOCKCOMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -362,7 +363,7 @@ public class HorthParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
-	public static class DataTypeGeneralContext extends DataTypeContext {
+	public static class DataTypeNestedContext extends DataTypeContext {
 		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public List<DataTypeContext> dataType() {
 			return getRuleContexts(DataTypeContext.class);
@@ -370,18 +371,18 @@ public class HorthParser extends Parser {
 		public DataTypeContext dataType(int i) {
 			return getRuleContext(DataTypeContext.class,i);
 		}
-		public DataTypeGeneralContext(DataTypeContext ctx) { copyFrom(ctx); }
+		public DataTypeNestedContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeGeneral(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterDataTypeNested(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeGeneral(this);
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitDataTypeNested(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeGeneral(this);
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitDataTypeNested(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -425,7 +426,7 @@ public class HorthParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new DataTypeGeneralContext(_localctx);
+				_localctx = new DataTypeNestedContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(45);
@@ -3080,12 +3081,13 @@ public class HorthParser extends Parser {
 	}
 
 	public static class ProgramContext extends ParserRuleContext {
+		public Token moduleName;
 		public IncludeContext include;
 		public List<IncludeContext> includes = new ArrayList<IncludeContext>();
 		public MainBlockContext mainBlock;
 		public List<MainBlockContext> main = new ArrayList<MainBlockContext>();
 		public TerminalNode EOF() { return getToken(HorthParser.EOF, 0); }
-		public TerminalNode STRING() { return getToken(HorthParser.STRING, 0); }
+		public TerminalNode MODULE_NAME() { return getToken(HorthParser.MODULE_NAME, 0); }
 		public List<IncludeContext> include() {
 			return getRuleContexts(IncludeContext.class);
 		}
@@ -3132,7 +3134,7 @@ public class HorthParser extends Parser {
 				setState(394);
 				match(T__81);
 				setState(395);
-				match(STRING);
+				((ProgramContext)_localctx).moduleName = match(MODULE_NAME);
 				}
 			}
 
@@ -3197,7 +3199,7 @@ public class HorthParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3`\u019f\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3a\u019f\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\3\2\3"+
 		"\2\5\2&\n\2\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\5\3\5\3\5\3\5\6\5\63\n\5\r"+
@@ -3347,7 +3349,7 @@ public class HorthParser extends Parser {
 		"\2\2\u0183\u0185\5\30\r\2\u0184\u0183\3\2\2\2\u0185\u0188\3\2\2\2\u0186"+
 		"\u0184\3\2\2\2\u0186\u0187\3\2\2\2\u0187\35\3\2\2\2\u0188\u0186\3\2\2"+
 		"\2\u0189\u018a\7S\2\2\u018a\u018b\7\\\2\2\u018b\37\3\2\2\2\u018c\u018d"+
-		"\7T\2\2\u018d\u018f\7\\\2\2\u018e\u018c\3\2\2\2\u018e\u018f\3\2\2\2\u018f"+
+		"\7T\2\2\u018d\u018f\7^\2\2\u018e\u018c\3\2\2\2\u018e\u018f\3\2\2\2\u018f"+
 		"\u0193\3\2\2\2\u0190\u0192\5\36\20\2\u0191\u0190\3\2\2\2\u0192\u0195\3"+
 		"\2\2\2\u0193\u0191\3\2\2\2\u0193\u0194\3\2\2\2\u0194\u0199\3\2\2\2\u0195"+
 		"\u0193\3\2\2\2\u0196\u0198\5\32\16\2\u0197\u0196\3\2\2\2\u0198\u019b\3"+

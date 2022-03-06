@@ -9,10 +9,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TProgram extends Tok {
+    public final String moduleName;
     public final List<ITok> includes;
     public final List<TFunc> main;
 
-    public TProgram(List<ITok> includes, List<TFunc> main) {
+    public TProgram(String moduleName, List<ITok> includes, List<TFunc> main) {
+        this.moduleName = moduleName;
         this.includes = includes;
         this.main = main;
     }

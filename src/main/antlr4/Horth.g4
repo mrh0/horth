@@ -15,6 +15,9 @@ CHAR: '\''.'\'' | '\'\\'('n'|'r'|'t'|'\\'|'\''|'"'|'0')'\'';
 
 STRING: '"' .*? '"';
 STRING_NT: '"' (~('\'' | '\\') | '\\' . )* '"^';
+
+MODULE_NAME: [a-zA-Z][._a-zA-Z0-9]*;
+
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
 BLOCKCOMMENT: '/*' .*? '*/' -> skip;
@@ -30,13 +33,9 @@ integer:
     | BIN       #integerBin
     ;
 
-simpleDataType:
-    NAME//'int' | 'string' | 'char' | 'atom' | 'bool' | 'ref' | 'u64' | 'u32' | 'u16' | 'u8' | 'byte'
-    ;
-
 dataType:
-    simpleDataType                                  #dataTypeSimple
-    | NAME '<' dataType+ '>'                        #dataTypeGeneral
+    NAME                                                #dataTypeSimple
+    | NAME '<' dataTypes+=dataType+ '>'                 #dataTypeNested
     //| 'ref<' dataType '>'                           #dataTypeRef
     //| 'arr<' dataType '>'                           #dataTypeArr
     //| 'any<' NAME '>'                               #dataTypeAny //replaced by function overloads
@@ -50,11 +49,11 @@ userDefinedDataType:
     ;
 
 unop:
-    'not' | '~'
+    'not' | '!' | '~'
     ;
 
 binop:
-    '+' | '-' | '*' | '/' | '%'
+    '+' | '-' | '*' | '/' | '%' | 'divmod'
     | '<' | '>' | '<=' | '>=' | '==' | '!='
     | '&' | '|' | 'and' | 'or'
     | '<<' | '>>' | '='
@@ -188,5 +187,5 @@ include:
     ;
 
 program:
-    ('module' STRING)? (includes+=include)* main+=mainBlock* EOF
+    ('module' moduleName=MODULE_NAME)? (includes+=include)* main+=mainBlock* EOF
     ;

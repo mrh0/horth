@@ -76,17 +76,17 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code dataTypeGeneral}
+	 * Enter a parse tree produced by the {@code dataTypeNested}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
 	 */
-	void enterDataTypeGeneral(HorthParser.DataTypeGeneralContext ctx);
+	void enterDataTypeNested(HorthParser.DataTypeNestedContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code dataTypeGeneral}
+	 * Exit a parse tree produced by the {@code dataTypeNested}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
 	 */
-	void exitDataTypeGeneral(HorthParser.DataTypeGeneralContext ctx);
+	void exitDataTypeNested(HorthParser.DataTypeNestedContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code dataTypeFunc}
 	 * labeled alternative in {@link HorthParser#dataType}.

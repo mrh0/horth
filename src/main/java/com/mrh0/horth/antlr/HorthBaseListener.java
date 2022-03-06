@@ -88,13 +88,13 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDataTypeGeneral(HorthParser.DataTypeGeneralContext ctx) { }
+	@Override public void enterDataTypeNested(HorthParser.DataTypeNestedContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDataTypeGeneral(HorthParser.DataTypeGeneralContext ctx) { }
+	@Override public void exitDataTypeNested(HorthParser.DataTypeNestedContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

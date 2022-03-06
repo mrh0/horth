@@ -60,7 +60,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitProgram(HorthParser.ProgramContext ctx) {
         ctx.include();
-        return new TProgram(visit(ctx.includes), visit(ctx.main))
+        return new TProgram(ctx.moduleName.getText(), visit(ctx.includes), visit(ctx.main))
                 .loc(ctx.start, file);
     }
 
