@@ -179,9 +179,8 @@ end
 start func main -> int in
     1 "Hello World" dup .nt@
     let fd str len in
-        fd, (str as unsafe int + sizeof int), len
-        syscall write drop
-    end
+    fd, (str as unsafe int + sizeof int), len
+    syscall write drop
     0
 end
 ```
@@ -212,8 +211,7 @@ exit //Exitcode: 10
 //Let
 1 2 3
 let a b c in
-   c b a
-end
+c b a
 //Reversed stack: 3 2 1
 ```
 
