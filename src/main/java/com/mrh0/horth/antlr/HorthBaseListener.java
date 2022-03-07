@@ -64,18 +64,6 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSimpleDataType(HorthParser.SimpleDataTypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSimpleDataType(HorthParser.SimpleDataTypeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -323,6 +311,18 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStaticExpr(HorthParser.StaticExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSwitchCaseExpr(HorthParser.SwitchCaseExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSwitchCaseExpr(HorthParser.SwitchCaseExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

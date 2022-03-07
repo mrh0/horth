@@ -35,7 +35,7 @@ integer:
 
 dataType:
     NAME                                                #dataTypeSimple
-    | NAME '<' dataTypes+=dataType+ '>'                 #dataTypeNested
+    | nestedName=NAME '<' nested=dataType '>'                      #dataTypeNested
     //| 'ref<' dataType '>'                           #dataTypeRef
     //| 'arr<' dataType '>'                           #dataTypeArr
     //| 'any<' NAME '>'                               #dataTypeAny //replaced by function overloads
@@ -64,7 +64,7 @@ keywords:
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
     | 'out' | 'log' 'error' | 'log'
-    | 'exit' | 'halt' // | 'ret' //| 'terminate'
+    //| 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'ret'
     | 'break' //brk?
     | 'here'
@@ -105,6 +105,10 @@ staticExpr:
     | typefunc
     ;
 
+switchCaseExpr:
+    integer | ATOM | BOOL | CHAR
+    ;
+
 general:
     ','                                                                                   #genSeparator
     | unop                                                                                  #genUnop
@@ -138,7 +142,7 @@ general:
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
     | 'switch' inBlock=block 'in'
-    ('case' (integer | BOOL | CHAR | ATOM) 'do' doBlock+=block 'break')*
+    ('case' cases=switchCaseExpr 'do' doBlock+=block 'break')*
     ('else' defBlock=block)? 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile

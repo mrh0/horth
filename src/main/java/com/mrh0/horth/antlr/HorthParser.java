@@ -32,14 +32,14 @@ public class HorthParser extends Parser {
 		CHAR=89, STRING=90, STRING_NT=91, MODULE_NAME=92, WHITESPACE=93, COMMENT=94, 
 		BLOCKCOMMENT=95;
 	public static final int
-		RULE_identifier = 0, RULE_integer = 1, RULE_simpleDataType = 2, RULE_dataType = 3, 
-		RULE_userDefinedDataType = 4, RULE_unop = 5, RULE_binop = 6, RULE_keywords = 7, 
-		RULE_typefunc = 8, RULE_infix = 9, RULE_staticExpr = 10, RULE_general = 11, 
-		RULE_mainBlock = 12, RULE_block = 13, RULE_include = 14, RULE_program = 15;
+		RULE_identifier = 0, RULE_integer = 1, RULE_dataType = 2, RULE_userDefinedDataType = 3, 
+		RULE_unop = 4, RULE_binop = 5, RULE_keywords = 6, RULE_typefunc = 7, RULE_infix = 8, 
+		RULE_staticExpr = 9, RULE_switchCaseExpr = 10, RULE_general = 11, RULE_mainBlock = 12, 
+		RULE_block = 13, RULE_include = 14, RULE_program = 15;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"identifier", "integer", "simpleDataType", "dataType", "userDefinedDataType", 
-			"unop", "binop", "keywords", "typefunc", "infix", "staticExpr", "general", 
+			"identifier", "integer", "dataType", "userDefinedDataType", "unop", "binop", 
+			"keywords", "typefunc", "infix", "staticExpr", "switchCaseExpr", "general", 
 			"mainBlock", "block", "include", "program"
 		};
 	}
@@ -48,12 +48,12 @@ public class HorthParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'@'", "'<'", "'>'", "'func'", "'->'", "'type'", "'as'", "','", 
-			"'end'", "'not'", "'~'", "'+'", "'-'", "'*'", "'/'", "'%'", "'<='", "'>='", 
-			"'=='", "'!='", "'&'", "'|'", "'and'", "'or'", "'<<'", "'>>'", "'='", 
-			"'dup'", "'dup2'", "'swap'", "'swap2'", "'drop'", "'drop2'", "'drop3'", 
-			"'out'", "'log'", "'error'", "'exit'", "'halt'", "'ret'", "'break'", 
-			"'here'", "'box'", "'void'", "'sizeof'", "'('", "')'", "'unsafe'", "'is'", 
-			"'.'", "'['", "']'", "']^'", "'{'", "'}'", "'assert'", "'static'", "'const'", 
+			"'end'", "'not'", "'!'", "'~'", "'+'", "'-'", "'*'", "'/'", "'%'", "'divmod'", 
+			"'<='", "'>='", "'=='", "'!='", "'&'", "'|'", "'and'", "'or'", "'<<'", 
+			"'>>'", "'='", "'dup'", "'dup2'", "'swap'", "'swap2'", "'drop'", "'drop2'", 
+			"'drop3'", "'out'", "'log'", "'error'", "'ret'", "'break'", "'here'", 
+			"'box'", "'void'", "'sizeof'", "'('", "')'", "'unsafe'", "'is'", "'.'", 
+			"'['", "']'", "']^'", "'{'", "'}'", "'assert'", "'static'", "'const'", 
 			"'alloc'", "'in'", "'if'", "'do'", "'elif'", "'else'", "'switch'", "'case'", 
 			"'while'", "'let'", "'with'", "'try'", "'throw'", "'pass'", "'catch'", 
 			"'syscall'", "'export'", "'inline'", "'extern'", "'start'", "'rec'", 
@@ -291,48 +291,6 @@ public class HorthParser extends Parser {
 		return _localctx;
 	}
 
-	public static class SimpleDataTypeContext extends ParserRuleContext {
-		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
-		public SimpleDataTypeContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_simpleDataType; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterSimpleDataType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitSimpleDataType(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitSimpleDataType(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final SimpleDataTypeContext simpleDataType() throws RecognitionException {
-		SimpleDataTypeContext _localctx = new SimpleDataTypeContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_simpleDataType);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(42);
-			match(NAME);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static class DataTypeContext extends ParserRuleContext {
 		public DataTypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -345,9 +303,7 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class DataTypeSimpleContext extends DataTypeContext {
-		public SimpleDataTypeContext simpleDataType() {
-			return getRuleContext(SimpleDataTypeContext.class,0);
-		}
+		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
 		public DataTypeSimpleContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
@@ -364,12 +320,11 @@ public class HorthParser extends Parser {
 		}
 	}
 	public static class DataTypeNestedContext extends DataTypeContext {
+		public Token nestedName;
+		public DataTypeContext nested;
 		public TerminalNode NAME() { return getToken(HorthParser.NAME, 0); }
-		public List<DataTypeContext> dataType() {
-			return getRuleContexts(DataTypeContext.class);
-		}
-		public DataTypeContext dataType(int i) {
-			return getRuleContext(DataTypeContext.class,i);
+		public DataTypeContext dataType() {
+			return getRuleContext(DataTypeContext.class,0);
 		}
 		public DataTypeNestedContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
@@ -411,43 +366,31 @@ public class HorthParser extends Parser {
 
 	public final DataTypeContext dataType() throws RecognitionException {
 		DataTypeContext _localctx = new DataTypeContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_dataType);
+		enterRule(_localctx, 4, RULE_dataType);
 		int _la;
 		try {
-			setState(71);
+			setState(65);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
 			case 1:
 				_localctx = new DataTypeSimpleContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(44);
-				simpleDataType();
+				setState(42);
+				match(NAME);
 				}
 				break;
 			case 2:
 				_localctx = new DataTypeNestedContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(45);
-				match(NAME);
-				setState(46);
+				setState(43);
+				((DataTypeNestedContext)_localctx).nestedName = match(NAME);
+				setState(44);
 				match(T__1);
-				setState(48); 
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-				do {
-					{
-					{
-					setState(47);
-					dataType();
-					}
-					}
-					setState(50); 
-					_errHandler.sync(this);
-					_la = _input.LA(1);
-				} while ( _la==T__3 || _la==NAME );
-				setState(52);
+				setState(45);
+				((DataTypeNestedContext)_localctx).nested = dataType();
+				setState(46);
 				match(T__2);
 				}
 				break;
@@ -455,49 +398,49 @@ public class HorthParser extends Parser {
 				_localctx = new DataTypeFuncContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(54);
+				setState(48);
 				match(T__3);
-				setState(55);
+				setState(49);
 				match(T__1);
-				setState(59);
+				setState(53);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__3 || _la==NAME) {
 					{
 					{
-					setState(56);
+					setState(50);
 					dataType();
 					}
 					}
-					setState(61);
+					setState(55);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(68);
+				setState(62);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__4) {
 					{
-					setState(62);
+					setState(56);
 					match(T__4);
-					setState(64); 
+					setState(58); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					do {
 						{
 						{
-						setState(63);
+						setState(57);
 						dataType();
 						}
 						}
-						setState(66); 
+						setState(60); 
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					} while ( _la==T__3 || _la==NAME );
 					}
 				}
 
-				setState(70);
+				setState(64);
 				match(T__2);
 				}
 				break;
@@ -546,42 +489,42 @@ public class HorthParser extends Parser {
 
 	public final UserDefinedDataTypeContext userDefinedDataType() throws RecognitionException {
 		UserDefinedDataTypeContext _localctx = new UserDefinedDataTypeContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_userDefinedDataType);
+		enterRule(_localctx, 6, RULE_userDefinedDataType);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(73);
+			setState(67);
 			match(T__5);
-			setState(74);
+			setState(68);
 			match(NAME);
-			setState(75);
+			setState(69);
 			match(T__6);
-			setState(82);
+			setState(76);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(76);
+					setState(70);
 					match(NAME);
-					setState(77);
+					setState(71);
 					dataType();
-					setState(78);
+					setState(72);
 					match(T__7);
 					}
 					} 
 				}
-				setState(84);
+				setState(78);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,7,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
-			setState(85);
+			setState(79);
 			match(NAME);
-			setState(86);
+			setState(80);
 			dataType();
-			setState(87);
+			setState(81);
 			match(T__8);
 			}
 		}
@@ -618,14 +561,14 @@ public class HorthParser extends Parser {
 
 	public final UnopContext unop() throws RecognitionException {
 		UnopContext _localctx = new UnopContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_unop);
+		enterRule(_localctx, 8, RULE_unop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(89);
+			setState(83);
 			_la = _input.LA(1);
-			if ( !(_la==T__9 || _la==T__10) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__9) | (1L << T__10) | (1L << T__11))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -668,14 +611,14 @@ public class HorthParser extends Parser {
 
 	public final BinopContext binop() throws RecognitionException {
 		BinopContext _localctx = new BinopContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_binop);
+		enterRule(_localctx, 10, RULE_binop);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(91);
+			setState(85);
 			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26))) != 0)) ) {
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28))) != 0)) ) {
 			_errHandler.recoverInline(this);
 			}
 			else {
@@ -718,129 +661,115 @@ public class HorthParser extends Parser {
 
 	public final KeywordsContext keywords() throws RecognitionException {
 		KeywordsContext _localctx = new KeywordsContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_keywords);
+		enterRule(_localctx, 12, RULE_keywords);
 		try {
-			setState(111);
+			setState(103);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
 			case 1:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(93);
-				match(T__27);
+				setState(87);
+				match(T__29);
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(94);
-				match(T__28);
+				setState(88);
+				match(T__30);
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(95);
-				match(T__29);
+				setState(89);
+				match(T__31);
 				}
 				break;
 			case 4:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(96);
-				match(T__30);
+				setState(90);
+				match(T__32);
 				}
 				break;
 			case 5:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(97);
-				match(T__31);
+				setState(91);
+				match(T__33);
 				}
 				break;
 			case 6:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(98);
-				match(T__32);
+				setState(92);
+				match(T__34);
 				}
 				break;
 			case 7:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(99);
-				match(T__33);
+				setState(93);
+				match(T__35);
 				}
 				break;
 			case 8:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(100);
-				match(T__34);
+				setState(94);
+				match(T__36);
 				}
 				break;
 			case 9:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(101);
-				match(T__35);
-				setState(102);
-				match(T__36);
+				setState(95);
+				match(T__37);
+				setState(96);
+				match(T__38);
 				}
 				break;
 			case 10:
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(103);
-				match(T__35);
+				setState(97);
+				match(T__37);
 				}
 				break;
 			case 11:
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(104);
-				match(T__37);
+				setState(98);
+				match(T__39);
 				}
 				break;
 			case 12:
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(105);
-				match(T__38);
+				setState(99);
+				match(T__40);
 				}
 				break;
 			case 13:
 				enterOuterAlt(_localctx, 13);
 				{
-				setState(106);
-				match(T__39);
+				setState(100);
+				match(T__41);
 				}
 				break;
 			case 14:
 				enterOuterAlt(_localctx, 14);
 				{
-				setState(107);
-				match(T__40);
+				setState(101);
+				match(T__42);
 				}
 				break;
 			case 15:
 				enterOuterAlt(_localctx, 15);
 				{
-				setState(108);
-				match(T__41);
-				}
-				break;
-			case 16:
-				enterOuterAlt(_localctx, 16);
-				{
-				setState(109);
-				match(T__42);
-				}
-				break;
-			case 17:
-				enterOuterAlt(_localctx, 17);
-				{
-				setState(110);
+				setState(102);
 				match(T__43);
 				}
 				break;
@@ -952,23 +881,23 @@ public class HorthParser extends Parser {
 
 	public final TypefuncContext typefunc() throws RecognitionException {
 		TypefuncContext _localctx = new TypefuncContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_typefunc);
+		enterRule(_localctx, 14, RULE_typefunc);
 		int _la;
 		try {
-			setState(136);
+			setState(128);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,10,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,9,_ctx) ) {
 			case 1:
 				_localctx = new TypefuncSizeofContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(113);
+				setState(105);
 				match(T__44);
-				setState(114);
+				setState(106);
 				match(T__45);
-				setState(115);
+				setState(107);
 				dataType();
-				setState(116);
+				setState(108);
 				match(T__46);
 				}
 				break;
@@ -976,9 +905,9 @@ public class HorthParser extends Parser {
 				_localctx = new TypefuncSizeofContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(118);
+				setState(110);
 				match(T__44);
-				setState(119);
+				setState(111);
 				dataType();
 				}
 				break;
@@ -986,9 +915,9 @@ public class HorthParser extends Parser {
 				_localctx = new TypefuncCastContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(120);
+				setState(112);
 				match(T__6);
-				setState(121);
+				setState(113);
 				dataType();
 				}
 				break;
@@ -996,11 +925,11 @@ public class HorthParser extends Parser {
 				_localctx = new TypefuncCastUnsafeContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(122);
+				setState(114);
 				match(T__6);
-				setState(123);
+				setState(115);
 				match(T__47);
-				setState(124);
+				setState(116);
 				dataType();
 				}
 				break;
@@ -1008,26 +937,26 @@ public class HorthParser extends Parser {
 				_localctx = new TypefuncIsContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(125);
+				setState(117);
 				match(T__48);
-				setState(126);
+				setState(118);
 				match(T__45);
-				setState(130);
+				setState(122);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__3 || _la==NAME) {
 					{
 					{
-					setState(127);
+					setState(119);
 					((TypefuncIsContext)_localctx).dataType = dataType();
 					((TypefuncIsContext)_localctx).types.add(((TypefuncIsContext)_localctx).dataType);
 					}
 					}
-					setState(132);
+					setState(124);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(133);
+				setState(125);
 				match(T__46);
 				}
 				break;
@@ -1035,9 +964,9 @@ public class HorthParser extends Parser {
 				_localctx = new TypefuncIsContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(134);
+				setState(126);
 				match(T__48);
-				setState(135);
+				setState(127);
 				((TypefuncIsContext)_localctx).dataType = dataType();
 				((TypefuncIsContext)_localctx).types.add(((TypefuncIsContext)_localctx).dataType);
 				}
@@ -1253,23 +1182,23 @@ public class HorthParser extends Parser {
 		int _parentState = getState();
 		InfixContext _localctx = new InfixContext(_ctx, _parentState);
 		InfixContext _prevctx = _localctx;
-		int _startState = 18;
-		enterRecursionRule(_localctx, 18, RULE_infix, _p);
+		int _startState = 16;
+		enterRecursionRule(_localctx, 16, RULE_infix, _p);
 		int _la;
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(155);
+			setState(147);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,12,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
 			case 1:
 				{
 				_localctx = new InfixIdentContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(139);
+				setState(131);
 				identifier();
 				}
 				break;
@@ -1278,17 +1207,17 @@ public class HorthParser extends Parser {
 				_localctx = new InfixTypefuncContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(141);
+				setState(133);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==NAME) {
 					{
-					setState(140);
+					setState(132);
 					identifier();
 					}
 				}
 
-				setState(143);
+				setState(135);
 				typefunc();
 				}
 				break;
@@ -1297,7 +1226,7 @@ public class HorthParser extends Parser {
 				_localctx = new InfixAtomContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(144);
+				setState(136);
 				match(ATOM);
 				}
 				break;
@@ -1306,7 +1235,7 @@ public class HorthParser extends Parser {
 				_localctx = new InfixIntContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(145);
+				setState(137);
 				integer();
 				}
 				break;
@@ -1315,7 +1244,7 @@ public class HorthParser extends Parser {
 				_localctx = new InfixBoolContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(146);
+				setState(138);
 				match(BOOL);
 				}
 				break;
@@ -1324,7 +1253,7 @@ public class HorthParser extends Parser {
 				_localctx = new InfixCharContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(147);
+				setState(139);
 				match(CHAR);
 				}
 				break;
@@ -1333,9 +1262,9 @@ public class HorthParser extends Parser {
 				_localctx = new InfixUnOpContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(148);
+				setState(140);
 				unop();
-				setState(149);
+				setState(141);
 				infix(2);
 				}
 				break;
@@ -1344,19 +1273,19 @@ public class HorthParser extends Parser {
 				_localctx = new InfixInfixContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(151);
+				setState(143);
 				match(T__45);
-				setState(152);
+				setState(144);
 				infix(0);
-				setState(153);
+				setState(145);
 				match(T__46);
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(163);
+			setState(155);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					if ( _parseListeners!=null ) triggerExitRuleEvent();
@@ -1365,18 +1294,18 @@ public class HorthParser extends Parser {
 					{
 					_localctx = new InfixBinOpContext(new InfixContext(_parentctx, _parentState));
 					pushNewRecursionContext(_localctx, _startState, RULE_infix);
-					setState(157);
+					setState(149);
 					if (!(precpred(_ctx, 3))) throw new FailedPredicateException(this, "precpred(_ctx, 3)");
-					setState(158);
+					setState(150);
 					binop();
-					setState(159);
+					setState(151);
 					infix(4);
 					}
 					} 
 				}
-				setState(165);
+				setState(157);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,13,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,12,_ctx);
 			}
 			}
 		}
@@ -1432,9 +1361,9 @@ public class HorthParser extends Parser {
 
 	public final StaticExprContext staticExpr() throws RecognitionException {
 		StaticExprContext _localctx = new StaticExprContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_staticExpr);
+		enterRule(_localctx, 18, RULE_staticExpr);
 		try {
-			setState(175);
+			setState(167);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case INT:
@@ -1442,56 +1371,56 @@ public class HorthParser extends Parser {
 			case BIN:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(166);
+				setState(158);
 				integer();
 				}
 				break;
 			case ATOM:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(167);
+				setState(159);
 				match(ATOM);
 				}
 				break;
 			case BOOL:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(168);
+				setState(160);
 				match(BOOL);
 				}
 				break;
 			case STRING:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(169);
+				setState(161);
 				match(STRING);
 				}
 				break;
 			case CHAR:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(170);
+				setState(162);
 				match(CHAR);
 				}
 				break;
 			case NAME:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(171);
+				setState(163);
 				identifier();
 				}
 				break;
 			case T__9:
 			case T__10:
+			case T__11:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(172);
+				setState(164);
 				unop();
 				}
 				break;
 			case T__1:
 			case T__2:
-			case T__11:
 			case T__12:
 			case T__13:
 			case T__14:
@@ -1507,9 +1436,11 @@ public class HorthParser extends Parser {
 			case T__24:
 			case T__25:
 			case T__26:
+			case T__27:
+			case T__28:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(173);
+				setState(165);
 				binop();
 				}
 				break;
@@ -1518,8 +1449,86 @@ public class HorthParser extends Parser {
 			case T__48:
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(174);
+				setState(166);
 				typefunc();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class SwitchCaseExprContext extends ParserRuleContext {
+		public IntegerContext integer() {
+			return getRuleContext(IntegerContext.class,0);
+		}
+		public TerminalNode ATOM() { return getToken(HorthParser.ATOM, 0); }
+		public TerminalNode BOOL() { return getToken(HorthParser.BOOL, 0); }
+		public TerminalNode CHAR() { return getToken(HorthParser.CHAR, 0); }
+		public SwitchCaseExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_switchCaseExpr; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).enterSwitchCaseExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HorthListener ) ((HorthListener)listener).exitSwitchCaseExpr(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HorthVisitor ) return ((HorthVisitor<? extends T>)visitor).visitSwitchCaseExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final SwitchCaseExprContext switchCaseExpr() throws RecognitionException {
+		SwitchCaseExprContext _localctx = new SwitchCaseExprContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_switchCaseExpr);
+		try {
+			setState(173);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case INT:
+			case HEX:
+			case BIN:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(169);
+				integer();
+				}
+				break;
+			case ATOM:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(170);
+				match(ATOM);
+				}
+				break;
+			case BOOL:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(171);
+				match(BOOL);
+				}
+				break;
+			case CHAR:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(172);
+				match(CHAR);
 				}
 				break;
 			default:
@@ -1663,6 +1672,7 @@ public class HorthParser extends Parser {
 	}
 	public static class GenSwitchContext extends GeneralContext {
 		public BlockContext inBlock;
+		public SwitchCaseExprContext cases;
 		public BlockContext block;
 		public List<BlockContext> doBlock = new ArrayList<BlockContext>();
 		public BlockContext defBlock;
@@ -1672,23 +1682,11 @@ public class HorthParser extends Parser {
 		public BlockContext block(int i) {
 			return getRuleContext(BlockContext.class,i);
 		}
-		public List<IntegerContext> integer() {
-			return getRuleContexts(IntegerContext.class);
+		public List<SwitchCaseExprContext> switchCaseExpr() {
+			return getRuleContexts(SwitchCaseExprContext.class);
 		}
-		public IntegerContext integer(int i) {
-			return getRuleContext(IntegerContext.class,i);
-		}
-		public List<TerminalNode> BOOL() { return getTokens(HorthParser.BOOL); }
-		public TerminalNode BOOL(int i) {
-			return getToken(HorthParser.BOOL, i);
-		}
-		public List<TerminalNode> CHAR() { return getTokens(HorthParser.CHAR); }
-		public TerminalNode CHAR(int i) {
-			return getToken(HorthParser.CHAR, i);
-		}
-		public List<TerminalNode> ATOM() { return getTokens(HorthParser.ATOM); }
-		public TerminalNode ATOM(int i) {
-			return getToken(HorthParser.ATOM, i);
+		public SwitchCaseExprContext switchCaseExpr(int i) {
+			return getRuleContext(SwitchCaseExprContext.class,i);
 		}
 		public GenSwitchContext(GeneralContext ctx) { copyFrom(ctx); }
 		@Override
@@ -2220,14 +2218,14 @@ public class HorthParser extends Parser {
 		int _la;
 		try {
 			int _alt;
-			setState(356);
+			setState(349);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,28,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,27,_ctx) ) {
 			case 1:
 				_localctx = new GenSeparatorContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(177);
+				setState(175);
 				match(T__7);
 				}
 				break;
@@ -2235,7 +2233,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenUnopContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(178);
+				setState(176);
 				unop();
 				}
 				break;
@@ -2243,7 +2241,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenBinOpContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(179);
+				setState(177);
 				binop();
 				}
 				break;
@@ -2251,7 +2249,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenKeywordContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(180);
+				setState(178);
 				keywords();
 				}
 				break;
@@ -2259,9 +2257,9 @@ public class HorthParser extends Parser {
 				_localctx = new GenPropContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(181);
+				setState(179);
 				match(T__49);
-				setState(182);
+				setState(180);
 				((GenPropContext)_localctx).prop = match(NAME);
 				}
 				break;
@@ -2269,11 +2267,11 @@ public class HorthParser extends Parser {
 				_localctx = new GenPropAddrContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(183);
+				setState(181);
 				match(T__49);
-				setState(184);
+				setState(182);
 				((GenPropAddrContext)_localctx).prop = match(NAME);
-				setState(185);
+				setState(183);
 				match(T__0);
 				}
 				break;
@@ -2281,11 +2279,11 @@ public class HorthParser extends Parser {
 				_localctx = new GenAccessorContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(186);
+				setState(184);
 				match(T__50);
-				setState(187);
+				setState(185);
 				((GenAccessorContext)_localctx).accBlock = block();
-				setState(188);
+				setState(186);
 				match(T__51);
 				}
 				break;
@@ -2293,11 +2291,11 @@ public class HorthParser extends Parser {
 				_localctx = new GenAccessorStrictContext(_localctx);
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(190);
+				setState(188);
 				match(T__50);
-				setState(191);
+				setState(189);
 				((GenAccessorStrictContext)_localctx).accBlock = block();
-				setState(192);
+				setState(190);
 				match(T__52);
 				}
 				break;
@@ -2305,37 +2303,37 @@ public class HorthParser extends Parser {
 				_localctx = new GenArrayContext(_localctx);
 				enterOuterAlt(_localctx, 9);
 				{
-				setState(194);
+				setState(192);
 				match(T__53);
-				setState(200);
+				setState(198);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 				while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 					if ( _alt==1 ) {
 						{
 						{
-						setState(195);
+						setState(193);
 						staticExpr();
-						setState(196);
+						setState(194);
 						match(T__7);
 						}
 						} 
 					}
-					setState(202);
+					setState(200);
 					_errHandler.sync(this);
 					_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
 				}
-				setState(204);
+				setState(202);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__44) | (1L << T__48))) != 0) || ((((_la - 83)) & ~0x3f) == 0 && ((1L << (_la - 83)) & ((1L << (BOOL - 83)) | (1L << (NAME - 83)) | (1L << (ATOM - 83)) | (1L << (INT - 83)) | (1L << (HEX - 83)) | (1L << (BIN - 83)) | (1L << (CHAR - 83)) | (1L << (STRING - 83)))) != 0)) {
+				if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__2) | (1L << T__6) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14) | (1L << T__15) | (1L << T__16) | (1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20) | (1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << T__27) | (1L << T__28) | (1L << T__44) | (1L << T__48))) != 0) || ((((_la - 83)) & ~0x3f) == 0 && ((1L << (_la - 83)) & ((1L << (BOOL - 83)) | (1L << (NAME - 83)) | (1L << (ATOM - 83)) | (1L << (INT - 83)) | (1L << (HEX - 83)) | (1L << (BIN - 83)) | (1L << (CHAR - 83)) | (1L << (STRING - 83)))) != 0)) {
 					{
-					setState(203);
+					setState(201);
 					staticExpr();
 					}
 				}
 
-				setState(206);
+				setState(204);
 				match(T__54);
 				}
 				break;
@@ -2343,11 +2341,11 @@ public class HorthParser extends Parser {
 				_localctx = new GenInfixContext(_localctx);
 				enterOuterAlt(_localctx, 10);
 				{
-				setState(207);
+				setState(205);
 				match(T__45);
-				setState(208);
+				setState(206);
 				infix(0);
-				setState(209);
+				setState(207);
 				match(T__46);
 				}
 				break;
@@ -2355,21 +2353,21 @@ public class HorthParser extends Parser {
 				_localctx = new GenAssertContext(_localctx);
 				enterOuterAlt(_localctx, 11);
 				{
-				setState(211);
+				setState(209);
 				match(T__55);
-				setState(213);
+				setState(211);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
 				case 1:
 					{
-					setState(212);
+					setState(210);
 					((GenAssertContext)_localctx).message = match(STRING);
 					}
 					break;
 				}
-				setState(215);
+				setState(213);
 				block();
-				setState(216);
+				setState(214);
 				match(T__8);
 				}
 				break;
@@ -2377,23 +2375,23 @@ public class HorthParser extends Parser {
 				_localctx = new GenStaticAssertContext(_localctx);
 				enterOuterAlt(_localctx, 12);
 				{
-				setState(218);
+				setState(216);
 				match(T__56);
-				setState(219);
+				setState(217);
 				match(T__55);
-				setState(221);
+				setState(219);
 				_errHandler.sync(this);
 				switch ( getInterpreter().adaptivePredict(_input,18,_ctx) ) {
 				case 1:
 					{
-					setState(220);
+					setState(218);
 					((GenStaticAssertContext)_localctx).message = match(STRING);
 					}
 					break;
 				}
-				setState(223);
+				setState(221);
 				staticExpr();
-				setState(224);
+				setState(222);
 				match(T__8);
 				}
 				break;
@@ -2401,31 +2399,31 @@ public class HorthParser extends Parser {
 				_localctx = new GenAllocStaticContext(_localctx);
 				enterOuterAlt(_localctx, 13);
 				{
-				setState(226);
+				setState(224);
 				match(T__57);
-				setState(227);
+				setState(225);
 				match(NAME);
-				setState(228);
+				setState(226);
 				match(T__58);
-				setState(229);
+				setState(227);
 				dataType();
-				setState(234);
+				setState(232);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				while (_la==T__13) {
+				while (_la==T__14) {
 					{
 					{
-					setState(230);
-					match(T__13);
-					setState(231);
+					setState(228);
+					match(T__14);
+					setState(229);
 					staticExpr();
 					}
 					}
-					setState(236);
+					setState(234);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(237);
+				setState(235);
 				match(T__8);
 				}
 				break;
@@ -2433,27 +2431,27 @@ public class HorthParser extends Parser {
 				_localctx = new GenAllocContext(_localctx);
 				enterOuterAlt(_localctx, 14);
 				{
-				setState(239);
+				setState(237);
 				match(T__58);
-				setState(240);
+				setState(238);
 				dataType();
-				setState(243);
+				setState(241);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-				if (_la==T__13) {
+				if (_la==T__14) {
 					{
-					setState(241);
-					match(T__13);
-					setState(242);
+					setState(239);
+					match(T__14);
+					setState(240);
 					block();
 					}
 				}
 
-				setState(245);
+				setState(243);
 				match(T__59);
-				setState(246);
+				setState(244);
 				block();
-				setState(247);
+				setState(245);
 				match(T__8);
 				}
 				break;
@@ -2461,51 +2459,51 @@ public class HorthParser extends Parser {
 				_localctx = new GenIfContext(_localctx);
 				enterOuterAlt(_localctx, 15);
 				{
-				setState(249);
+				setState(247);
 				match(T__60);
-				setState(250);
+				setState(248);
 				((GenIfContext)_localctx).block = block();
 				((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
-				setState(251);
+				setState(249);
 				match(T__61);
-				setState(252);
+				setState(250);
 				((GenIfContext)_localctx).block = block();
 				((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
-				setState(260);
+				setState(258);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__62) {
 					{
 					{
-					setState(253);
+					setState(251);
 					match(T__62);
-					setState(254);
+					setState(252);
 					((GenIfContext)_localctx).block = block();
 					((GenIfContext)_localctx).conds.add(((GenIfContext)_localctx).block);
-					setState(255);
+					setState(253);
 					match(T__61);
-					setState(256);
+					setState(254);
 					((GenIfContext)_localctx).block = block();
 					((GenIfContext)_localctx).doBlock.add(((GenIfContext)_localctx).block);
 					}
 					}
-					setState(262);
+					setState(260);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(265);
+				setState(263);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__63) {
 					{
-					setState(263);
+					setState(261);
 					match(T__63);
-					setState(264);
+					setState(262);
 					((GenIfContext)_localctx).elseBlock = block();
 					}
 				}
 
-				setState(267);
+				setState(265);
 				match(T__8);
 				}
 				break;
@@ -2513,78 +2511,48 @@ public class HorthParser extends Parser {
 				_localctx = new GenSwitchContext(_localctx);
 				enterOuterAlt(_localctx, 16);
 				{
-				setState(269);
+				setState(267);
 				match(T__64);
-				setState(270);
+				setState(268);
 				((GenSwitchContext)_localctx).inBlock = block();
-				setState(271);
+				setState(269);
 				match(T__59);
-				setState(285);
+				setState(278);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__65) {
 					{
 					{
-					setState(272);
+					setState(270);
 					match(T__65);
-					setState(277);
-					_errHandler.sync(this);
-					switch (_input.LA(1)) {
-					case INT:
-					case HEX:
-					case BIN:
-						{
-						setState(273);
-						integer();
-						}
-						break;
-					case BOOL:
-						{
-						setState(274);
-						match(BOOL);
-						}
-						break;
-					case CHAR:
-						{
-						setState(275);
-						match(CHAR);
-						}
-						break;
-					case ATOM:
-						{
-						setState(276);
-						match(ATOM);
-						}
-						break;
-					default:
-						throw new NoViableAltException(this);
-					}
-					setState(279);
+					setState(271);
+					((GenSwitchContext)_localctx).cases = switchCaseExpr();
+					setState(272);
 					match(T__61);
-					setState(280);
+					setState(273);
 					((GenSwitchContext)_localctx).block = block();
 					((GenSwitchContext)_localctx).doBlock.add(((GenSwitchContext)_localctx).block);
-					setState(281);
+					setState(274);
 					match(T__40);
 					}
 					}
-					setState(287);
+					setState(280);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(290);
+				setState(283);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__63) {
 					{
-					setState(288);
+					setState(281);
 					match(T__63);
-					setState(289);
+					setState(282);
 					((GenSwitchContext)_localctx).defBlock = block();
 					}
 				}
 
-				setState(292);
+				setState(285);
 				match(T__8);
 				}
 				break;
@@ -2592,27 +2560,27 @@ public class HorthParser extends Parser {
 				_localctx = new GenWhileContext(_localctx);
 				enterOuterAlt(_localctx, 17);
 				{
-				setState(294);
+				setState(287);
 				match(T__66);
-				setState(295);
+				setState(288);
 				((GenWhileContext)_localctx).cond = block();
-				setState(296);
+				setState(289);
 				match(T__61);
-				setState(297);
+				setState(290);
 				((GenWhileContext)_localctx).doBlock = block();
-				setState(300);
+				setState(293);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				if (_la==T__63) {
 					{
-					setState(298);
+					setState(291);
 					match(T__63);
-					setState(299);
+					setState(292);
 					((GenWhileContext)_localctx).elseBlock = block();
 					}
 				}
 
-				setState(302);
+				setState(295);
 				match(T__8);
 				}
 				break;
@@ -2620,26 +2588,26 @@ public class HorthParser extends Parser {
 				_localctx = new GenLetContext(_localctx);
 				enterOuterAlt(_localctx, 18);
 				{
-				setState(304);
+				setState(297);
 				match(T__67);
-				setState(306); 
+				setState(299); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(305);
+					setState(298);
 					((GenLetContext)_localctx).NAME = match(NAME);
 					((GenLetContext)_localctx).names.add(((GenLetContext)_localctx).NAME);
 					}
 					}
-					setState(308); 
+					setState(301); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==NAME );
-				setState(310);
+				setState(303);
 				match(T__59);
-				setState(311);
+				setState(304);
 				((GenLetContext)_localctx).localBlock = block();
 				}
 				break;
@@ -2647,15 +2615,15 @@ public class HorthParser extends Parser {
 				_localctx = new GenWithContext(_localctx);
 				enterOuterAlt(_localctx, 19);
 				{
-				setState(312);
+				setState(305);
 				match(T__68);
-				setState(313);
+				setState(306);
 				match(NAME);
-				setState(314);
+				setState(307);
 				match(T__61);
-				setState(315);
+				setState(308);
 				block();
-				setState(316);
+				setState(309);
 				match(T__8);
 				}
 				break;
@@ -2663,13 +2631,13 @@ public class HorthParser extends Parser {
 				_localctx = new GenConstContext(_localctx);
 				enterOuterAlt(_localctx, 20);
 				{
-				setState(318);
+				setState(311);
 				match(T__57);
-				setState(319);
+				setState(312);
 				match(NAME);
-				setState(320);
+				setState(313);
 				staticExpr();
-				setState(321);
+				setState(314);
 				match(T__8);
 				}
 				break;
@@ -2677,9 +2645,9 @@ public class HorthParser extends Parser {
 				_localctx = new GenTryContext(_localctx);
 				enterOuterAlt(_localctx, 21);
 				{
-				setState(323);
+				setState(316);
 				match(T__69);
-				setState(324);
+				setState(317);
 				match(NAME);
 				}
 				break;
@@ -2687,11 +2655,11 @@ public class HorthParser extends Parser {
 				_localctx = new GenThrowContext(_localctx);
 				enterOuterAlt(_localctx, 22);
 				{
-				setState(325);
+				setState(318);
 				match(T__70);
-				setState(326);
+				setState(319);
 				block();
-				setState(327);
+				setState(320);
 				match(T__8);
 				}
 				break;
@@ -2699,19 +2667,19 @@ public class HorthParser extends Parser {
 				_localctx = new GenCatchContext(_localctx);
 				enterOuterAlt(_localctx, 23);
 				{
-				setState(329);
+				setState(322);
 				match(T__69);
-				setState(330);
+				setState(323);
 				match(NAME);
-				setState(331);
+				setState(324);
 				match(T__71);
-				setState(332);
+				setState(325);
 				((GenCatchContext)_localctx).passBlock = block();
-				setState(333);
+				setState(326);
 				match(T__72);
-				setState(334);
+				setState(327);
 				((GenCatchContext)_localctx).failBlock = block();
-				setState(335);
+				setState(328);
 				match(T__8);
 				}
 				break;
@@ -2719,19 +2687,19 @@ public class HorthParser extends Parser {
 				_localctx = new GenCatchContext(_localctx);
 				enterOuterAlt(_localctx, 24);
 				{
-				setState(337);
+				setState(330);
 				match(T__69);
-				setState(338);
+				setState(331);
 				match(NAME);
-				setState(339);
+				setState(332);
 				match(T__72);
-				setState(340);
+				setState(333);
 				((GenCatchContext)_localctx).failBlock = block();
-				setState(341);
+				setState(334);
 				match(T__71);
-				setState(342);
+				setState(335);
 				((GenCatchContext)_localctx).passBlock = block();
-				setState(343);
+				setState(336);
 				match(T__8);
 				}
 				break;
@@ -2739,9 +2707,9 @@ public class HorthParser extends Parser {
 				_localctx = new GenSyscallContext(_localctx);
 				enterOuterAlt(_localctx, 25);
 				{
-				setState(345);
+				setState(338);
 				match(T__73);
-				setState(346);
+				setState(339);
 				((GenSyscallContext)_localctx).sysCallName = match(NAME);
 				}
 				break;
@@ -2749,9 +2717,9 @@ public class HorthParser extends Parser {
 				_localctx = new GenExportContext(_localctx);
 				enterOuterAlt(_localctx, 26);
 				{
-				setState(347);
+				setState(340);
 				match(T__74);
-				setState(348);
+				setState(341);
 				match(NAME);
 				}
 				break;
@@ -2759,7 +2727,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenIntrfuncContext(_localctx);
 				enterOuterAlt(_localctx, 27);
 				{
-				setState(349);
+				setState(342);
 				typefunc();
 				}
 				break;
@@ -2767,7 +2735,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenAtomContext(_localctx);
 				enterOuterAlt(_localctx, 28);
 				{
-				setState(350);
+				setState(343);
 				match(ATOM);
 				}
 				break;
@@ -2775,7 +2743,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenIntContext(_localctx);
 				enterOuterAlt(_localctx, 29);
 				{
-				setState(351);
+				setState(344);
 				integer();
 				}
 				break;
@@ -2783,7 +2751,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenIdentifierContext(_localctx);
 				enterOuterAlt(_localctx, 30);
 				{
-				setState(352);
+				setState(345);
 				identifier();
 				}
 				break;
@@ -2791,7 +2759,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenStringContext(_localctx);
 				enterOuterAlt(_localctx, 31);
 				{
-				setState(353);
+				setState(346);
 				match(STRING);
 				}
 				break;
@@ -2799,7 +2767,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenBoolContext(_localctx);
 				enterOuterAlt(_localctx, 32);
 				{
-				setState(354);
+				setState(347);
 				match(BOOL);
 				}
 				break;
@@ -2807,7 +2775,7 @@ public class HorthParser extends Parser {
 				_localctx = new GenCharContext(_localctx);
 				enterOuterAlt(_localctx, 33);
 				{
-				setState(355);
+				setState(348);
 				match(CHAR);
 				}
 				break;
@@ -2877,12 +2845,12 @@ public class HorthParser extends Parser {
 			_localctx = new MainFuncContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(359);
+			setState(352);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (((((_la - 76)) & ~0x3f) == 0 && ((1L << (_la - 76)) & ((1L << (T__75 - 76)) | (1L << (T__76 - 76)) | (1L << (T__77 - 76)) | (1L << (T__78 - 76)))) != 0)) {
 				{
-				setState(358);
+				setState(351);
 				((MainFuncContext)_localctx).funcPrefix = _input.LT(1);
 				_la = _input.LA(1);
 				if ( !(((((_la - 76)) & ~0x3f) == 0 && ((1L << (_la - 76)) & ((1L << (T__75 - 76)) | (1L << (T__76 - 76)) | (1L << (T__77 - 76)) | (1L << (T__78 - 76)))) != 0)) ) {
@@ -2896,67 +2864,67 @@ public class HorthParser extends Parser {
 				}
 			}
 
-			setState(361);
+			setState(354);
 			match(T__3);
-			setState(362);
+			setState(355);
 			((MainFuncContext)_localctx).name = match(NAME);
-			setState(366);
+			setState(359);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__3 || _la==NAME) {
 				{
 				{
-				setState(363);
+				setState(356);
 				((MainFuncContext)_localctx).dataType = dataType();
 				((MainFuncContext)_localctx).args.add(((MainFuncContext)_localctx).dataType);
 				}
 				}
-				setState(368);
+				setState(361);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(375);
+			setState(368);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__4) {
 				{
-				setState(369);
+				setState(362);
 				match(T__4);
-				setState(371); 
+				setState(364); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				do {
 					{
 					{
-					setState(370);
+					setState(363);
 					((MainFuncContext)_localctx).dataType = dataType();
 					((MainFuncContext)_localctx).rets.add(((MainFuncContext)_localctx).dataType);
 					}
 					}
-					setState(373); 
+					setState(366); 
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==T__3 || _la==NAME );
 				}
 			}
 
-			setState(379);
+			setState(372);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__79) {
 				{
-				setState(377);
+				setState(370);
 				match(T__79);
-				setState(378);
+				setState(371);
 				((MainFuncContext)_localctx).thrown = dataType();
 				}
 			}
 
-			setState(381);
+			setState(374);
 			match(T__59);
-			setState(382);
+			setState(375);
 			((MainFuncContext)_localctx).funcBody = block();
-			setState(383);
+			setState(376);
 			match(T__8);
 			}
 		}
@@ -3006,22 +2974,22 @@ public class HorthParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(388);
+			setState(381);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,33,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
 					{
 					{
-					setState(385);
+					setState(378);
 					((BlockContext)_localctx).general = general();
 					((BlockContext)_localctx).contents.add(((BlockContext)_localctx).general);
 					}
 					} 
 				}
-				setState(390);
+				setState(383);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,34,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,33,_ctx);
 			}
 			}
 		}
@@ -3063,9 +3031,9 @@ public class HorthParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(391);
+			setState(384);
 			match(T__80);
-			setState(392);
+			setState(385);
 			match(STRING);
 			}
 		}
@@ -3126,49 +3094,49 @@ public class HorthParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(396);
+			setState(389);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__81) {
 				{
-				setState(394);
+				setState(387);
 				match(T__81);
-				setState(395);
+				setState(388);
 				((ProgramContext)_localctx).moduleName = match(MODULE_NAME);
 				}
 			}
 
-			setState(401);
+			setState(394);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__80) {
 				{
 				{
-				setState(398);
+				setState(391);
 				((ProgramContext)_localctx).include = include();
 				((ProgramContext)_localctx).includes.add(((ProgramContext)_localctx).include);
 				}
 				}
-				setState(403);
+				setState(396);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(407);
+			setState(400);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__3 || ((((_la - 76)) & ~0x3f) == 0 && ((1L << (_la - 76)) & ((1L << (T__75 - 76)) | (1L << (T__76 - 76)) | (1L << (T__77 - 76)) | (1L << (T__78 - 76)))) != 0)) {
 				{
 				{
-				setState(404);
+				setState(397);
 				((ProgramContext)_localctx).mainBlock = mainBlock();
 				((ProgramContext)_localctx).main.add(((ProgramContext)_localctx).mainBlock);
 				}
 				}
-				setState(409);
+				setState(402);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(410);
+			setState(403);
 			match(EOF);
 			}
 		}
@@ -3185,7 +3153,7 @@ public class HorthParser extends Parser {
 
 	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
 		switch (ruleIndex) {
-		case 9:
+		case 8:
 			return infix_sempred((InfixContext)_localctx, predIndex);
 		}
 		return true;
@@ -3199,165 +3167,161 @@ public class HorthParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3a\u019f\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3a\u0198\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\3\2\3\2\3"+
-		"\2\5\2&\n\2\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\5\3\5\3\5\3\5\6\5\63\n\5\r"+
-		"\5\16\5\64\3\5\3\5\3\5\3\5\3\5\7\5<\n\5\f\5\16\5?\13\5\3\5\3\5\6\5C\n"+
-		"\5\r\5\16\5D\5\5G\n\5\3\5\5\5J\n\5\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6S\n"+
-		"\6\f\6\16\6V\13\6\3\6\3\6\3\6\3\6\3\7\3\7\3\b\3\b\3\t\3\t\3\t\3\t\3\t"+
-		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\5\tr\n\t\3\n\3\n"+
-		"\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\7\n\u0083\n\n\f\n"+
-		"\16\n\u0086\13\n\3\n\3\n\3\n\5\n\u008b\n\n\3\13\3\13\3\13\5\13\u0090\n"+
-		"\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u009e"+
-		"\n\13\3\13\3\13\3\13\3\13\7\13\u00a4\n\13\f\13\16\13\u00a7\13\13\3\f\3"+
-		"\f\3\f\3\f\3\f\3\f\3\f\3\f\3\f\5\f\u00b2\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u00c9\n"+
-		"\r\f\r\16\r\u00cc\13\r\3\r\5\r\u00cf\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5"+
-		"\r\u00d8\n\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00e0\n\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\3\r\3\r\3\r\7\r\u00eb\n\r\f\r\16\r\u00ee\13\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\5\r\u00f6\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\7\r\u0105\n\r\f\r\16\r\u0108\13\r\3\r\3\r\5\r\u010c\n\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u0118\n\r\3\r\3\r\3\r\3\r\7\r\u011e\n\r"+
-		"\f\r\16\r\u0121\13\r\3\r\3\r\5\r\u0125\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
-		"\3\r\5\r\u012f\n\r\3\r\3\r\3\r\3\r\6\r\u0135\n\r\r\r\16\r\u0136\3\r\3"+
+		"\2\5\2&\n\2\3\3\3\3\3\3\5\3+\n\3\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\3\4\7"+
+		"\4\66\n\4\f\4\16\49\13\4\3\4\3\4\6\4=\n\4\r\4\16\4>\5\4A\n\4\3\4\5\4D"+
+		"\n\4\3\5\3\5\3\5\3\5\3\5\3\5\3\5\7\5M\n\5\f\5\16\5P\13\5\3\5\3\5\3\5\3"+
+		"\5\3\6\3\6\3\7\3\7\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b\3\b"+
+		"\3\b\3\b\3\b\5\bj\n\b\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t"+
+		"\3\t\3\t\3\t\7\t{\n\t\f\t\16\t~\13\t\3\t\3\t\3\t\5\t\u0083\n\t\3\n\3\n"+
+		"\3\n\5\n\u0088\n\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\3\n\5\n"+
+		"\u0096\n\n\3\n\3\n\3\n\3\n\7\n\u009c\n\n\f\n\16\n\u009f\13\n\3\13\3\13"+
+		"\3\13\3\13\3\13\3\13\3\13\3\13\3\13\5\13\u00aa\n\13\3\f\3\f\3\f\3\f\5"+
+		"\f\u00b0\n\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
+		"\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u00c7\n\r\f\r\16\r\u00ca\13\r\3\r\5\r\u00cd"+
+		"\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00d6\n\r\3\r\3\r\3\r\3\r\3\r\3\r"+
+		"\5\r\u00de\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u00e9\n\r\f\r\16"+
+		"\r\u00ec\13\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u00f4\n\r\3\r\3\r\3\r\3\r\3"+
+		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u0103\n\r\f\r\16\r\u0106\13\r\3"+
+		"\r\3\r\5\r\u010a\n\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\7\r\u0117"+
+		"\n\r\f\r\16\r\u011a\13\r\3\r\3\r\5\r\u011e\n\r\3\r\3\r\3\r\3\r\3\r\3\r"+
+		"\3\r\3\r\5\r\u0128\n\r\3\r\3\r\3\r\3\r\6\r\u012e\n\r\r\r\16\r\u012f\3"+
 		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r"+
 		"\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3"+
-		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u0167\n\r\3\16\5\16\u016a\n"+
-		"\16\3\16\3\16\3\16\7\16\u016f\n\16\f\16\16\16\u0172\13\16\3\16\3\16\6"+
-		"\16\u0176\n\16\r\16\16\16\u0177\5\16\u017a\n\16\3\16\3\16\5\16\u017e\n"+
-		"\16\3\16\3\16\3\16\3\16\3\17\7\17\u0185\n\17\f\17\16\17\u0188\13\17\3"+
-		"\20\3\20\3\20\3\21\3\21\5\21\u018f\n\21\3\21\7\21\u0192\n\21\f\21\16\21"+
-		"\u0195\13\21\3\21\7\21\u0198\n\21\f\21\16\21\u019b\13\21\3\21\3\21\3\21"+
-		"\2\3\24\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2\5\3\2\f\r\4\2\4\5"+
-		"\16\35\3\2NQ\2\u01f7\2%\3\2\2\2\4*\3\2\2\2\6,\3\2\2\2\bI\3\2\2\2\nK\3"+
-		"\2\2\2\f[\3\2\2\2\16]\3\2\2\2\20q\3\2\2\2\22\u008a\3\2\2\2\24\u009d\3"+
-		"\2\2\2\26\u00b1\3\2\2\2\30\u0166\3\2\2\2\32\u0169\3\2\2\2\34\u0186\3\2"+
-		"\2\2\36\u0189\3\2\2\2 \u018e\3\2\2\2\"#\7V\2\2#&\7\3\2\2$&\7V\2\2%\"\3"+
-		"\2\2\2%$\3\2\2\2&\3\3\2\2\2\'+\7X\2\2(+\7Y\2\2)+\7Z\2\2*\'\3\2\2\2*(\3"+
-		"\2\2\2*)\3\2\2\2+\5\3\2\2\2,-\7V\2\2-\7\3\2\2\2.J\5\6\4\2/\60\7V\2\2\60"+
-		"\62\7\4\2\2\61\63\5\b\5\2\62\61\3\2\2\2\63\64\3\2\2\2\64\62\3\2\2\2\64"+
-		"\65\3\2\2\2\65\66\3\2\2\2\66\67\7\5\2\2\67J\3\2\2\289\7\6\2\29=\7\4\2"+
-		"\2:<\5\b\5\2;:\3\2\2\2<?\3\2\2\2=;\3\2\2\2=>\3\2\2\2>F\3\2\2\2?=\3\2\2"+
-		"\2@B\7\7\2\2AC\5\b\5\2BA\3\2\2\2CD\3\2\2\2DB\3\2\2\2DE\3\2\2\2EG\3\2\2"+
-		"\2F@\3\2\2\2FG\3\2\2\2GH\3\2\2\2HJ\7\5\2\2I.\3\2\2\2I/\3\2\2\2I8\3\2\2"+
-		"\2J\t\3\2\2\2KL\7\b\2\2LM\7V\2\2MT\7\t\2\2NO\7V\2\2OP\5\b\5\2PQ\7\n\2"+
-		"\2QS\3\2\2\2RN\3\2\2\2SV\3\2\2\2TR\3\2\2\2TU\3\2\2\2UW\3\2\2\2VT\3\2\2"+
-		"\2WX\7V\2\2XY\5\b\5\2YZ\7\13\2\2Z\13\3\2\2\2[\\\t\2\2\2\\\r\3\2\2\2]^"+
-		"\t\3\2\2^\17\3\2\2\2_r\7\36\2\2`r\7\37\2\2ar\7 \2\2br\7!\2\2cr\7\"\2\2"+
-		"dr\7#\2\2er\7$\2\2fr\7%\2\2gh\7&\2\2hr\7\'\2\2ir\7&\2\2jr\7(\2\2kr\7)"+
-		"\2\2lr\7*\2\2mr\7+\2\2nr\7,\2\2or\7-\2\2pr\7.\2\2q_\3\2\2\2q`\3\2\2\2"+
-		"qa\3\2\2\2qb\3\2\2\2qc\3\2\2\2qd\3\2\2\2qe\3\2\2\2qf\3\2\2\2qg\3\2\2\2"+
-		"qi\3\2\2\2qj\3\2\2\2qk\3\2\2\2ql\3\2\2\2qm\3\2\2\2qn\3\2\2\2qo\3\2\2\2"+
-		"qp\3\2\2\2r\21\3\2\2\2st\7/\2\2tu\7\60\2\2uv\5\b\5\2vw\7\61\2\2w\u008b"+
-		"\3\2\2\2xy\7/\2\2y\u008b\5\b\5\2z{\7\t\2\2{\u008b\5\b\5\2|}\7\t\2\2}~"+
-		"\7\62\2\2~\u008b\5\b\5\2\177\u0080\7\63\2\2\u0080\u0084\7\60\2\2\u0081"+
-		"\u0083\5\b\5\2\u0082\u0081\3\2\2\2\u0083\u0086\3\2\2\2\u0084\u0082\3\2"+
-		"\2\2\u0084\u0085\3\2\2\2\u0085\u0087\3\2\2\2\u0086\u0084\3\2\2\2\u0087"+
-		"\u008b\7\61\2\2\u0088\u0089\7\63\2\2\u0089\u008b\5\b\5\2\u008as\3\2\2"+
-		"\2\u008ax\3\2\2\2\u008az\3\2\2\2\u008a|\3\2\2\2\u008a\177\3\2\2\2\u008a"+
-		"\u0088\3\2\2\2\u008b\23\3\2\2\2\u008c\u008d\b\13\1\2\u008d\u009e\5\2\2"+
-		"\2\u008e\u0090\5\2\2\2\u008f\u008e\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0091"+
-		"\3\2\2\2\u0091\u009e\5\22\n\2\u0092\u009e\7W\2\2\u0093\u009e\5\4\3\2\u0094"+
-		"\u009e\7U\2\2\u0095\u009e\7[\2\2\u0096\u0097\5\f\7\2\u0097\u0098\5\24"+
-		"\13\4\u0098\u009e\3\2\2\2\u0099\u009a\7\60\2\2\u009a\u009b\5\24\13\2\u009b"+
-		"\u009c\7\61\2\2\u009c\u009e\3\2\2\2\u009d\u008c\3\2\2\2\u009d\u008f\3"+
-		"\2\2\2\u009d\u0092\3\2\2\2\u009d\u0093\3\2\2\2\u009d\u0094\3\2\2\2\u009d"+
-		"\u0095\3\2\2\2\u009d\u0096\3\2\2\2\u009d\u0099\3\2\2\2\u009e\u00a5\3\2"+
-		"\2\2\u009f\u00a0\f\5\2\2\u00a0\u00a1\5\16\b\2\u00a1\u00a2\5\24\13\6\u00a2"+
-		"\u00a4\3\2\2\2\u00a3\u009f\3\2\2\2\u00a4\u00a7\3\2\2\2\u00a5\u00a3\3\2"+
-		"\2\2\u00a5\u00a6\3\2\2\2\u00a6\25\3\2\2\2\u00a7\u00a5\3\2\2\2\u00a8\u00b2"+
-		"\5\4\3\2\u00a9\u00b2\7W\2\2\u00aa\u00b2\7U\2\2\u00ab\u00b2\7\\\2\2\u00ac"+
-		"\u00b2\7[\2\2\u00ad\u00b2\5\2\2\2\u00ae\u00b2\5\f\7\2\u00af\u00b2\5\16"+
-		"\b\2\u00b0\u00b2\5\22\n\2\u00b1\u00a8\3\2\2\2\u00b1\u00a9\3\2\2\2\u00b1"+
-		"\u00aa\3\2\2\2\u00b1\u00ab\3\2\2\2\u00b1\u00ac\3\2\2\2\u00b1\u00ad\3\2"+
-		"\2\2\u00b1\u00ae\3\2\2\2\u00b1\u00af\3\2\2\2\u00b1\u00b0\3\2\2\2\u00b2"+
-		"\27\3\2\2\2\u00b3\u0167\7\n\2\2\u00b4\u0167\5\f\7\2\u00b5\u0167\5\16\b"+
-		"\2\u00b6\u0167\5\20\t\2\u00b7\u00b8\7\64\2\2\u00b8\u0167\7V\2\2\u00b9"+
-		"\u00ba\7\64\2\2\u00ba\u00bb\7V\2\2\u00bb\u0167\7\3\2\2\u00bc\u00bd\7\65"+
-		"\2\2\u00bd\u00be\5\34\17\2\u00be\u00bf\7\66\2\2\u00bf\u0167\3\2\2\2\u00c0"+
-		"\u00c1\7\65\2\2\u00c1\u00c2\5\34\17\2\u00c2\u00c3\7\67\2\2\u00c3\u0167"+
-		"\3\2\2\2\u00c4\u00ca\78\2\2\u00c5\u00c6\5\26\f\2\u00c6\u00c7\7\n\2\2\u00c7"+
-		"\u00c9\3\2\2\2\u00c8\u00c5\3\2\2\2\u00c9\u00cc\3\2\2\2\u00ca\u00c8\3\2"+
-		"\2\2\u00ca\u00cb\3\2\2\2\u00cb\u00ce\3\2\2\2\u00cc\u00ca\3\2\2\2\u00cd"+
-		"\u00cf\5\26\f\2\u00ce\u00cd\3\2\2\2\u00ce\u00cf\3\2\2\2\u00cf\u00d0\3"+
-		"\2\2\2\u00d0\u0167\79\2\2\u00d1\u00d2\7\60\2\2\u00d2\u00d3\5\24\13\2\u00d3"+
-		"\u00d4\7\61\2\2\u00d4\u0167\3\2\2\2\u00d5\u00d7\7:\2\2\u00d6\u00d8\7\\"+
-		"\2\2\u00d7\u00d6\3\2\2\2\u00d7\u00d8\3\2\2\2\u00d8\u00d9\3\2\2\2\u00d9"+
-		"\u00da\5\34\17\2\u00da\u00db\7\13\2\2\u00db\u0167\3\2\2\2\u00dc\u00dd"+
-		"\7;\2\2\u00dd\u00df\7:\2\2\u00de\u00e0\7\\\2\2\u00df\u00de\3\2\2\2\u00df"+
-		"\u00e0\3\2\2\2\u00e0\u00e1\3\2\2\2\u00e1\u00e2\5\26\f\2\u00e2\u00e3\7"+
-		"\13\2\2\u00e3\u0167\3\2\2\2\u00e4\u00e5\7<\2\2\u00e5\u00e6\7V\2\2\u00e6"+
-		"\u00e7\7=\2\2\u00e7\u00ec\5\b\5\2\u00e8\u00e9\7\20\2\2\u00e9\u00eb\5\26"+
-		"\f\2\u00ea\u00e8\3\2\2\2\u00eb\u00ee\3\2\2\2\u00ec\u00ea\3\2\2\2\u00ec"+
-		"\u00ed\3\2\2\2\u00ed\u00ef\3\2\2\2\u00ee\u00ec\3\2\2\2\u00ef\u00f0\7\13"+
-		"\2\2\u00f0\u0167\3\2\2\2\u00f1\u00f2\7=\2\2\u00f2\u00f5\5\b\5\2\u00f3"+
-		"\u00f4\7\20\2\2\u00f4\u00f6\5\34\17\2\u00f5\u00f3\3\2\2\2\u00f5\u00f6"+
-		"\3\2\2\2\u00f6\u00f7\3\2\2\2\u00f7\u00f8\7>\2\2\u00f8\u00f9\5\34\17\2"+
-		"\u00f9\u00fa\7\13\2\2\u00fa\u0167\3\2\2\2\u00fb\u00fc\7?\2\2\u00fc\u00fd"+
-		"\5\34\17\2\u00fd\u00fe\7@\2\2\u00fe\u0106\5\34\17\2\u00ff\u0100\7A\2\2"+
-		"\u0100\u0101\5\34\17\2\u0101\u0102\7@\2\2\u0102\u0103\5\34\17\2\u0103"+
-		"\u0105\3\2\2\2\u0104\u00ff\3\2\2\2\u0105\u0108\3\2\2\2\u0106\u0104\3\2"+
-		"\2\2\u0106\u0107\3\2\2\2\u0107\u010b\3\2\2\2\u0108\u0106\3\2\2\2\u0109"+
-		"\u010a\7B\2\2\u010a\u010c\5\34\17\2\u010b\u0109\3\2\2\2\u010b\u010c\3"+
-		"\2\2\2\u010c\u010d\3\2\2\2\u010d\u010e\7\13\2\2\u010e\u0167\3\2\2\2\u010f"+
-		"\u0110\7C\2\2\u0110\u0111\5\34\17\2\u0111\u011f\7>\2\2\u0112\u0117\7D"+
-		"\2\2\u0113\u0118\5\4\3\2\u0114\u0118\7U\2\2\u0115\u0118\7[\2\2\u0116\u0118"+
-		"\7W\2\2\u0117\u0113\3\2\2\2\u0117\u0114\3\2\2\2\u0117\u0115\3\2\2\2\u0117"+
-		"\u0116\3\2\2\2\u0118\u0119\3\2\2\2\u0119\u011a\7@\2\2\u011a\u011b\5\34"+
-		"\17\2\u011b\u011c\7+\2\2\u011c\u011e\3\2\2\2\u011d\u0112\3\2\2\2\u011e"+
-		"\u0121\3\2\2\2\u011f\u011d\3\2\2\2\u011f\u0120\3\2\2\2\u0120\u0124\3\2"+
-		"\2\2\u0121\u011f\3\2\2\2\u0122\u0123\7B\2\2\u0123\u0125\5\34\17\2\u0124"+
-		"\u0122\3\2\2\2\u0124\u0125\3\2\2\2\u0125\u0126\3\2\2\2\u0126\u0127\7\13"+
-		"\2\2\u0127\u0167\3\2\2\2\u0128\u0129\7E\2\2\u0129\u012a\5\34\17\2\u012a"+
-		"\u012b\7@\2\2\u012b\u012e\5\34\17\2\u012c\u012d\7B\2\2\u012d\u012f\5\34"+
-		"\17\2\u012e\u012c\3\2\2\2\u012e\u012f\3\2\2\2\u012f\u0130\3\2\2\2\u0130"+
-		"\u0131\7\13\2\2\u0131\u0167\3\2\2\2\u0132\u0134\7F\2\2\u0133\u0135\7V"+
-		"\2\2\u0134\u0133\3\2\2\2\u0135\u0136\3\2\2\2\u0136\u0134\3\2\2\2\u0136"+
-		"\u0137\3\2\2\2\u0137\u0138\3\2\2\2\u0138\u0139\7>\2\2\u0139\u0167\5\34"+
-		"\17\2\u013a\u013b\7G\2\2\u013b\u013c\7V\2\2\u013c\u013d\7@\2\2\u013d\u013e"+
-		"\5\34\17\2\u013e\u013f\7\13\2\2\u013f\u0167\3\2\2\2\u0140\u0141\7<\2\2"+
-		"\u0141\u0142\7V\2\2\u0142\u0143\5\26\f\2\u0143\u0144\7\13\2\2\u0144\u0167"+
-		"\3\2\2\2\u0145\u0146\7H\2\2\u0146\u0167\7V\2\2\u0147\u0148\7I\2\2\u0148"+
-		"\u0149\5\34\17\2\u0149\u014a\7\13\2\2\u014a\u0167\3\2\2\2\u014b\u014c"+
-		"\7H\2\2\u014c\u014d\7V\2\2\u014d\u014e\7J\2\2\u014e\u014f\5\34\17\2\u014f"+
-		"\u0150\7K\2\2\u0150\u0151\5\34\17\2\u0151\u0152\7\13\2\2\u0152\u0167\3"+
-		"\2\2\2\u0153\u0154\7H\2\2\u0154\u0155\7V\2\2\u0155\u0156\7K\2\2\u0156"+
-		"\u0157\5\34\17\2\u0157\u0158\7J\2\2\u0158\u0159\5\34\17\2\u0159\u015a"+
-		"\7\13\2\2\u015a\u0167\3\2\2\2\u015b\u015c\7L\2\2\u015c\u0167\7V\2\2\u015d"+
-		"\u015e\7M\2\2\u015e\u0167\7V\2\2\u015f\u0167\5\22\n\2\u0160\u0167\7W\2"+
-		"\2\u0161\u0167\5\4\3\2\u0162\u0167\5\2\2\2\u0163\u0167\7\\\2\2\u0164\u0167"+
-		"\7U\2\2\u0165\u0167\7[\2\2\u0166\u00b3\3\2\2\2\u0166\u00b4\3\2\2\2\u0166"+
-		"\u00b5\3\2\2\2\u0166\u00b6\3\2\2\2\u0166\u00b7\3\2\2\2\u0166\u00b9\3\2"+
-		"\2\2\u0166\u00bc\3\2\2\2\u0166\u00c0\3\2\2\2\u0166\u00c4\3\2\2\2\u0166"+
-		"\u00d1\3\2\2\2\u0166\u00d5\3\2\2\2\u0166\u00dc\3\2\2\2\u0166\u00e4\3\2"+
-		"\2\2\u0166\u00f1\3\2\2\2\u0166\u00fb\3\2\2\2\u0166\u010f\3\2\2\2\u0166"+
-		"\u0128\3\2\2\2\u0166\u0132\3\2\2\2\u0166\u013a\3\2\2\2\u0166\u0140\3\2"+
-		"\2\2\u0166\u0145\3\2\2\2\u0166\u0147\3\2\2\2\u0166\u014b\3\2\2\2\u0166"+
-		"\u0153\3\2\2\2\u0166\u015b\3\2\2\2\u0166\u015d\3\2\2\2\u0166\u015f\3\2"+
-		"\2\2\u0166\u0160\3\2\2\2\u0166\u0161\3\2\2\2\u0166\u0162\3\2\2\2\u0166"+
-		"\u0163\3\2\2\2\u0166\u0164\3\2\2\2\u0166\u0165\3\2\2\2\u0167\31\3\2\2"+
-		"\2\u0168\u016a\t\4\2\2\u0169\u0168\3\2\2\2\u0169\u016a\3\2\2\2\u016a\u016b"+
-		"\3\2\2\2\u016b\u016c\7\6\2\2\u016c\u0170\7V\2\2\u016d\u016f\5\b\5\2\u016e"+
-		"\u016d\3\2\2\2\u016f\u0172\3\2\2\2\u0170\u016e\3\2\2\2\u0170\u0171\3\2"+
-		"\2\2\u0171\u0179\3\2\2\2\u0172\u0170\3\2\2\2\u0173\u0175\7\7\2\2\u0174"+
-		"\u0176\5\b\5\2\u0175\u0174\3\2\2\2\u0176\u0177\3\2\2\2\u0177\u0175\3\2"+
-		"\2\2\u0177\u0178\3\2\2\2\u0178\u017a\3\2\2\2\u0179\u0173\3\2\2\2\u0179"+
-		"\u017a\3\2\2\2\u017a\u017d\3\2\2\2\u017b\u017c\7R\2\2\u017c\u017e\5\b"+
-		"\5\2\u017d\u017b\3\2\2\2\u017d\u017e\3\2\2\2\u017e\u017f\3\2\2\2\u017f"+
-		"\u0180\7>\2\2\u0180\u0181\5\34\17\2\u0181\u0182\7\13\2\2\u0182\33\3\2"+
-		"\2\2\u0183\u0185\5\30\r\2\u0184\u0183\3\2\2\2\u0185\u0188\3\2\2\2\u0186"+
-		"\u0184\3\2\2\2\u0186\u0187\3\2\2\2\u0187\35\3\2\2\2\u0188\u0186\3\2\2"+
-		"\2\u0189\u018a\7S\2\2\u018a\u018b\7\\\2\2\u018b\37\3\2\2\2\u018c\u018d"+
-		"\7T\2\2\u018d\u018f\7^\2\2\u018e\u018c\3\2\2\2\u018e\u018f\3\2\2\2\u018f"+
-		"\u0193\3\2\2\2\u0190\u0192\5\36\20\2\u0191\u0190\3\2\2\2\u0192\u0195\3"+
-		"\2\2\2\u0193\u0191\3\2\2\2\u0193\u0194\3\2\2\2\u0194\u0199\3\2\2\2\u0195"+
-		"\u0193\3\2\2\2\u0196\u0198\5\32\16\2\u0197\u0196\3\2\2\2\u0198\u019b\3"+
-		"\2\2\2\u0199\u0197\3\2\2\2\u0199\u019a\3\2\2\2\u019a\u019c\3\2\2\2\u019b"+
-		"\u0199\3\2\2\2\u019c\u019d\7\2\2\3\u019d!\3\2\2\2(%*\64=DFITq\u0084\u008a"+
-		"\u008f\u009d\u00a5\u00b1\u00ca\u00ce\u00d7\u00df\u00ec\u00f5\u0106\u010b"+
-		"\u0117\u011f\u0124\u012e\u0136\u0166\u0169\u0170\u0177\u0179\u017d\u0186"+
-		"\u018e\u0193\u0199";
+		"\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\r\u0160\n\r\3\16\5\16\u0163"+
+		"\n\16\3\16\3\16\3\16\7\16\u0168\n\16\f\16\16\16\u016b\13\16\3\16\3\16"+
+		"\6\16\u016f\n\16\r\16\16\16\u0170\5\16\u0173\n\16\3\16\3\16\5\16\u0177"+
+		"\n\16\3\16\3\16\3\16\3\16\3\17\7\17\u017e\n\17\f\17\16\17\u0181\13\17"+
+		"\3\20\3\20\3\20\3\21\3\21\5\21\u0188\n\21\3\21\7\21\u018b\n\21\f\21\16"+
+		"\21\u018e\13\21\3\21\7\21\u0191\n\21\f\21\16\21\u0194\13\21\3\21\3\21"+
+		"\3\21\2\3\22\22\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \2\5\3\2\f\16\4"+
+		"\2\4\5\17\37\3\2NQ\2\u01ed\2%\3\2\2\2\4*\3\2\2\2\6C\3\2\2\2\bE\3\2\2\2"+
+		"\nU\3\2\2\2\fW\3\2\2\2\16i\3\2\2\2\20\u0082\3\2\2\2\22\u0095\3\2\2\2\24"+
+		"\u00a9\3\2\2\2\26\u00af\3\2\2\2\30\u015f\3\2\2\2\32\u0162\3\2\2\2\34\u017f"+
+		"\3\2\2\2\36\u0182\3\2\2\2 \u0187\3\2\2\2\"#\7V\2\2#&\7\3\2\2$&\7V\2\2"+
+		"%\"\3\2\2\2%$\3\2\2\2&\3\3\2\2\2\'+\7X\2\2(+\7Y\2\2)+\7Z\2\2*\'\3\2\2"+
+		"\2*(\3\2\2\2*)\3\2\2\2+\5\3\2\2\2,D\7V\2\2-.\7V\2\2./\7\4\2\2/\60\5\6"+
+		"\4\2\60\61\7\5\2\2\61D\3\2\2\2\62\63\7\6\2\2\63\67\7\4\2\2\64\66\5\6\4"+
+		"\2\65\64\3\2\2\2\669\3\2\2\2\67\65\3\2\2\2\678\3\2\2\28@\3\2\2\29\67\3"+
+		"\2\2\2:<\7\7\2\2;=\5\6\4\2<;\3\2\2\2=>\3\2\2\2><\3\2\2\2>?\3\2\2\2?A\3"+
+		"\2\2\2@:\3\2\2\2@A\3\2\2\2AB\3\2\2\2BD\7\5\2\2C,\3\2\2\2C-\3\2\2\2C\62"+
+		"\3\2\2\2D\7\3\2\2\2EF\7\b\2\2FG\7V\2\2GN\7\t\2\2HI\7V\2\2IJ\5\6\4\2JK"+
+		"\7\n\2\2KM\3\2\2\2LH\3\2\2\2MP\3\2\2\2NL\3\2\2\2NO\3\2\2\2OQ\3\2\2\2P"+
+		"N\3\2\2\2QR\7V\2\2RS\5\6\4\2ST\7\13\2\2T\t\3\2\2\2UV\t\2\2\2V\13\3\2\2"+
+		"\2WX\t\3\2\2X\r\3\2\2\2Yj\7 \2\2Zj\7!\2\2[j\7\"\2\2\\j\7#\2\2]j\7$\2\2"+
+		"^j\7%\2\2_j\7&\2\2`j\7\'\2\2ab\7(\2\2bj\7)\2\2cj\7(\2\2dj\7*\2\2ej\7+"+
+		"\2\2fj\7,\2\2gj\7-\2\2hj\7.\2\2iY\3\2\2\2iZ\3\2\2\2i[\3\2\2\2i\\\3\2\2"+
+		"\2i]\3\2\2\2i^\3\2\2\2i_\3\2\2\2i`\3\2\2\2ia\3\2\2\2ic\3\2\2\2id\3\2\2"+
+		"\2ie\3\2\2\2if\3\2\2\2ig\3\2\2\2ih\3\2\2\2j\17\3\2\2\2kl\7/\2\2lm\7\60"+
+		"\2\2mn\5\6\4\2no\7\61\2\2o\u0083\3\2\2\2pq\7/\2\2q\u0083\5\6\4\2rs\7\t"+
+		"\2\2s\u0083\5\6\4\2tu\7\t\2\2uv\7\62\2\2v\u0083\5\6\4\2wx\7\63\2\2x|\7"+
+		"\60\2\2y{\5\6\4\2zy\3\2\2\2{~\3\2\2\2|z\3\2\2\2|}\3\2\2\2}\177\3\2\2\2"+
+		"~|\3\2\2\2\177\u0083\7\61\2\2\u0080\u0081\7\63\2\2\u0081\u0083\5\6\4\2"+
+		"\u0082k\3\2\2\2\u0082p\3\2\2\2\u0082r\3\2\2\2\u0082t\3\2\2\2\u0082w\3"+
+		"\2\2\2\u0082\u0080\3\2\2\2\u0083\21\3\2\2\2\u0084\u0085\b\n\1\2\u0085"+
+		"\u0096\5\2\2\2\u0086\u0088\5\2\2\2\u0087\u0086\3\2\2\2\u0087\u0088\3\2"+
+		"\2\2\u0088\u0089\3\2\2\2\u0089\u0096\5\20\t\2\u008a\u0096\7W\2\2\u008b"+
+		"\u0096\5\4\3\2\u008c\u0096\7U\2\2\u008d\u0096\7[\2\2\u008e\u008f\5\n\6"+
+		"\2\u008f\u0090\5\22\n\4\u0090\u0096\3\2\2\2\u0091\u0092\7\60\2\2\u0092"+
+		"\u0093\5\22\n\2\u0093\u0094\7\61\2\2\u0094\u0096\3\2\2\2\u0095\u0084\3"+
+		"\2\2\2\u0095\u0087\3\2\2\2\u0095\u008a\3\2\2\2\u0095\u008b\3\2\2\2\u0095"+
+		"\u008c\3\2\2\2\u0095\u008d\3\2\2\2\u0095\u008e\3\2\2\2\u0095\u0091\3\2"+
+		"\2\2\u0096\u009d\3\2\2\2\u0097\u0098\f\5\2\2\u0098\u0099\5\f\7\2\u0099"+
+		"\u009a\5\22\n\6\u009a\u009c\3\2\2\2\u009b\u0097\3\2\2\2\u009c\u009f\3"+
+		"\2\2\2\u009d\u009b\3\2\2\2\u009d\u009e\3\2\2\2\u009e\23\3\2\2\2\u009f"+
+		"\u009d\3\2\2\2\u00a0\u00aa\5\4\3\2\u00a1\u00aa\7W\2\2\u00a2\u00aa\7U\2"+
+		"\2\u00a3\u00aa\7\\\2\2\u00a4\u00aa\7[\2\2\u00a5\u00aa\5\2\2\2\u00a6\u00aa"+
+		"\5\n\6\2\u00a7\u00aa\5\f\7\2\u00a8\u00aa\5\20\t\2\u00a9\u00a0\3\2\2\2"+
+		"\u00a9\u00a1\3\2\2\2\u00a9\u00a2\3\2\2\2\u00a9\u00a3\3\2\2\2\u00a9\u00a4"+
+		"\3\2\2\2\u00a9\u00a5\3\2\2\2\u00a9\u00a6\3\2\2\2\u00a9\u00a7\3\2\2\2\u00a9"+
+		"\u00a8\3\2\2\2\u00aa\25\3\2\2\2\u00ab\u00b0\5\4\3\2\u00ac\u00b0\7W\2\2"+
+		"\u00ad\u00b0\7U\2\2\u00ae\u00b0\7[\2\2\u00af\u00ab\3\2\2\2\u00af\u00ac"+
+		"\3\2\2\2\u00af\u00ad\3\2\2\2\u00af\u00ae\3\2\2\2\u00b0\27\3\2\2\2\u00b1"+
+		"\u0160\7\n\2\2\u00b2\u0160\5\n\6\2\u00b3\u0160\5\f\7\2\u00b4\u0160\5\16"+
+		"\b\2\u00b5\u00b6\7\64\2\2\u00b6\u0160\7V\2\2\u00b7\u00b8\7\64\2\2\u00b8"+
+		"\u00b9\7V\2\2\u00b9\u0160\7\3\2\2\u00ba\u00bb\7\65\2\2\u00bb\u00bc\5\34"+
+		"\17\2\u00bc\u00bd\7\66\2\2\u00bd\u0160\3\2\2\2\u00be\u00bf\7\65\2\2\u00bf"+
+		"\u00c0\5\34\17\2\u00c0\u00c1\7\67\2\2\u00c1\u0160\3\2\2\2\u00c2\u00c8"+
+		"\78\2\2\u00c3\u00c4\5\24\13\2\u00c4\u00c5\7\n\2\2\u00c5\u00c7\3\2\2\2"+
+		"\u00c6\u00c3\3\2\2\2\u00c7\u00ca\3\2\2\2\u00c8\u00c6\3\2\2\2\u00c8\u00c9"+
+		"\3\2\2\2\u00c9\u00cc\3\2\2\2\u00ca\u00c8\3\2\2\2\u00cb\u00cd\5\24\13\2"+
+		"\u00cc\u00cb\3\2\2\2\u00cc\u00cd\3\2\2\2\u00cd\u00ce\3\2\2\2\u00ce\u0160"+
+		"\79\2\2\u00cf\u00d0\7\60\2\2\u00d0\u00d1\5\22\n\2\u00d1\u00d2\7\61\2\2"+
+		"\u00d2\u0160\3\2\2\2\u00d3\u00d5\7:\2\2\u00d4\u00d6\7\\\2\2\u00d5\u00d4"+
+		"\3\2\2\2\u00d5\u00d6\3\2\2\2\u00d6\u00d7\3\2\2\2\u00d7\u00d8\5\34\17\2"+
+		"\u00d8\u00d9\7\13\2\2\u00d9\u0160\3\2\2\2\u00da\u00db\7;\2\2\u00db\u00dd"+
+		"\7:\2\2\u00dc\u00de\7\\\2\2\u00dd\u00dc\3\2\2\2\u00dd\u00de\3\2\2\2\u00de"+
+		"\u00df\3\2\2\2\u00df\u00e0\5\24\13\2\u00e0\u00e1\7\13\2\2\u00e1\u0160"+
+		"\3\2\2\2\u00e2\u00e3\7<\2\2\u00e3\u00e4\7V\2\2\u00e4\u00e5\7=\2\2\u00e5"+
+		"\u00ea\5\6\4\2\u00e6\u00e7\7\21\2\2\u00e7\u00e9\5\24\13\2\u00e8\u00e6"+
+		"\3\2\2\2\u00e9\u00ec\3\2\2\2\u00ea\u00e8\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb"+
+		"\u00ed\3\2\2\2\u00ec\u00ea\3\2\2\2\u00ed\u00ee\7\13\2\2\u00ee\u0160\3"+
+		"\2\2\2\u00ef\u00f0\7=\2\2\u00f0\u00f3\5\6\4\2\u00f1\u00f2\7\21\2\2\u00f2"+
+		"\u00f4\5\34\17\2\u00f3\u00f1\3\2\2\2\u00f3\u00f4\3\2\2\2\u00f4\u00f5\3"+
+		"\2\2\2\u00f5\u00f6\7>\2\2\u00f6\u00f7\5\34\17\2\u00f7\u00f8\7\13\2\2\u00f8"+
+		"\u0160\3\2\2\2\u00f9\u00fa\7?\2\2\u00fa\u00fb\5\34\17\2\u00fb\u00fc\7"+
+		"@\2\2\u00fc\u0104\5\34\17\2\u00fd\u00fe\7A\2\2\u00fe\u00ff\5\34\17\2\u00ff"+
+		"\u0100\7@\2\2\u0100\u0101\5\34\17\2\u0101\u0103\3\2\2\2\u0102\u00fd\3"+
+		"\2\2\2\u0103\u0106\3\2\2\2\u0104\u0102\3\2\2\2\u0104\u0105\3\2\2\2\u0105"+
+		"\u0109\3\2\2\2\u0106\u0104\3\2\2\2\u0107\u0108\7B\2\2\u0108\u010a\5\34"+
+		"\17\2\u0109\u0107\3\2\2\2\u0109\u010a\3\2\2\2\u010a\u010b\3\2\2\2\u010b"+
+		"\u010c\7\13\2\2\u010c\u0160\3\2\2\2\u010d\u010e\7C\2\2\u010e\u010f\5\34"+
+		"\17\2\u010f\u0118\7>\2\2\u0110\u0111\7D\2\2\u0111\u0112\5\26\f\2\u0112"+
+		"\u0113\7@\2\2\u0113\u0114\5\34\17\2\u0114\u0115\7+\2\2\u0115\u0117\3\2"+
+		"\2\2\u0116\u0110\3\2\2\2\u0117\u011a\3\2\2\2\u0118\u0116\3\2\2\2\u0118"+
+		"\u0119\3\2\2\2\u0119\u011d\3\2\2\2\u011a\u0118\3\2\2\2\u011b\u011c\7B"+
+		"\2\2\u011c\u011e\5\34\17\2\u011d\u011b\3\2\2\2\u011d\u011e\3\2\2\2\u011e"+
+		"\u011f\3\2\2\2\u011f\u0120\7\13\2\2\u0120\u0160\3\2\2\2\u0121\u0122\7"+
+		"E\2\2\u0122\u0123\5\34\17\2\u0123\u0124\7@\2\2\u0124\u0127\5\34\17\2\u0125"+
+		"\u0126\7B\2\2\u0126\u0128\5\34\17\2\u0127\u0125\3\2\2\2\u0127\u0128\3"+
+		"\2\2\2\u0128\u0129\3\2\2\2\u0129\u012a\7\13\2\2\u012a\u0160\3\2\2\2\u012b"+
+		"\u012d\7F\2\2\u012c\u012e\7V\2\2\u012d\u012c\3\2\2\2\u012e\u012f\3\2\2"+
+		"\2\u012f\u012d\3\2\2\2\u012f\u0130\3\2\2\2\u0130\u0131\3\2\2\2\u0131\u0132"+
+		"\7>\2\2\u0132\u0160\5\34\17\2\u0133\u0134\7G\2\2\u0134\u0135\7V\2\2\u0135"+
+		"\u0136\7@\2\2\u0136\u0137\5\34\17\2\u0137\u0138\7\13\2\2\u0138\u0160\3"+
+		"\2\2\2\u0139\u013a\7<\2\2\u013a\u013b\7V\2\2\u013b\u013c\5\24\13\2\u013c"+
+		"\u013d\7\13\2\2\u013d\u0160\3\2\2\2\u013e\u013f\7H\2\2\u013f\u0160\7V"+
+		"\2\2\u0140\u0141\7I\2\2\u0141\u0142\5\34\17\2\u0142\u0143\7\13\2\2\u0143"+
+		"\u0160\3\2\2\2\u0144\u0145\7H\2\2\u0145\u0146\7V\2\2\u0146\u0147\7J\2"+
+		"\2\u0147\u0148\5\34\17\2\u0148\u0149\7K\2\2\u0149\u014a\5\34\17\2\u014a"+
+		"\u014b\7\13\2\2\u014b\u0160\3\2\2\2\u014c\u014d\7H\2\2\u014d\u014e\7V"+
+		"\2\2\u014e\u014f\7K\2\2\u014f\u0150\5\34\17\2\u0150\u0151\7J\2\2\u0151"+
+		"\u0152\5\34\17\2\u0152\u0153\7\13\2\2\u0153\u0160\3\2\2\2\u0154\u0155"+
+		"\7L\2\2\u0155\u0160\7V\2\2\u0156\u0157\7M\2\2\u0157\u0160\7V\2\2\u0158"+
+		"\u0160\5\20\t\2\u0159\u0160\7W\2\2\u015a\u0160\5\4\3\2\u015b\u0160\5\2"+
+		"\2\2\u015c\u0160\7\\\2\2\u015d\u0160\7U\2\2\u015e\u0160\7[\2\2\u015f\u00b1"+
+		"\3\2\2\2\u015f\u00b2\3\2\2\2\u015f\u00b3\3\2\2\2\u015f\u00b4\3\2\2\2\u015f"+
+		"\u00b5\3\2\2\2\u015f\u00b7\3\2\2\2\u015f\u00ba\3\2\2\2\u015f\u00be\3\2"+
+		"\2\2\u015f\u00c2\3\2\2\2\u015f\u00cf\3\2\2\2\u015f\u00d3\3\2\2\2\u015f"+
+		"\u00da\3\2\2\2\u015f\u00e2\3\2\2\2\u015f\u00ef\3\2\2\2\u015f\u00f9\3\2"+
+		"\2\2\u015f\u010d\3\2\2\2\u015f\u0121\3\2\2\2\u015f\u012b\3\2\2\2\u015f"+
+		"\u0133\3\2\2\2\u015f\u0139\3\2\2\2\u015f\u013e\3\2\2\2\u015f\u0140\3\2"+
+		"\2\2\u015f\u0144\3\2\2\2\u015f\u014c\3\2\2\2\u015f\u0154\3\2\2\2\u015f"+
+		"\u0156\3\2\2\2\u015f\u0158\3\2\2\2\u015f\u0159\3\2\2\2\u015f\u015a\3\2"+
+		"\2\2\u015f\u015b\3\2\2\2\u015f\u015c\3\2\2\2\u015f\u015d\3\2\2\2\u015f"+
+		"\u015e\3\2\2\2\u0160\31\3\2\2\2\u0161\u0163\t\4\2\2\u0162\u0161\3\2\2"+
+		"\2\u0162\u0163\3\2\2\2\u0163\u0164\3\2\2\2\u0164\u0165\7\6\2\2\u0165\u0169"+
+		"\7V\2\2\u0166\u0168\5\6\4\2\u0167\u0166\3\2\2\2\u0168\u016b\3\2\2\2\u0169"+
+		"\u0167\3\2\2\2\u0169\u016a\3\2\2\2\u016a\u0172\3\2\2\2\u016b\u0169\3\2"+
+		"\2\2\u016c\u016e\7\7\2\2\u016d\u016f\5\6\4\2\u016e\u016d\3\2\2\2\u016f"+
+		"\u0170\3\2\2\2\u0170\u016e\3\2\2\2\u0170\u0171\3\2\2\2\u0171\u0173\3\2"+
+		"\2\2\u0172\u016c\3\2\2\2\u0172\u0173\3\2\2\2\u0173\u0176\3\2\2\2\u0174"+
+		"\u0175\7R\2\2\u0175\u0177\5\6\4\2\u0176\u0174\3\2\2\2\u0176\u0177\3\2"+
+		"\2\2\u0177\u0178\3\2\2\2\u0178\u0179\7>\2\2\u0179\u017a\5\34\17\2\u017a"+
+		"\u017b\7\13\2\2\u017b\33\3\2\2\2\u017c\u017e\5\30\r\2\u017d\u017c\3\2"+
+		"\2\2\u017e\u0181\3\2\2\2\u017f\u017d\3\2\2\2\u017f\u0180\3\2\2\2\u0180"+
+		"\35\3\2\2\2\u0181\u017f\3\2\2\2\u0182\u0183\7S\2\2\u0183\u0184\7\\\2\2"+
+		"\u0184\37\3\2\2\2\u0185\u0186\7T\2\2\u0186\u0188\7^\2\2\u0187\u0185\3"+
+		"\2\2\2\u0187\u0188\3\2\2\2\u0188\u018c\3\2\2\2\u0189\u018b\5\36\20\2\u018a"+
+		"\u0189\3\2\2\2\u018b\u018e\3\2\2\2\u018c\u018a\3\2\2\2\u018c\u018d\3\2"+
+		"\2\2\u018d\u0192\3\2\2\2\u018e\u018c\3\2\2\2\u018f\u0191\5\32\16\2\u0190"+
+		"\u018f\3\2\2\2\u0191\u0194\3\2\2\2\u0192\u0190\3\2\2\2\u0192\u0193\3\2"+
+		"\2\2\u0193\u0195\3\2\2\2\u0194\u0192\3\2\2\2\u0195\u0196\7\2\2\3\u0196"+
+		"!\3\2\2\2\'%*\67>@CNi|\u0082\u0087\u0095\u009d\u00a9\u00af\u00c8\u00cc"+
+		"\u00d5\u00dd\u00ea\u00f3\u0104\u0109\u0118\u011d\u0127\u012f\u015f\u0162"+
+		"\u0169\u0170\u0172\u0176\u017f\u0187\u018c\u0192";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

@@ -201,6 +201,15 @@ public class AllTypes {
         }
     }
 
+    public static IType byNestedName(String name, IType nested) {
+        switch(name) {
+            case "ref":
+                return ref(nested);
+            default:
+                return null;
+        }
+    }
+
     public static boolean isNumber(IType type) {
         return type == U64 || type == U32 || type == U16 || type == BYTE || type == INT;
     }

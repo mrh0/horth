@@ -17,10 +17,7 @@ import com.mrh0.horth.ast.nodes.operators.TUnOp;
 import com.mrh0.horth.ast.nodes.other.TLet;
 import com.mrh0.horth.ast.nodes.other.TSeparator;
 import com.mrh0.horth.ast.nodes.other.TSysCall;
-import com.mrh0.horth.ast.nodes.types.TType;
-import com.mrh0.horth.ast.nodes.types.TTypeFuncCast;
-import com.mrh0.horth.ast.nodes.types.TTypeFuncIs;
-import com.mrh0.horth.ast.nodes.types.TTypeFuncSizeof;
+import com.mrh0.horth.ast.nodes.types.*;
 import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.high.CompileData;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -60,7 +57,7 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitProgram(HorthParser.ProgramContext ctx) {
         ctx.include();
-        return new TProgram(ctx.moduleName.getText(), visit(ctx.includes), visit(ctx.main))
+        return new TProgram(ctx.moduleName == null ? "" : ctx.moduleName.getText(), visit(ctx.includes), visit(ctx.main))
                 .loc(ctx.start, file);
     }
 
@@ -155,6 +152,12 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) {
         return new TType(ctx.getText())
+                .loc(ctx.start, file);
+    }
+
+    @Override
+    public ITok visitDataTypeNested(HorthParser.DataTypeNestedContext ctx) {
+        return new TTypeNested(ctx.nestedName.getText(), cvisit(ctx.nested))
                 .loc(ctx.start, file);
     }
 

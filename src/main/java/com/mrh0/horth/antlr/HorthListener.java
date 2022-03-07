@@ -54,16 +54,6 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitIntegerBin(HorthParser.IntegerBinContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HorthParser#simpleDataType}.
-	 * @param ctx the parse tree
-	 */
-	void enterSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HorthParser#simpleDataType}.
-	 * @param ctx the parse tree
-	 */
-	void exitSimpleDataType(HorthParser.SimpleDataTypeContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code dataTypeSimple}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
@@ -305,6 +295,16 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStaticExpr(HorthParser.StaticExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HorthParser#switchCaseExpr}.
+	 * @param ctx the parse tree
+	 */
+	void enterSwitchCaseExpr(HorthParser.SwitchCaseExprContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HorthParser#switchCaseExpr}.
+	 * @param ctx the parse tree
+	 */
+	void exitSwitchCaseExpr(HorthParser.SwitchCaseExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code genSeparator}
 	 * labeled alternative in {@link HorthParser#general}.

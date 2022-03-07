@@ -11,3 +11,7 @@ func str int -> string in
     end
     "World"  ret
 end
+
+func test ref<int> in
+    drop ret
+end
