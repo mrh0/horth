@@ -37,6 +37,10 @@ public class VirtualTypeStack {
         return stack.size()-1;
     }
 
+    private int last(int i) {
+        return stack.size()-1-i;
+    }
+
     @Deprecated
     public StackEntry pop() throws BreachOfContractException {
         if(stack.isEmpty())

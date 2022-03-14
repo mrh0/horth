@@ -135,15 +135,15 @@ general:
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
     | 'const' NAME 'alloc' dataType ('*' staticExpr)* 'end'                                #genAllocStatic
-    | 'alloc' dataType ('*' block)? 'in' block 'end'                                   #genAlloc
+    | 'alloc' dataType 'in'                                                                #genAlloc
 
     | 'if' conds+=block 'do' doBlock+=block
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
     | 'switch' inBlock=block 'in'
-    ('case' cases=switchCaseExpr 'do' doBlock+=block 'break')*
-    ('else' defBlock=block)? 'end'                                                          #genSwitch
+    ('case' cases=switchCaseExpr 'do' doBlock+=block)*
+    ('else' defBlock=block) 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
@@ -157,7 +157,7 @@ general:
     | 'const' NAME staticExpr 'end'                                                         #genConst
 
     | 'try' NAME                                                                            #genTry
-    | 'throw' block 'end'                                                                   #genThrow
+    | 'throw' block                                                                   #genThrow
     | 'try' NAME 'pass' passBlock=block 'catch' failBlock=block 'end'                  #genCatch
     | 'try' NAME 'catch' failBlock=block 'pass' passBlock=block 'end'                  #genCatch
 

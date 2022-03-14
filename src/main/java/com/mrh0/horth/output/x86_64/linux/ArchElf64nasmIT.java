@@ -5,7 +5,7 @@ import com.mrh0.horth.instructions.InstructionTransformer;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
 import com.mrh0.horth.instructions.high.accessor.HAccessor;
-import com.mrh0.horth.instructions.high.accessor.HAccessorLength;
+import com.mrh0.horth.instructions.high.accessor.HAccessorStack;
 import com.mrh0.horth.instructions.high.accessor.HProp;
 import com.mrh0.horth.instructions.high.branching.HBranch;
 import com.mrh0.horth.instructions.high.branching.HBreak;
@@ -35,7 +35,7 @@ import com.mrh0.horth.instructions.high.stackops.binop.logical.HOr;
 import com.mrh0.horth.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
-import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorLength;
+import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorStack;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LOffset;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LRead;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
@@ -108,8 +108,8 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
         else if(in instanceof HLog)
             out.add(LLog.INSTANCE);
 
-        else if(in instanceof HAccessorLength)
-            out.add(LAccessorLength.INSTANCE);
+        else if(in instanceof HAccessorStack)
+            out.add(new LAccessorStack((HAccessorStack) in));
         else if(in instanceof HAccessor)
             out.add(new LAccessor((HAccessor) in));
 

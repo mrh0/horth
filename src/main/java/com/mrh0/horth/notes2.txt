@@ -93,3 +93,25 @@ end
 func test2 char string -> int in
     drop drop 0
 end
+
+
+non-primitive types (>8 bytes) are allocated on a separate stack (dynamicStack)
+//16 new array<byte> //Creates a 16 byte array (32 bytes in memory)
+func makeBuffer -> buffer<byte> in
+    16 new buffer<byte> ret
+    // Creates a 16 byte buffer (24 bytes in memory)
+    // the size (16) is stored in an 8 byte int, then the 16 bytes,
+    // a pointer is returned from 'new' which points to the start of the 16 bytes
+    // adds 16 to the DSP
+end
+
+func useBuffer -> int in
+    makeBuffer drop 0 ret
+    // Calling a function will put the current DSRP on the dynamicStack
+    // Returning from a function will set the DSP to the
+    // The compiler knows makeBuffer return a non-primitive type which mean it will add
+    // copy operations from the pointer location to the new top of the dynamicStack
+end
+
+functions cannot return pointers to items on the local stack, ie ref<int> ref<char> etc.
+(Maybe prevent them from ever being created?)
