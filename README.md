@@ -35,10 +35,10 @@ not ~
 
 ```
 //Accessor
-"Hello World" []   // Returns string length (11)
+1 "Hello World"[]   // Returns char at index 1 ('e')
 "Hello World" [1]  // Returns char at index 1 ('e')
 
-{5, 8, 3, 1} []    // Returns array length (4) [WIP]
+2 {5, 8, 3, 1} []    // Returns int at index 2 (3) [WIP]
 {5, 8, 3, 1} [2]   // Returns int at index 2 (3) [WIP]
 
 ```
