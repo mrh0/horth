@@ -35,10 +35,10 @@ not ~
 
 ```
 //Accessor
-1 "Hello World"[]   // Returns char at index 1 ('e')
+1 "Hello World"[]  // Returns char at index 1 ('e')
 "Hello World" [1]  // Returns char at index 1 ('e')
 
-2 {5, 8, 3, 1} []    // Returns int at index 2 (3) [WIP]
+2 {5, 8, 3, 1} []  // Returns int at index 2 (3) [WIP]
 {5, 8, 3, 1} [2]   // Returns int at index 2 (3) [WIP]
 
 ```
