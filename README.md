@@ -16,7 +16,7 @@ Symbols can be separated with a comma ',' but has no effect on the compilation o
 "Hello World"
 
 //Character
-'a' '5' 'Z' '\n' '\r' '\r' '\0' '\\' '\''
+'a' '5' 'Z' '\n' '\r' '\t' '\0' '\\' '\''
 
 //Integer
 0 1 42 -10 0xA0 0b1100
