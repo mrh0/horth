@@ -72,17 +72,25 @@ keywords:
     | 'void'
     ;
 
-typefunc:
-    'sizeof' '(' dataType ')'                       #typefuncSizeof
-    | 'sizeof' dataType                             #typefuncSizeof
-    //| 'cast' '(' dataType ')'                       #typefuncCast
-    | 'as' dataType                                 #typefuncCast
-    //| 'as' '(' (types+=dataType)* ')'               #typefuncCast
-    //| 'unsafe' 'cast' '(' dataType ')'              #typefuncCastUnsafe
-    | 'as' 'unsafe' dataType                        #typefuncCastUnsafe
-    //| 'as' '(' ('unsafe'? types+=dataType)* ')'     #typefuncCastUnsafe
-    | 'is' '(' (types+=dataType)* ')'               #typefuncIs
-    | 'is' types+=dataType                          #typefuncIs
+/*typeConstructor:
+    '{' integer '}'
+    //| '{' typeConstructor+ '}'
+
+    ;
+*/
+
+typefunc: // _ used as skip type?
+    'sizeof' '(' dataType ')'                           #typefuncSizeof
+    | 'sizeof' dataType                                 #typefuncSizeof
+    //| 'cast' '(' dataType ')'                         #typefuncCast
+    | 'as' dataType                                     #typefuncCast
+    //| 'as' '(' (types+=dataType)* ')'                 #typefuncCast
+    //| 'unsafe' 'cast' '(' dataType ')'                #typefuncCastUnsafe
+    | 'as' 'unsafe' dataType                            #typefuncCastUnsafe
+    //| 'as' '(' ('unsafe'? types+=dataType)* ')'       #typefuncCastUnsafe
+    | 'is' '(' (types+=dataType)* ')'                   #typefuncIs
+    | 'is' types+=dataType                              #typefuncIs
+    | 'new' type=dataType                               #typefuncNew
     ;
 
 infix:
@@ -143,7 +151,7 @@ general:
 
     | 'switch' inBlock=block 'in'
     ('case' cases=switchCaseExpr 'do' doBlock+=block)*
-    ('else' defBlock=block) 'end'                                                          #genSwitch
+    ('default' 'case' defBlock=block) 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor

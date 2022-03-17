@@ -113,6 +113,11 @@ public class AllTypes {
             }
             return IType.super.getProperty(location, name);
         }
+
+        @Override
+        public boolean isPrimitive() {
+            return false;
+        }
     };
 
     public static final IType ATOM = new IType() {

@@ -21,17 +21,6 @@ public interface IType {
         return a == b;
     }
 
-    @Deprecated
-    static void addGenerics(List<GenericType> list, IType type) {
-        if(type instanceof NestedType)
-            addGenerics(list, type.getNested());
-        else if(type instanceof GenericType)
-            if(!list.contains(type))
-                list.add((GenericType) type);
-        else
-            return;
-    }
-
     default IType getNested() {
         return ((NestedType) this).nested;
     }
@@ -57,6 +46,10 @@ public interface IType {
             return true;
         }
         return false;
+    }
+
+    default boolean isPrimitive() {
+        return true;
     }
 
     default int constructor(Loc location) throws HorthException {

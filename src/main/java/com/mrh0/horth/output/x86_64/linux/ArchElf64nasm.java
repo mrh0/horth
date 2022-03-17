@@ -19,7 +19,8 @@ import java.util.Map;
 public class ArchElf64nasm extends Arch {
 
     public static final Map<String, SysCall> syscalls = new HashMap<>();
-    public static final int localStackMemory = 1024 * 1024 * 32;
+    public static final int localStackMemory = 1024 * 1024;
+    public static final int dynStackMemory = 1024 * 1024;
 
     public ArchElf64nasm() {
 
@@ -63,7 +64,11 @@ public class ArchElf64nasm extends Arch {
                 .inst("section .bss")
                 .label("init_stack").append(" resq 1")
                 .label(LowInst.LS).append("    resb " + localStackMemory)
-                .label("local_temp_rsp").append("  resq 1");
+                .label("local_temp_rsp").append("  resq 1")
+
+                //DynStack
+                .label(LowInst.DSP).append(" resq 1")
+                .label(LowInst.DS).append(" resb " + dynStackMemory);
 
         ib      .inst("section").reg(".data");
 

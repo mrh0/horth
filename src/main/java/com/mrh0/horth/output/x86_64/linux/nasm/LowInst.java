@@ -9,6 +9,8 @@ public interface LowInst {
     String T2 = "rdx";  //Temp2
     String LSP = "r15";  //Local Stack Pointer
     String LS = "local_stack";
+    String DSP = "dyn_sp";
+    String DS = "dyn_stack";
 
     String S1_32 = "eax";  //Stack1
     String S2_32 = "ebx";  //Stack2
