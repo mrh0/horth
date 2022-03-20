@@ -1,6 +1,7 @@
 package com.mrh0.horth.output.x86_64.linux;
 
 import com.mrh0.horth.exceptions.compile.CompileException;
+import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.InstructionTransformer;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
@@ -91,8 +92,11 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LCallFunc((HCallFunc) in));
         else if(in instanceof HFunc)
             out.add(new LFuncInit());
-        else if(in instanceof HRet)
-            out.add(new LRet(((HRet) in).getLocalContext().getClaimedBytes()));
+        else if(in instanceof HRet) {
+            HRet hr = (HRet) in;
+            if(hr.getLocalContext().func.getPrefix() != Func.Prefix.INLINE)
+                out.add(new LRet(hr.getLocalContext().getClaimedBytes()));
+        }
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
