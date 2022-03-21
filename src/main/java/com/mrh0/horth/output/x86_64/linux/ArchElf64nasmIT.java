@@ -35,11 +35,13 @@ import com.mrh0.horth.instructions.high.stackops.binop.logical.HAnd;
 import com.mrh0.horth.instructions.high.stackops.binop.logical.HOr;
 import com.mrh0.horth.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
+import com.mrh0.horth.instructions.high.types.HNew;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessor;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LAccessorStack;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LOffset;
 import com.mrh0.horth.output.x86_64.linux.nasm.accessor.LRead;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
+import com.mrh0.horth.output.x86_64.linux.nasm.dyn.LAlloc;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LCallFunc;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LFuncInit;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LRet;
@@ -100,6 +102,9 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
 
         else if(in instanceof HExit)
             out.add(LExit.INSTANCE);
+
+        else if(in instanceof HNew)
+            out.add(new LAlloc());
 
         else if(in instanceof HProp) {
             var v = (HProp) in;

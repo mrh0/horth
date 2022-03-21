@@ -163,26 +163,32 @@ public class Visitor extends HorthBaseVisitor<ITok> {
 
     //TypeFuncs
     @Override
-    public ITok visitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx) {
+    public ITok visitTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx) {
         return new TTypeFuncSizeof(cvisit(ctx.dataType()))
                 .loc(ctx.start, file);
     }
 
     @Override
-    public ITok visitTypefuncCast(HorthParser.TypefuncCastContext ctx) {
+    public ITok visitTypeFuncCast(HorthParser.TypeFuncCastContext ctx) {
         return new TTypeFuncCast(cvisit(ctx.dataType()), false)
                 .loc(ctx.start, file);
     }
 
     @Override
-    public ITok visitTypefuncIs(HorthParser.TypefuncIsContext ctx) {
+    public ITok visitTypeFuncIs(HorthParser.TypeFuncIsContext ctx) {
         return new TTypeFuncIs(visit(ctx.types))
                 .loc(ctx.start, file);
     }
 
     @Override
-    public ITok visitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx) {
+    public ITok visitTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx) {
         return new TTypeFuncCast(cvisit(ctx.dataType()), true)
+                .loc(ctx.start, file);
+    }
+
+    @Override
+    public ITok visitTypeFuncNew(HorthParser.TypeFuncNewContext ctx) {
+        return new TTypeFuncNew(cvisit(ctx.dataType()))
                 .loc(ctx.start, file);
     }
 
@@ -225,8 +231,8 @@ public class Visitor extends HorthBaseVisitor<ITok> {
     @Override
     public ITok visitInfixTypefunc(HorthParser.InfixTypefuncContext ctx) {
         if(ctx.identifier() == null)
-            return visit(ctx.typefunc());
-        return new TSpread(visit(ctx.identifier()), visit(ctx.typefunc()))
+            return visit(ctx.typeFunc());
+        return new TSpread(visit(ctx.identifier()), visit(ctx.typeFunc()))
                 .loc(ctx.start, file);
     }
 

@@ -83,33 +83,40 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitKeywords(HorthParser.KeywordsContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code typefuncSizeof}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Visit a parse tree produced by the {@code typeFuncSizeof}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
+	T visitTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code typefuncCast}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Visit a parse tree produced by the {@code typeFuncCast}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypefuncCast(HorthParser.TypefuncCastContext ctx);
+	T visitTypeFuncCast(HorthParser.TypeFuncCastContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code typefuncCastUnsafe}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Visit a parse tree produced by the {@code typeFuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	T visitTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code typefuncIs}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Visit a parse tree produced by the {@code typeFuncIs}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	T visitTypeFuncIs(HorthParser.TypeFuncIsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeFuncNew}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeFuncNew(HorthParser.TypeFuncNewContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code infixChar}
 	 * labeled alternative in {@link HorthParser#infix}.

@@ -130,53 +130,65 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitKeywords(HorthParser.KeywordsContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code typefuncSizeof}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Enter a parse tree produced by the {@code typeFuncSizeof}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
+	void enterTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code typefuncSizeof}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Exit a parse tree produced by the {@code typeFuncSizeof}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx);
+	void exitTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code typefuncCast}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Enter a parse tree produced by the {@code typeFuncCast}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypefuncCast(HorthParser.TypefuncCastContext ctx);
+	void enterTypeFuncCast(HorthParser.TypeFuncCastContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code typefuncCast}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Exit a parse tree produced by the {@code typeFuncCast}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypefuncCast(HorthParser.TypefuncCastContext ctx);
+	void exitTypeFuncCast(HorthParser.TypeFuncCastContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code typefuncCastUnsafe}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Enter a parse tree produced by the {@code typeFuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	void enterTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code typefuncCastUnsafe}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Exit a parse tree produced by the {@code typeFuncCastUnsafe}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx);
+	void exitTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code typefuncIs}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Enter a parse tree produced by the {@code typeFuncIs}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void enterTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	void enterTypeFuncIs(HorthParser.TypeFuncIsContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code typefuncIs}
-	 * labeled alternative in {@link HorthParser#typefunc}.
+	 * Exit a parse tree produced by the {@code typeFuncIs}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
 	 * @param ctx the parse tree
 	 */
-	void exitTypefuncIs(HorthParser.TypefuncIsContext ctx);
+	void exitTypeFuncIs(HorthParser.TypeFuncIsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeFuncNew}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeFuncNew(HorthParser.TypeFuncNewContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeFuncNew}
+	 * labeled alternative in {@link HorthParser#typeFunc}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeFuncNew(HorthParser.TypeFuncNewContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code infixChar}
 	 * labeled alternative in {@link HorthParser#infix}.

@@ -11,7 +11,5 @@ public class LFuncInit implements LowInst {
                 .inst("mov").reg(T1).vreg(DSP, 0)
                 .inst("mov").vreg(LSP, 8).reg(T1)
                 .inst("add").reg(LSP).imm(16);
-
-
     }
 }

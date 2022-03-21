@@ -79,23 +79,23 @@ keywords:
     ;
 */
 
-typefunc: // _ used as skip type?
-    'sizeof' '(' dataType ')'                           #typefuncSizeof
-    | 'sizeof' dataType                                 #typefuncSizeof
-    //| 'cast' '(' dataType ')'                         #typefuncCast
-    | 'as' dataType                                     #typefuncCast
-    //| 'as' '(' (types+=dataType)* ')'                 #typefuncCast
-    //| 'unsafe' 'cast' '(' dataType ')'                #typefuncCastUnsafe
-    | 'as' 'unsafe' dataType                            #typefuncCastUnsafe
-    //| 'as' '(' ('unsafe'? types+=dataType)* ')'       #typefuncCastUnsafe
-    | 'is' '(' (types+=dataType)* ')'                   #typefuncIs
-    | 'is' types+=dataType                              #typefuncIs
-    | 'new' type=dataType                               #typefuncNew
+typeFunc: // _ used as skip type?
+    'sizeof' '(' dataType ')'                           #typeFuncSizeof
+    | 'sizeof' dataType                                 #typeFuncSizeof
+    //| 'cast' '(' dataType ')'                         #typeFuncCast
+    | 'as' dataType                                     #typeFuncCast
+    //| 'as' '(' (types+=dataType)* ')'                 #typeFuncCast
+    //| 'unsafe' 'cast' '(' dataType ')'                #typeFuncCastUnsafe
+    | 'as' 'unsafe' dataType                            #typeFuncCastUnsafe
+    //| 'as' '(' ('unsafe'? types+=dataType)* ')'       #typeFuncCastUnsafe
+    | 'is' '(' (types+=dataType)* ')'                   #typeFuncIs
+    | 'is' types+=dataType                              #typeFuncIs
+    | 'new' type=dataType                               #typeFuncNew
     ;
 
 infix:
     identifier                  #infixIdent
-    | identifier? typefunc      #infixTypefunc
+    | identifier? typeFunc      #infixTypefunc
     | ATOM                      #infixAtom
     | integer                   #infixInt
     | BOOL                      #infixBool
@@ -110,7 +110,7 @@ staticExpr:
     integer | ATOM | BOOL | STRING | CHAR
     | identifier //constants only
     | unop | binop
-    | typefunc
+    | typeFunc
     ;
 
 switchCaseExpr:
@@ -175,7 +175,7 @@ general:
     //TODO: should . mean .value? i.e: "" == "value"
 
     //| 'new' dataType                                                                        #genNew
-    | typefunc                                                                              #genIntrfunc
+    | typeFunc                                                                              #genIntrfunc
 
     | ATOM                                                                                    #genAtom
     | integer                                                                               #genInt

@@ -94,28 +94,35 @@ public class HorthBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypefuncCast(HorthParser.TypefuncCastContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeFuncCast(HorthParser.TypeFuncCastContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation returns the result of calling
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
-	@Override public T visitTypefuncIs(HorthParser.TypefuncIsContext ctx) { return visitChildren(ctx); }
+	@Override public T visitTypeFuncIs(HorthParser.TypeFuncIsContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitTypeFuncNew(HorthParser.TypeFuncNewContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

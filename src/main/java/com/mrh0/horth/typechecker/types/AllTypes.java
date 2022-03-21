@@ -108,7 +108,7 @@ public class AllTypes {
             switch(name) {
                 case "length":
                     return new TypeProperty(name, INT, 0);
-                case "nt":
+                case "data":
                     return new TypeProperty(name, CHAR, INT.getSize());
             }
             return IType.super.getProperty(location, name);
@@ -117,6 +117,11 @@ public class AllTypes {
         @Override
         public boolean isPrimitive() {
             return false;
+        }
+
+        @Override
+        public int constructor(Loc location) throws HorthException {
+            return 1;
         }
     };
 

@@ -1,18 +1,4 @@
 start func main -> int in
-    1 str log
-
-    0 "Testing"[] as int ret
-end
-
-
-func str int -> string in
-    let i in
-    if (i == 0) do
-        "Hello" ret
-    end
-    "World" ret
-end
-
-func test ref<int> in
-    drop ret
+    10 new string log
+    0 ret
 end

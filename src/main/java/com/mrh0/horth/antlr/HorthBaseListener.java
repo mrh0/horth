@@ -148,49 +148,61 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx) { }
+	@Override public void enterTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypefuncSizeof(HorthParser.TypefuncSizeofContext ctx) { }
+	@Override public void exitTypeFuncSizeof(HorthParser.TypeFuncSizeofContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypefuncCast(HorthParser.TypefuncCastContext ctx) { }
+	@Override public void enterTypeFuncCast(HorthParser.TypeFuncCastContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypefuncCast(HorthParser.TypefuncCastContext ctx) { }
+	@Override public void exitTypeFuncCast(HorthParser.TypeFuncCastContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx) { }
+	@Override public void enterTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypefuncCastUnsafe(HorthParser.TypefuncCastUnsafeContext ctx) { }
+	@Override public void exitTypeFuncCastUnsafe(HorthParser.TypeFuncCastUnsafeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTypefuncIs(HorthParser.TypefuncIsContext ctx) { }
+	@Override public void enterTypeFuncIs(HorthParser.TypeFuncIsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTypefuncIs(HorthParser.TypefuncIsContext ctx) { }
+	@Override public void exitTypeFuncIs(HorthParser.TypeFuncIsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterTypeFuncNew(HorthParser.TypeFuncNewContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitTypeFuncNew(HorthParser.TypeFuncNewContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
