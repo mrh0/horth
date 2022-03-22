@@ -104,7 +104,7 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(LExit.INSTANCE);
 
         else if(in instanceof HNew)
-            out.add(new LAlloc());
+            out.add(new LAlloc((HNew) in));
 
         else if(in instanceof HProp) {
             var v = (HProp) in;

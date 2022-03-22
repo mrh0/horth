@@ -64,6 +64,7 @@ keywords:
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
     | 'out' | 'log' 'error' | 'log'
+    | 'read' | 'write' | 'copy' | 'clone'
     //| 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'ret'
     | 'break' //brk?

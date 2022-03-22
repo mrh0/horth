@@ -22,13 +22,19 @@ public class LWrite implements LowInst {
                         .inst("pop").reg(S2);
                 break;
             case 4:
-
+                ib      .inst("mov").vreg(S2, offset).reg(S1_32)
+                        .inst("pop").reg(S1)
+                        .inst("pop").reg(S2);
                 break;
             case 2:
-
+                ib      .inst("mov").vreg(S2, offset).reg(S1_16)
+                        .inst("pop").reg(S1)
+                        .inst("pop").reg(S2);
                 break;
             case 1:
-
+                ib      .inst("mov").vreg(S2, offset).reg(S1_8)
+                        .inst("pop").reg(S1)
+                        .inst("pop").reg(S2);
                 break;
         }
     }

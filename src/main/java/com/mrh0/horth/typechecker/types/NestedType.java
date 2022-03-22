@@ -1,6 +1,6 @@
 package com.mrh0.horth.typechecker.types;
 
-public abstract class NestedType implements IType {
+public abstract class NestedType extends PointerType {
     public final IType nested;
 
     public NestedType(IType nested) {

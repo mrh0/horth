@@ -48,8 +48,8 @@ public interface IType {
         return false;
     }
 
-    default boolean isPrimitive() {
-        return true;
+    default boolean isPointerType() {
+        return false;
     }
 
     default int constructor(Loc location) throws HorthException {

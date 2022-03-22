@@ -2,6 +2,7 @@ package com.mrh0.horth.ast.nodes;
 
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.accessor.HWrite;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.instructions.high.io.HLog;
@@ -14,6 +15,7 @@ import com.mrh0.horth.instructions.high.stackops.base.HOver;
 import com.mrh0.horth.instructions.high.stackops.base.HSwap;
 import com.mrh0.horth.instructions.high.stackops.other.HVoid;
 import com.mrh0.horth.instructions.high.types.HBBox;
+import com.mrh0.horth.instructions.high.types.HNew;
 
 import java.util.List;
 
@@ -61,6 +63,10 @@ public class TKeyword extends Tok {
                 break;
             case "box":
                 space.add(new HBBox(this));
+                break;
+
+            case "write":
+                space.add(new HWrite(this));
                 break;
             default:
                 throw new ParserException(this.getLocation(), "Unimplemented keyword: " + text + ".");

@@ -1,8 +1,8 @@
-package com.mrh0.horth.instructions.high.types;
+package com.mrh0.horth.instructions.high.accessor;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.exceptions.typechecker.CannotConstructException;
+import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
@@ -10,26 +10,27 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
+import com.mrh0.horth.typechecker.types.BufferType;
 import com.mrh0.horth.typechecker.types.IType;
 
-public class HNew extends HighInst implements ISpecialCheck {
-    public final IType type;
+public class HWrite extends HighInst implements ISpecialCheck {
+    private int size;
 
-    public HNew(ITok token, IType type) {
+    public HWrite(ITok token) {
         super(token);
-        this.type = type;
     }
 
     @Override
     public IContract getContract() {
-        return type.getConstructorContract();
+        return Contract.VOID;
     }
 
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        int v = type.constructor(token.getLocation());
-        for(int i = 0; i < v; i++)
-            stack.check(token, AllTypes.INT);
-        stack.push(type, token);
+        IType t = stack.pop(token).type();
+        this.size = t.getSize();
+        if(this.size > 8)
+            throw new CompileException(token.getLocation(), "Cannot write type " + AllTypes.stringOf(t) + " as it is larger than 8 bytes.");
+        stack.check(token, new BufferType(t));
     }
 }

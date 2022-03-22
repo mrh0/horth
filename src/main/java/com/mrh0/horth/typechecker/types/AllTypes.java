@@ -115,8 +115,8 @@ public class AllTypes {
         }
 
         @Override
-        public boolean isPrimitive() {
-            return false;
+        public boolean isPointerType() {
+            return true;
         }
 
         @Override
@@ -215,6 +215,8 @@ public class AllTypes {
         switch(name) {
             case "ref":
                 return ref(nested);
+            case "buf":
+                return new BufferType(nested);
             default:
                 return null;
         }
