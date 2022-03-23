@@ -2,6 +2,7 @@ package com.mrh0.horth.ast.nodes;
 
 import com.mrh0.horth.exceptions.parser.ParserException;
 import com.mrh0.horth.instructions.high.HighInst;
+import com.mrh0.horth.instructions.high.accessor.HNext;
 import com.mrh0.horth.instructions.high.accessor.HWrite;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.function.HRet;
@@ -63,6 +64,10 @@ public class TKeyword extends Tok {
                 break;
             case "box":
                 space.add(new HBBox(this));
+                break;
+
+            case "next":
+                space.add(new HNext(this));
                 break;
 
             case "write":

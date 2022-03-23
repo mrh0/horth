@@ -38,13 +38,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIntegerBin(HorthParser.IntegerBinContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code dataTypeSimple}
-	 * labeled alternative in {@link HorthParser#dataType}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code dataTypeNested}
 	 * labeled alternative in {@link HorthParser#dataType}.
 	 * @param ctx the parse tree
@@ -58,6 +51,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitDataTypeFunc(HorthParser.DataTypeFuncContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code dataTypeSimple}
+	 * labeled alternative in {@link HorthParser#dataType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HorthParser#userDefinedDataType}.
 	 * @param ctx the parse tree

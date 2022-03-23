@@ -2,6 +2,7 @@ package com.mrh0.horth.output.x86_64.linux.nasm.accessor;
 
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.accessor.HProp;
+import com.mrh0.horth.instructions.high.accessor.HWrite;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 
@@ -11,6 +12,11 @@ public class LWrite implements LowInst {
     public LWrite(int offset, int size) {
         this.offset = offset;
         this.size = size;
+    }
+
+    public LWrite(HWrite inst) {
+        this.offset = 0;
+        this.size = inst.getSize();
     }
 
     @Override

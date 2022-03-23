@@ -77,3 +77,22 @@ end
 func test ref<int> in
     drop ret
 end
+
+
+
+func leap buf<char> int -> buf<char> in
+    let b i in
+    b as unsafe int i + as unsafe buf<char> ret
+end
+
+start func main -> int in
+    16 new buf<char> dup dup as unsafe buf<int> 4 write 8 leap
+    dup 'T' write next
+    dup 'e' write next
+    dup 's' write next
+    dup 't' write
+    0 as char write
+    as unsafe string
+    log
+    1 ret
+end

@@ -88,6 +88,8 @@ public class ArchElf64nasm extends Arch {
                 .inst("mov").vreg("init_stack", 0).reg("rsp")
                 .inst("mov").reg(LowInst.LSP).reg(LowInst.LS)
 
+                .inst("mov").append("QWORD ").vreg(LowInst.DSP, 0).append(", " + LowInst.DS)
+
                 .inst("call").jlabel(compileData.getStartFunctions().get(0).label.id)
                 .inst("jmp").append("terminate");
 

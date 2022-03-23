@@ -64,18 +64,6 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterDataTypeNested(HorthParser.DataTypeNestedContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -95,6 +83,18 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDataTypeFunc(HorthParser.DataTypeFuncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitDataTypeSimple(HorthParser.DataTypeSimpleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -15,9 +15,10 @@ import com.mrh0.horth.typechecker.types.IType;
 public class HNew extends HighInst implements ISpecialCheck {
     public final IType type;
 
-    public HNew(ITok token, IType type) {
+    public HNew(ITok token, IType type) throws HorthException {
         super(token);
         this.type = type;
+        IType.validate(this.type, token.getLocation());
     }
 
     @Override

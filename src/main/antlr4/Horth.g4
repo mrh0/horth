@@ -34,14 +34,14 @@ integer:
     ;
 
 dataType:
-    NAME                                                #dataTypeSimple
-    | nestedName=NAME '<' nested=dataType '>'                      #dataTypeNested
+    nestedName=NAME '<' nested=dataType '>'                      #dataTypeNested
     //| 'ref<' dataType '>'                           #dataTypeRef
     //| 'arr<' dataType '>'                           #dataTypeArr
     //| 'any<' NAME '>'                               #dataTypeAny //replaced by function overloads
     | 'func' '<' (dataType)* ('->' (dataType)+)? '>'   #dataTypeFunc
     //| dataType '*' staticExpr                       #dataTypeMany
     //| 'atom' '<' (ATOM '|')* ATOM '>'                  #dataTypeAtoms
+    | NAME                                                #dataTypeSimple
     ;
 
 userDefinedDataType:
@@ -63,6 +63,7 @@ keywords:
     'dup' | 'dup2'
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
+    | 'next'
     | 'out' | 'log' 'error' | 'log'
     | 'read' | 'write' | 'copy' | 'clone'
     //| 'exit' | 'halt' // | 'ret' //| 'terminate'

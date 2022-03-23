@@ -4,6 +4,7 @@ import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.types.HNew;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
+import com.mrh0.horth.typechecker.types.BufferType;
 
 public class LAlloc implements LowInst {
     private final int size;
@@ -13,7 +14,10 @@ public class LAlloc implements LowInst {
     }
 
     public LAlloc(HNew inst) {
-        this.size = inst.type.getSize();
+        if(inst.type instanceof BufferType)
+            this.size = inst.type.getNested().getSize();
+        else
+            this.size = inst.type.getSize();
     }
 
     @Override

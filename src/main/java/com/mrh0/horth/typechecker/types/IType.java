@@ -5,6 +5,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 import com.mrh0.horth.exceptions.typechecker.CannotConstructException;
 import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
+import com.mrh0.horth.exceptions.typechecker.UndefinedTypeException;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.util.IO;
@@ -74,5 +75,10 @@ public interface IType {
 
     default boolean is8() {
         return getSize() == 1;
+    }
+
+    static void validate(IType type, Loc location) throws HorthException {
+        if(type == null)
+            throw new UndefinedTypeException(location);
     }
 }

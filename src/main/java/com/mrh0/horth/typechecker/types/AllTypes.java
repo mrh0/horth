@@ -166,7 +166,9 @@ public class AllTypes {
     public static final BoxedType BOXED = new BoxedType();
 
     public static String stringOf(IType type) {
-        if(type == STRING)
+        if(type == null)
+            return "UNDEFINED_TYPE";
+        else if(type == STRING)
             return "string";
         else if(type instanceof NestedType)
             return type.toString();
