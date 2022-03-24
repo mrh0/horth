@@ -89,6 +89,7 @@ typeFunc: // _ used as skip type?
     //| 'as' '(' (types+=dataType)* ')'                 #typeFuncCast
     //| 'unsafe' 'cast' '(' dataType ')'                #typeFuncCastUnsafe
     | 'as' 'unsafe' dataType                            #typeFuncCastUnsafe
+    | 'as' '!' dataType                                    #typeFuncCastUnsafe
     //| 'as' '(' ('unsafe'? types+=dataType)* ')'       #typeFuncCastUnsafe
     | 'is' '(' (types+=dataType)* ')'                   #typeFuncIs
     | 'is' types+=dataType                              #typeFuncIs

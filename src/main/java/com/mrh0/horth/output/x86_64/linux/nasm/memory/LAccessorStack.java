@@ -1,7 +1,6 @@
-package com.mrh0.horth.output.x86_64.linux.nasm.accessor;
+package com.mrh0.horth.output.x86_64.linux.nasm.memory;
 
 import com.mrh0.horth.instructions.high.CompileData;
-import com.mrh0.horth.instructions.high.accessor.HAccessor;
 import com.mrh0.horth.instructions.high.accessor.HAccessorStack;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;

@@ -175,3 +175,22 @@ prop:
 
 propAddr:
     add     rax, <offset>
+
+copy:
+pop     T1
+mov     T2, 0
+label1
+cmp     T2, T1
+jge     label2
+
+mov     T3, [S1]
+mov     [S2], T3
+
+add     S1, 8
+add     S2, 8
+
+add     T2, 8
+jmp     label1
+label2
+pop     S1
+pop     S2

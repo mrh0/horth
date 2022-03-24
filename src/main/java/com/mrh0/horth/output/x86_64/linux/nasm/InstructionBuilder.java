@@ -5,8 +5,13 @@ import com.mrh0.horth.util.Util;
 public class InstructionBuilder {
     private StringBuilder sb;
     private boolean first = true;
+    private static long lowLabelId = 0;
     public InstructionBuilder(StringBuilder sb) {
         this.sb = sb;
+    }
+
+    public void endLowLabel() {
+        lowLabelId++;
     }
 
     public InstructionBuilder inst(String inst) {
@@ -61,6 +66,20 @@ public class InstructionBuilder {
         sb.append("\nlabel_");
         sb.append(id);
         sb.append(':');
+        return this;
+    }
+
+    public InstructionBuilder lowLabel(long id) {
+        sb.append("\nlow_label_");
+        sb.append(id + "_" + lowLabelId);
+        sb.append(':');
+        return this;
+    }
+
+    public InstructionBuilder jlowLabel(long id) {
+        begin();
+        sb.append("low_label_");
+        sb.append(id + "_" + lowLabelId);
         return this;
     }
 

@@ -7,6 +7,8 @@ public interface LowInst {
     String S2 = "rbx";  //Stack2
     String T1 = "rcx";  //Temp1
     String T2 = "rdx";  //Temp2
+    String T3 = "r8";  //Temp3
+    String T4 = "r9";  //Temp4
     String LSP = "r15";  //Local Stack Pointer
     String LS = "local_stack";
     String DSP = "dyn_sp";

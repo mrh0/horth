@@ -34,7 +34,7 @@ import com.mrh0.horth.instructions.high.stackops.binop.logical.HOr;
 import com.mrh0.horth.instructions.high.stackops.binop.HSub;
 import com.mrh0.horth.instructions.high.stackops.unop.logical.HNot;
 import com.mrh0.horth.instructions.high.types.HNew;
-import com.mrh0.horth.output.x86_64.linux.nasm.accessor.*;
+import com.mrh0.horth.output.x86_64.linux.nasm.memory.*;
 import com.mrh0.horth.output.x86_64.linux.nasm.branching.LBranch;
 import com.mrh0.horth.output.x86_64.linux.nasm.dyn.LAlloc;
 import com.mrh0.horth.output.x86_64.linux.nasm.function.LCallFunc;
