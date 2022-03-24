@@ -1,15 +1,32 @@
+
 func leap buf<char> int -> buf<char> in
     let b i in
     b as unsafe int i + as unsafe buf<char> ret
 end
 
+func writeLength buf<char> int -> buf<char> in
+    let b v in
+    b as unsafe buf<int> v write
+    b 8 leap ret
+end
+
+func putChar buf<char> char -> buf<char> in
+    let b c in
+    b c write
+    b next ret
+end
+
+func putChar buf<char> int -> buf<char> in
+    as char putChar ret
+end
+
 start func main -> int in
-    16 new buf<char> dup dup as unsafe buf<int> 4 write 8 leap
-    dup 'T' write next
-    dup 'e' write next
-    dup 's' write next
-    dup 't' write next
-    0 as char write
+    16 new buf<char> dup 4 writeLength
+    'T' putChar
+    'e' putChar
+    's' putChar
+    't' putChar
+    0 putChar drop
     as unsafe string
     log
     1 ret

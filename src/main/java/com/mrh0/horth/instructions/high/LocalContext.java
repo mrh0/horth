@@ -22,9 +22,9 @@ public class LocalContext {
         this.func = func;
     }
 
-    public int claim(int bytes) {
+    public int claim() {
         var p = totalSize;
-        totalSize += bytes;
+        totalSize += 8;
         return p;
     }
 
@@ -34,7 +34,7 @@ public class LocalContext {
             throw new CompileException(location, "Name '" + name + "' is already a defined " + globalType.name() + ".");
         if(findNamed(name) != null)
             throw new CompileException(location, "Name '" + name + "' is already a defined LOCAL.");
-        namedLocalsList.add(new NamedEntry(name, type, claim(type.getSize())));
+        namedLocalsList.add(new NamedEntry(name, type, claim()));
     }
 
     public void dereferenceNamed(int count) {

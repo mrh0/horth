@@ -90,8 +90,20 @@ start func main -> int in
     dup 'T' write next
     dup 'e' write next
     dup 's' write next
-    dup 't' write
+    dup 't' write next
     0 as char write
+    as unsafe string
+    log
+    1 ret
+end
+
+start func main -> int in
+    16 new buf<char> 4 writeLength
+    'T' putChar
+    'e' putChar
+    's' putChar
+    't' putChar
+    0 as char putChar
     as unsafe string
     log
     1 ret
