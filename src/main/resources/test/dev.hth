@@ -19,7 +19,7 @@ end
 inline func putChar buf<char> int -> buf<char> in
     as char putChar ret
 end
-
+/*
 start func main -> int in
     16 new buf<char> dup 4 writeLength
     'T' putChar
@@ -30,4 +30,18 @@ start func main -> int in
     as! string
     log
     1 ret
+end
+*/
+
+start func main -> int in
+    16 new buf<char>
+    let b in
+    16, "TestTest", b
+    copy
+    b as! string log
+    1 ret
+end
+
+func concat string string -> string in
+
 end

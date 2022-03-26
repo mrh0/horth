@@ -4,8 +4,8 @@ import com.mrh0.horth.ast.nodes.TBlock;
 import com.mrh0.horth.ast.nodes.Tok;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.HighInst;
-import com.mrh0.horth.instructions.high.accessor.HAccessor;
-import com.mrh0.horth.instructions.high.accessor.HAccessorStack;
+import com.mrh0.horth.instructions.high.memory.HAccessor;
+import com.mrh0.horth.instructions.high.memory.HAccessorStack;
 
 import java.util.List;
 

@@ -1,22 +1,23 @@
-package com.mrh0.horth.instructions.high.accessor;
+package com.mrh0.horth.instructions.high.memory;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.exceptions.typechecker.TypeCheckerException;
+import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
-import com.mrh0.horth.typechecker.types.BufferType;
+import com.mrh0.horth.typechecker.types.AllTypes;
 import com.mrh0.horth.typechecker.types.IType;
 
-public class HNext extends HighInst implements ISpecialCheck {
-    private int size;
+public class HAccessorStack extends HighInst implements ISpecialCheck {
+    public int size, offset;
 
-    public HNext(ITok token) {
+    public HAccessorStack(ITok token) {
         super(token);
+        offset = 8;
     }
 
     @Override
@@ -26,16 +27,13 @@ public class HNext extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        IType t = stack.peek(token).type();
-        if(!t.isPointerType())
-            throw new TypeCheckerException(token.getLocation());
-        if(t instanceof BufferType)
-            this.size = t.getNested().getSize();
+        IType type = stack.pop(token).type();
+        stack.check(token, AllTypes.INT);
+        if(type == AllTypes.STRING) {
+            stack.push(AllTypes.CHAR, token);
+            size = AllTypes.CHAR.getSize();
+        }
         else
-            this.size = t.getSize();
-    }
-
-    public int getSize() {
-        return size;
+            throw new BreachOfContractException(token.getLocation(), null, type);
     }
 }

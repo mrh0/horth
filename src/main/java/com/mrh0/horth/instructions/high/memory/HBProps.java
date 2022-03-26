@@ -1,4 +1,4 @@
-package com.mrh0.horth.instructions.high.accessor;
+package com.mrh0.horth.instructions.high.memory;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;

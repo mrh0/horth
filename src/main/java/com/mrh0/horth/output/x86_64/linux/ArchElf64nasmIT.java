@@ -5,7 +5,7 @@ import com.mrh0.horth.function.Func;
 import com.mrh0.horth.instructions.InstructionTransformer;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.HighLabel;
-import com.mrh0.horth.instructions.high.accessor.*;
+import com.mrh0.horth.instructions.high.memory.*;
 import com.mrh0.horth.instructions.high.branching.HBranch;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.branching.HJump;
@@ -105,6 +105,8 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
             out.add(new LAlloc((HNew) in));
         else if(in instanceof HWrite)
             out.add(new LWrite((HWrite) in));
+        else if(in instanceof HCopy)
+            out.add(new LCopy());
 
         else if(in instanceof HProp) {
             var v = (HProp) in;

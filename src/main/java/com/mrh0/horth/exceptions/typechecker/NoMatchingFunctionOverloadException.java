@@ -25,6 +25,8 @@ public class NoMatchingFunctionOverloadException extends TypeCheckerException {
         else {
             this.types = new IType[count];
             for(int i = 0; i < count; i++) {
+                if(stack.size()-count+i < 0)
+                    return;
                 types[i] = stack.stack.get(stack.size()-count+i).type();
             }
         }

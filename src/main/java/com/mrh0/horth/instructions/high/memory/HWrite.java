@@ -1,8 +1,8 @@
-package com.mrh0.horth.instructions.high.accessor;
+package com.mrh0.horth.instructions.high.memory;
 
 import com.mrh0.horth.ast.nodes.ITok;
 import com.mrh0.horth.exceptions.HorthException;
-import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
+import com.mrh0.horth.exceptions.compile.CompileException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.typechecker.Contract;
@@ -10,14 +10,14 @@ import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.typechecker.ISpecialCheck;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.typechecker.types.AllTypes;
+import com.mrh0.horth.typechecker.types.BufferType;
 import com.mrh0.horth.typechecker.types.IType;
 
-public class HAccessorStack extends HighInst implements ISpecialCheck {
-    public int size, offset;
+public class HWrite extends HighInst implements ISpecialCheck {
+    private int size;
 
-    public HAccessorStack(ITok token) {
+    public HWrite(ITok token) {
         super(token);
-        offset = 8;
     }
 
     @Override
@@ -27,13 +27,14 @@ public class HAccessorStack extends HighInst implements ISpecialCheck {
 
     @Override
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
-        IType type = stack.pop(token).type();
-        stack.check(token, AllTypes.INT);
-        if(type == AllTypes.STRING) {
-            stack.push(AllTypes.CHAR, token);
-            size = AllTypes.CHAR.getSize();
-        }
-        else
-            throw new BreachOfContractException(token.getLocation(), null, type);
+        IType t = stack.pop(token).type();
+        this.size = t.getSize();
+        if(this.size > 8)
+            throw new CompileException(token.getLocation(), "Cannot write type " + AllTypes.stringOf(t) + " as it is larger than 8 bytes.");
+        stack.check(token, new BufferType(t));
+    }
+
+    public int getSize() {
+        return size;
     }
 }
