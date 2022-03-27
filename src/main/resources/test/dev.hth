@@ -1,4 +1,3 @@
-
 func leap buf<char> int -> buf<char> in
     let b i in
     b as! int i + as! buf<char> ret
@@ -32,7 +31,7 @@ start func main -> int in
     1 ret
 end
 */
-
+/*
 start func main -> int in
     16 new buf<char>
     let b in
@@ -41,7 +40,19 @@ start func main -> int in
     b as! string log
     1 ret
 end
-
+*/
 func concat string string -> string in
+    let a b in
+    a .length b .length +
+    dup new buf<char>
+    let len buf in
+    a .length a .data@
+    len writeLength
+    copy
+    buf as! string ret
+end
 
+start func main -> int in
+    "Hello" "World" concat log
+    1 ret
 end

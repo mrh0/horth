@@ -14,7 +14,6 @@ BIN: '0b'[0-1]*;
 CHAR: '\''.'\'' | '\'\\'('n'|'r'|'t'|'\\'|'\''|'"'|'0')'\'';
 
 STRING: '"' .*? '"';
-STRING_NT: '"' (~('\'' | '\\') | '\\' . )* '"^';
 
 MODULE_NAME: [a-zA-Z][._a-zA-Z0-9]*;
 
@@ -126,16 +125,16 @@ general:
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
 
-    | '.' prop=NAME                                                                         #genProp
-    | '.' prop=NAME '@'                                                                     #genPropAddr
+    | '.'prop=NAME                                                                         #genProp
+    | '.'prop=NAME '@'                                                                     #genPropAddr
 
     | '[' accBlock=block ']'                                                                #genAccessor
     | '[' accBlock=block ']^'                                                               #genAccessorStrict
-    | '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
+    //| '{' (staticExpr ',')* staticExpr? '}'                                                 #genArray
 
     | '(' infix ')'                                                                         #genInfix
-    | 'assert' (message=STRING)? block 'end'                                              #genAssert
-    | 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
+    //| 'assert' (message=STRING)? block 'end'                                              #genAssert
+    //| 'static' 'assert' (message=STRING)? staticExpr 'end'                                #genStaticAssert
     //| ('inline' | 'extern' | 'start')? 'func' NAME 'infer' 'in' block 'end'                           #genFuncInfer
 
 
@@ -145,16 +144,15 @@ general:
     //| ('inline' | 'extern')? 'func' NAME (dataType)* ('->' (dataType)+)? 'end'              #genFuncSignature
     //| ('inline' | 'extern')? 'func' IDENTIFIER 'infer' 'from' IDENTIFIER 'in' block 'end'   #genFuncSignatureOf
 
-    | 'const' NAME 'alloc' dataType ('*' staticExpr)* 'end'                                #genAllocStatic
-    | 'alloc' dataType 'in'                                                                #genAlloc
+    //| 'const' NAME 'alloc' dataType ('*' staticExpr)* 'end'                                #genAllocStatic
 
     | 'if' conds+=block 'do' doBlock+=block
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
-    | 'switch' inBlock=block 'in'
-    ('case' cases=switchCaseExpr 'do' doBlock+=block)*
-    ('default' 'case' defBlock=block) 'end'                                                          #genSwitch
+    //| 'switch' inBlock=block 'in'
+    //('case' cases=switchCaseExpr 'do' doBlock+=block)*
+    //('default' 'case' defBlock=block) 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile
     //| 'for' block ';' block ';' block 'do' block 'end'                                      #genFor
@@ -164,28 +162,26 @@ general:
     | 'let' (names+=NAME)+ 'in' localBlock=block                                              #genLet
     //| 'label' (IDENTIFIER)+ 'in' block 'end'                                                #genLabel
     //| 'let' (names+=NAME)+ 'in' #genLetFuncScope
-    | 'with' NAME 'do' block 'end'                                                          #genWith
-    | 'const' NAME staticExpr 'end'                                                         #genConst
+    //| 'with' NAME 'do' block 'end'                                                          #genWith
+    //| 'const' NAME staticExpr 'end'                                                         #genConst
 
-    | 'try' NAME                                                                            #genTry
-    | 'throw' block                                                                   #genThrow
-    | 'try' NAME 'pass' passBlock=block 'catch' failBlock=block 'end'                  #genCatch
-    | 'try' NAME 'catch' failBlock=block 'pass' passBlock=block 'end'                  #genCatch
+    //| 'try' NAME                                                                            #genTry
+    //| 'throw' block                                                                   #genThrow
+    //| 'try' NAME 'pass' passBlock=block 'catch' failBlock=block 'end'                  #genCatch
+    //| 'try' NAME 'catch' failBlock=block 'pass' passBlock=block 'end'                  #genCatch
 
     | 'syscall' sysCallName=NAME                                                            #genSyscall
-    | 'export' NAME                                                                         #genExport
+    //| 'export' NAME                                                                         #genExport
 
-    //TODO: should . mean .value? i.e: "" == "value"
-
-    //| 'new' dataType                                                                        #genNew
     | typeFunc                                                                              #genIntrfunc
 
-    | ATOM                                                                                    #genAtom
+    | ATOM                                                                                  #genAtom
     | integer                                                                               #genInt
     | identifier                                                                            #genIdentifier
     | STRING                                                                                #genString
     | BOOL                                                                                  #genBool
     | CHAR                                                                                  #genChar
+
     ;
 
 mainBlock:
