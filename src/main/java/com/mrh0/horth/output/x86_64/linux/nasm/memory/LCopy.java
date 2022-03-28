@@ -23,6 +23,7 @@ public class LCopy implements LowInst {
                 .inst("jmp").jlowLabel(0)
                 .lowLabel(1)
                 .inst("pop").reg(S1)
-                .inst("pop").reg(S2);
+                .inst("pop").reg(S2)
+                .endLowLabel();
     }
 }

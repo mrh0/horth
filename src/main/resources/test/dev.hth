@@ -43,11 +43,15 @@ end
 */
 func concat string string -> string in
     let a b in
-    a .length b .length +
+    a .length b .length + 8 +
     dup new buf<char>
     let len buf in
     a .length a .data@
-    len writeLength
+    buf len writeLength
+    copy
+
+    b .length b .data@
+    buf a .length 8 + leap
     copy
     buf as! string ret
 end
