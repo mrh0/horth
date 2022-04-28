@@ -25,6 +25,7 @@ public class HCopy extends HighInst implements ISpecialCheck {
     public void check(VirtualTypeStack stack, CompileData cd) throws HorthException {
         //IType type = stack.pop(token).type();
         //stack.check(token, type);
+        //from, to, length
         stack.pop(token);
         stack.pop(token);
         stack.check(token, AllTypes.INT);

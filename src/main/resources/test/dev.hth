@@ -18,41 +18,20 @@ end
 inline func putChar buf<char> int -> buf<char> in
     as char putChar ret
 end
-/*
-start func main -> int in
-    16 new buf<char> dup 4 writeLength
-    'T' putChar
-    'e' putChar
-    's' putChar
-    't' putChar
-    0 putChar drop
-    as! string
-    log
-    1 ret
-end
-*/
-/*
-start func main -> int in
-    16 new buf<char>
-    let b in
-    16, "TestTest", b
-    copy
-    b as! string log
-    1 ret
-end
-*/
+
 func concat string string -> string in
     let a b in
     a .length b .length + 8 +
-    dup new buf<char>
-    let len buf in
-    a .length a .data@
-    buf len writeLength
+    let len in
+    len new buf<char>
+    len writeLength
+    let buf in
+    a .length, a .data@, buf
     copy
+    //b .length, b .data@, buf a .length leap
+    //copy
 
-    b .length b .data@
-    buf a .length 8 + leap
-    copy
+
     buf as! string ret
 end
 

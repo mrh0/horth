@@ -57,6 +57,12 @@ public class InstructionBuilder {
         return this;
     }
 
+    public InstructionBuilder imm(char c) {
+        begin();
+        sb.append("'" + c + "'");
+        return this;
+    }
+
     public InstructionBuilder append(Object str) {
         sb.append(str);
         return this;
