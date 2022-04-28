@@ -58,5 +58,5 @@ end
 
 start func main -> int in
     "Hello" "World" concat log
-    1 ret
+    0 ret
 end
