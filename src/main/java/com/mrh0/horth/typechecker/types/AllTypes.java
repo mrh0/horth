@@ -6,6 +6,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.exceptions.typechecker.BreachOfContractException;
 import com.mrh0.horth.exceptions.typechecker.CannotCastException;
 import com.mrh0.horth.exceptions.typechecker.UndefinedPropertyException;
+import com.mrh0.horth.exceptions.typechecker.UndefinedTypeException;
 
 public class AllTypes {
     public static final IType INT = new IType() {
@@ -237,6 +238,8 @@ public class AllTypes {
     }
 
     public static void canCast(ITok token, IType type, IType to) throws BreachOfContractException {
+        if(type == null)
+            throw new BreachOfContractException(token.getLocation());
         if(IType.equals(type, to))
             return;
         try {

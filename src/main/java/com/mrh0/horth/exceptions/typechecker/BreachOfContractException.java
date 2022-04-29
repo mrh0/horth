@@ -13,6 +13,12 @@ public class BreachOfContractException extends TypeCheckerException {
         this.actual = null;
     }*/
 
+    public BreachOfContractException(Loc location) {
+        super(location);
+        this.expected = null;
+        this.actual = null;
+    }
+
     public BreachOfContractException(Loc location, IType expected) {
         super(location);
         this.expected = expected;

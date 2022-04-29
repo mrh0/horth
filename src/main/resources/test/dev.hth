@@ -21,21 +21,26 @@ end
 
 func concat string string -> string in
     let a b in
-    a .length b .length + 8 +
+    a .length b .length +
     let len in
-    len new buf<char>
-    len writeLength
+    len 8 + new buf<char>
     let buf in
-    a .length, a .data@, buf
-    copy
-    //b .length, b .data@, buf a .length leap
-    //copy
+    buf len writeLength drop
 
+    a .length, a .data@, buf 8 leap
+    copy
 
     buf as! string ret
 end
 
 start func main -> int in
-    "Hello" "World" concat log
+    16 new buf<char> 4 writeLength
+    'T' putChar
+    'e' putChar
+    's' putChar
+    't' putChar
+    0 putChar
+    as! string
+    log
     0 ret
 end
