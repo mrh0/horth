@@ -13,6 +13,7 @@ public class LReclaim implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("sub").reg(LSP).imm(bytes);
+        if(this.bytes > 0)
+            ib.inst("sub").reg(LSP).imm(this.bytes);
     }
 }

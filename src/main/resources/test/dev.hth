@@ -1,3 +1,14 @@
+func test in
+    16 new buf<char> drop
+    ret
+end
+
+start func main -> int in
+    test
+    0 ret
+end
+
+/*
 func leap buf<char> int -> buf<char> in
     let b i in
     b as! int i + as! buf<char> ret
@@ -9,38 +20,13 @@ func writeLength buf<char> int -> buf<char> in
     b 8 leap ret
 end
 
-inline func putChar buf<char> char -> buf<char> in
-    let b c in
-    b c write
-    b next ret
-end
-
-inline func putChar buf<char> int -> buf<char> in
-    as char putChar ret
-end
-
-func concat string string -> string in
-    let a b in
-    a .length b .length +
-    let len in
-    len 8 + new buf<char>
-    let buf in
-    buf len writeLength drop
-
-    a .length, a .data@, buf 8 leap
-    copy
-
-    buf as! string ret
-end
-
 start func main -> int in
-    16 new buf<char> 4 writeLength
-    'T' putChar
-    'e' putChar
-    's' putChar
-    't' putChar
-    0 putChar
-    as! string
-    log
+    16 new buf<char>
+    let buf in
+    buf 4 writeLength
+    'T' write
+
+    buf as! string log
     0 ret
 end
+*/

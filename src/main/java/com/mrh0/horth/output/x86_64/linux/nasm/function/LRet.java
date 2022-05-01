@@ -14,11 +14,13 @@ public class LRet implements LowInst {
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
         ib      .comment("FUNC_RET")
-                .inst("sub").reg(LSP).imm(bytes)
-                .inst("sub").reg(LSP).imm(16)
+                //.inst("sub").reg(LSP).imm(bytes)
+                .inst("sub").reg(LSP).imm(16 + this.bytes)
                 .inst("push").qword().vreg(LSP, 0)
-                //.inst("mov").reg(T1).vreg(LSP, 8)
-                //.inst("mov").vreg(DSP, 0).reg(T1)
+
+                //.inst("mov").reg(T1).vreg(LSP, 8)//?
+                //.inst("mov").vreg(DSP, 0).reg(T1)//?
+
                 .inst("ret");
 
         //Alternative, sub 8 + offset for all lets in func and then add 8 offset to vreg

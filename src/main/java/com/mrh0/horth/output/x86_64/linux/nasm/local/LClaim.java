@@ -13,6 +13,7 @@ public class LClaim implements LowInst {
 
     @Override
     public void asm(InstructionBuilder ib, CompileData cd) {
-        ib.inst("add").reg(LSP).imm(this.bytes);
+        if(this.bytes > 0)
+            ib.inst("add").reg(LSP).imm(this.bytes);
     }
 }
