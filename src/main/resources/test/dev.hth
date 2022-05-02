@@ -1,14 +1,4 @@
-func test in
-    16 new buf<char> drop
-    ret
-end
 
-start func main -> int in
-    test
-    0 ret
-end
-
-/*
 func leap buf<char> int -> buf<char> in
     let b i in
     b as! int i + as! buf<char> ret
@@ -20,13 +10,27 @@ func writeLength buf<char> int -> buf<char> in
     b 8 leap ret
 end
 
-start func main -> int in
-    16 new buf<char>
-    let buf in
-    buf 4 writeLength
-    'T' write
+func concat string string -> string in
+    let a b in
 
-    buf as! string log
+    a.length b.length +
+    let len in
+
+    len 8 + new buf<char>
+    let buf in
+
+    buf len writeLength drop
+
+    a.length, a.data@, buf 8 leap
+    copy
+
+    b.length, b.data@, buf 8 a.length + leap
+    copy
+
+    buf as! string ret
+end
+
+start func main -> int in
+    "Hello" "World" concat log
     0 ret
 end
-*/

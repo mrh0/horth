@@ -16,10 +16,7 @@ import com.mrh0.horth.instructions.high.io.HLog;
 import com.mrh0.horth.instructions.high.local.HClaim;
 import com.mrh0.horth.instructions.high.local.HLet;
 import com.mrh0.horth.instructions.high.local.HReclaim;
-import com.mrh0.horth.instructions.high.stackops.base.HDrop;
-import com.mrh0.horth.instructions.high.stackops.base.HDup;
-import com.mrh0.horth.instructions.high.stackops.base.HOver;
-import com.mrh0.horth.instructions.high.stackops.base.HSwap;
+import com.mrh0.horth.instructions.high.stackops.base.*;
 import com.mrh0.horth.instructions.high.stackops.binop.compare.*;
 import com.mrh0.horth.instructions.high.stackops.operands.*;
 import com.mrh0.horth.instructions.high.stackops.other.HSysCall;
@@ -45,10 +42,7 @@ import com.mrh0.horth.output.x86_64.linux.nasm.local.LClaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LLet;
 import com.mrh0.horth.output.x86_64.linux.nasm.local.LReclaim;
 import com.mrh0.horth.output.x86_64.linux.nasm.other.*;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.LDrop;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.LDup;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.LOver;
-import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.LSwap;
+import com.mrh0.horth.output.x86_64.linux.nasm.stackop.base.*;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LBinary;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LCompare;
 import com.mrh0.horth.output.x86_64.linux.nasm.stackop.binop.LAdd;
@@ -89,7 +83,7 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
         else if(in instanceof HCallFunc)
             out.add(new LCallFunc((HCallFunc) in));
         else if(in instanceof HFunc)
-            out.add(new LFuncInit());
+            out.add(new LFuncInit(((HFunc) in).localBytes));
         else if(in instanceof HRet) {
             HRet hr = (HRet) in;
             if(hr.getLocalContext().func.getPrefix() != Func.Prefix.INLINE)
@@ -161,12 +155,23 @@ public class ArchElf64nasmIT implements InstructionTransformer<LowInst> {
 
         else if(in instanceof HDup)
             out.add(LDup.INSTANCE);
+        else if(in instanceof HDup2)
+            out.add(LDup2.INSTANCE);
+
         else if(in instanceof HDrop)
             out.add(LDrop.INSTANCE);
+        else if(in instanceof HDrop2)
+            out.add(LDrop2.INSTANCE);
+        else if(in instanceof HDrop3)
+            out.add(LDrop3.INSTANCE);
+
         else if(in instanceof HOver)
             out.add(LOver.INSTANCE);
+
         else if(in instanceof HSwap)
             out.add(LSwap.INSTANCE);
+        else if(in instanceof HSwap2)
+            out.add(LSwap2.INSTANCE);
 
         else if(in instanceof HighLabel)
             out.add(new Label((HighLabel) in));

@@ -8,7 +8,7 @@ public class LPutVar implements LowInst {
     private final int offset;
 
     public  LPutVar(int offset) {
-        this.offset = offset;
+        this.offset = -offset - 8;
     }
 
     @Override

@@ -2,9 +2,6 @@ grammar Horth;
 
 BOOL: 'true' | 'false';
 NAME: [_a-zA-Z][_a-zA-Z0-9]*;
-//IDENTIFIER: '@'+[_a-zA-Z][_a-zA-Z0-9]*;
-//KEYED_IDENTIFIER: [_a-zA-Z][_a-zA-Z0-9.]*[_a-zA-Z0-9]+;
-//KEYED_IDENTIFIER_DEF: [_a-zA-Z][_a-zA-Z0-9.]*;
 ATOM: ':'[a-zA-Z0-9][_a-zA-Z0-9]*;
 
 INT: '0'|'-'?[1-9][0-9]*;
@@ -15,7 +12,7 @@ CHAR: '\''.'\'' | '\'\\'('n'|'r'|'t'|'\\'|'\''|'"'|'0')'\'';
 
 STRING: '"' .*? '"';
 
-MODULE_NAME: [a-zA-Z][._a-zA-Z0-9]*;
+//MODULE_NAME: ([a-zA-Z][_a-zA-Z0-9]*)('.'[a-zA-Z][_a-zA-Z0-9])*;
 
 WHITESPACE: [ \t\r\n]+ -> skip;
 COMMENT: '//' ~[\r\n]* -> skip;
@@ -88,7 +85,7 @@ typeFunc: // _ used as skip type?
     //| 'as' '(' (types+=dataType)* ')'                 #typeFuncCast
     //| 'unsafe' 'cast' '(' dataType ')'                #typeFuncCastUnsafe
     | 'as' 'unsafe' dataType                            #typeFuncCastUnsafe
-    | 'as' '!' dataType                                    #typeFuncCastUnsafe
+    | 'as' '!' dataType                                 #typeFuncCastUnsafe
     //| 'as' '(' ('unsafe'? types+=dataType)* ')'       #typeFuncCastUnsafe
     | 'is' '(' (types+=dataType)* ')'                   #typeFuncIs
     | 'is' types+=dataType                              #typeFuncIs
@@ -98,6 +95,8 @@ typeFunc: // _ used as skip type?
 infix:
     identifier                  #infixIdent
     | identifier? typeFunc      #infixTypefunc
+    //| identifier '.' prop=NAME          #infixProps
+    //| identifier '.' prop=NAME '@'      #infixPropsAddr
     | ATOM                      #infixAtom
     | integer                   #infixInt
     | BOOL                      #infixBool
@@ -120,13 +119,13 @@ switchCaseExpr:
     ;
 
 general:
-    ','                                                                                   #genSeparator
+    ','                                                                                     #genSeparator
     | unop                                                                                  #genUnop
     | binop                                                                                 #genBinOp
     | keywords                                                                              #genKeyword
 
-    | '.'prop=NAME                                                                         #genProp
-    | '.'prop=NAME '@'                                                                     #genPropAddr
+    | '.' prop=NAME                                                                          #genProp
+    | '.' prop=NAME '@'                                                                      #genPropAddr
 
     | '[' accBlock=block ']'                                                                #genAccessor
     | '[' accBlock=block ']^'                                                               #genAccessorStrict
@@ -181,7 +180,6 @@ general:
     | STRING                                                                                #genString
     | BOOL                                                                                  #genBool
     | CHAR                                                                                  #genChar
-
     ;
 
 mainBlock:
@@ -197,6 +195,10 @@ include:
     'include' STRING
     ;
 
+module:
+    NAME ('.'NAME)*
+    ;
+
 program:
-    ('module' moduleName=MODULE_NAME)? (includes+=include)* main+=mainBlock* EOF
+    ('module' moduleName=module)? (includes+=include)* main+=mainBlock* EOF
     ;

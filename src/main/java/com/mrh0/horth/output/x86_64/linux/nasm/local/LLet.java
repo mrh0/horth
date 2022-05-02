@@ -20,16 +20,16 @@ public class LLet implements LowInst {
         if(count == 0)
             System.err.println("[Claim] This should never happen.");
         if(count == 1) {
-            ib      .inst("mov").vreg(LSP, this.offset).reg(S1)
+            ib      .inst("mov").vreg(LSP, -this.offset - 8).reg(S1)
                     .inst("mov").reg(S1).reg(S2)
                     .inst("pop").reg(S2);
         }
         else if (count >= 2) {
-            ib      .inst("mov").vreg(LSP, this.offset).reg(S1)
-                    .inst("mov").vreg(LSP, this.offset + 8).reg(S2);
+            ib      .inst("mov").vreg(LSP, -this.offset - 8).reg(S1)
+                    .inst("mov").vreg(LSP, -this.offset - 16).reg(S2);
 
             for(int i = 2; i < count; i++) {
-                ib.inst("pop").append("QWORD ").vreg(LSP, this.offset + i*8);
+                ib.inst("pop").append("QWORD ").vreg(LSP, -this.offset - i*8 - 8);
             }
             ib      .inst("pop").reg(S1)
                     .inst("pop").reg(S2);

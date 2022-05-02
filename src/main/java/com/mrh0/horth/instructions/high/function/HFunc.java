@@ -10,11 +10,13 @@ import com.mrh0.horth.typechecker.IContract;
 public class HFunc extends HighInst {
     public final HighLabel label;
     public final Func func;
+    public final int localBytes;
 
-    public HFunc(ITok token, Func func, HighLabel label) {
+    public HFunc(ITok token, Func func, int localBytes, HighLabel label) {
         super(token);
         this.label = label;
         this.func = func;
+        this.localBytes = localBytes;
     }
 
     @Override

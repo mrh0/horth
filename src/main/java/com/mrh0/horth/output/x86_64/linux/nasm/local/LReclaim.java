@@ -3,7 +3,7 @@ package com.mrh0.horth.output.x86_64.linux.nasm.local;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
-
+@Deprecated
 public class LReclaim implements LowInst {
     private final int bytes;
 

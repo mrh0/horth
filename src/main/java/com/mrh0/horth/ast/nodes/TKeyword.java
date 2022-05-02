@@ -8,13 +8,10 @@ import com.mrh0.horth.instructions.high.memory.HWrite;
 import com.mrh0.horth.instructions.high.branching.HBreak;
 import com.mrh0.horth.instructions.high.function.HRet;
 import com.mrh0.horth.instructions.high.io.HLog;
-import com.mrh0.horth.instructions.high.stackops.base.HDrop;
-import com.mrh0.horth.instructions.high.stackops.base.HDup;
+import com.mrh0.horth.instructions.high.stackops.base.*;
 import com.mrh0.horth.instructions.high.stackops.operands.HPutInt;
 import com.mrh0.horth.instructions.high.stackops.operands.HPutString;
 import com.mrh0.horth.instructions.high.stackops.other.HExit;
-import com.mrh0.horth.instructions.high.stackops.base.HOver;
-import com.mrh0.horth.instructions.high.stackops.base.HSwap;
 import com.mrh0.horth.instructions.high.stackops.other.HVoid;
 import com.mrh0.horth.instructions.high.types.HBBox;
 
@@ -38,18 +35,34 @@ public class TKeyword extends Tok {
             case "ret":
                 space.add(new HRet(this));
                 break;
+
             case "dup":
                 space.add(new HDup(this));
+            case "dup2":
+                space.add(new HDup2(this));
                 break;
+
             case "drop":
                 space.add(new HDrop(this));
                 break;
+            case "drop2":
+                space.add(new HDrop2(this));
+                break;
+            case "drop3":
+                space.add(new HDrop3(this));
+                break;
+
             case "over":
                 space.add(new HOver(this));
                 break;
+
             case "swap":
                 space.add(new HSwap(this));
                 break;
+            case "swap2":
+                space.add(new HSwap2(this));
+                break;
+
             case "log":
                 space.add(new HLog(this));
                 break;
@@ -59,6 +72,7 @@ public class TKeyword extends Tok {
                 space.add(new HPutInt(this.getLocation().getLine(),this));
                 space.add(new HPutInt(this.getLocation().getPosOnLine(),this));
             break;
+
             case "void":
                 space.add(new HVoid(this));
                 break;
@@ -69,7 +83,6 @@ public class TKeyword extends Tok {
             case "next":
                 space.add(new HNext(this));
                 break;
-
             case "write":
                 space.add(new HWrite(this));
                 break;

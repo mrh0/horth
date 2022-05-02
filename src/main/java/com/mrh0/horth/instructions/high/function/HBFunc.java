@@ -52,8 +52,8 @@ public class HBFunc extends HighInst implements ISpecialCheck, IExpanding {
             return;
         var label = func.label;
         space.add(label);
-        space.add(new HFunc(token, func, label));
-        space.add(new HClaim(token, localBytes));
+        space.add(new HFunc(token, func, localBytes, label));
+        //space.add(new HClaim(token, localBytes));
         IExpanding.expandAll(func.getBody(), space);
 
         if(!(space.get(space.size()-1) instanceof HRet))
