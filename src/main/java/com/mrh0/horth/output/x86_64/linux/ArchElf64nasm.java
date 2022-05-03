@@ -28,7 +28,7 @@ public class ArchElf64nasm extends Arch {
 
     @Override
     public String getName() {
-        return "win64nasm";
+        return "elf64:nasm";
     }
 
     @Override
