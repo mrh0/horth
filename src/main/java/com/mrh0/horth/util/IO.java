@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class IO {
@@ -36,5 +37,9 @@ public class IO {
 
     public static void warn(String text, Loc location) {
         System.out.println("[WARN]: " + text + (location == null ? "" : "\n\tat: " + location.toString()));
+    }
+
+    public static Path getAbsolutePath(String path) {
+        return Path.of(path).toAbsolutePath();
     }
 }

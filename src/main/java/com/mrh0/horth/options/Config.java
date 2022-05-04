@@ -11,6 +11,7 @@ public class Config {
     private Optional<String> arch;
     private Optional<String> input;
     private Optional<String> output;
+    private Optional<String> logLevel;
 
     public Config() {
         included = new ArrayList<>();
@@ -18,6 +19,7 @@ public class Config {
         arch = Optional.empty();
         input = Optional.empty();
         output = Optional.empty();
+        logLevel = Optional.empty();
     }
 
     public List<String> getIncluded() {
@@ -38,6 +40,10 @@ public class Config {
 
     public String getOutput() {
         return output.orElse("out.asm");
+    }
+
+    public String getLogLevel() {
+        return logLevel.orElse("normal");
     }
 
     public void setIncluded(List<String> included) {
@@ -62,5 +68,9 @@ public class Config {
 
     public void setOutput(String output) {
         this.output = Optional.of(output);
+    }
+
+    public void setLogLevel(String level) {
+        this.logLevel = Optional.of(level);
     }
 }

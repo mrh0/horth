@@ -14,6 +14,7 @@ import com.mrh0.horth.output.x86_64.linux.ArchElf64nasm;
 import com.mrh0.horth.typechecker.TypeChecker;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.util.IO;
+import com.mrh0.horth.util.Log;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -26,12 +27,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
+    public static String version = "20220504a";
+
     public static void main(String[] args) throws IOException, URISyntaxException, HorthException {
+        Log.log("Horth", "-", version);
         Config config = new Config();
         Command.parse(config, args);
+        Log.setLogLevel(config.getLogLevel());
 
         Horth horth = new Horth();
-
+        Log.log("Compiling...");
         horth.compile(config);
+        Log.log("Finished.");
+        System.exit(0);
     }
 }

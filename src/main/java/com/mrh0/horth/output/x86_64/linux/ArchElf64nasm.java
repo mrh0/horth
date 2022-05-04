@@ -8,6 +8,7 @@ import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.output.x86_64.linux.nasm.InstructionBuilder;
 import com.mrh0.horth.output.x86_64.linux.nasm.LowInst;
 import com.mrh0.horth.util.IO;
+import com.mrh0.horth.util.Log;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -44,7 +45,7 @@ public class ArchElf64nasm extends Arch {
         StringBuilder lisb = new StringBuilder();
         for(LowInst li : LLIR)
             lisb.append(li.getClass().getSimpleName() + ", ");
-        System.out.println(lisb.toString());
+        Log.debug(lisb.toString());
 
         //List<LowInst> optimizedLLIR = Optimizer.optimize(LLIR);
 

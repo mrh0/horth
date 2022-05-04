@@ -13,6 +13,7 @@ import com.mrh0.horth.output.x86_64.linux.ArchElf64nasm;
 import com.mrh0.horth.typechecker.TypeChecker;
 import com.mrh0.horth.typechecker.VirtualTypeStack;
 import com.mrh0.horth.util.IO;
+import com.mrh0.horth.util.Log;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
@@ -49,13 +50,13 @@ public class Horth {
 
         var tree = parser.program();
         var t = new Visitor(inputFile, compileData).visitProgram(tree);
-        System.out.println(t.toString());
+        Log.debug(t.toString());
 
         //PreTypeCheckExpanding
         List<HighInst> HLIR = new ArrayList<>(); // High Level Intermediate Representation
         t.expand(HLIR);
 
-        System.out.println(HLIR);
+        Log.debug(HLIR);
 
         if(HLIR.size() == 0)
             return;
@@ -70,6 +71,7 @@ public class Horth {
         IExpanding.expandAll(HLIR, newHLIR);
 
         HLIR = newHLIR;
+        Log.debug(HLIR);
 
         //IDataChecked.checkAll(cd, HLIR);
 
@@ -80,7 +82,7 @@ public class Horth {
         String outputnasm = arch.compile(compileData, HLIR).toString();
 
         //Output
-        System.out.println(outputnasm);
+        Log.debug(outputnasm);
         IO.writeFile(IO.getFile(asmFile), outputnasm);
 
         /*try {
