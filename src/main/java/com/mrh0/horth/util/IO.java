@@ -2,6 +2,7 @@ package com.mrh0.horth.util;
 
 import com.mrh0.horth.Main;
 import com.mrh0.horth.ast.Loc;
+import org.apache.tools.ant.DirectoryScanner;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +11,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IO {
     public static File getResource(String path) {
@@ -35,11 +38,27 @@ public class IO {
         return Paths.get(new URI(file)).toFile();
     }
 
-    public static void warn(String text, Loc location) {
-        System.out.println("[WARN]: " + text + (location == null ? "" : "\n\tat: " + location.toString()));
-    }
-
     public static Path getAbsolutePath(String path) {
         return Path.of(path).toAbsolutePath();
+    }
+
+    public static List<File> getIncludedFiles(List<String> includes) {
+        return getIncludedFiles(includes.toArray(new String[includes.size()]));
+    }
+
+    public static List<File> getIncludedFiles(String includes[]) {
+        String baseDir = Path.of(".").toAbsolutePath().toString();
+        DirectoryScanner scanner = new DirectoryScanner();
+        scanner.setIncludes(includes);
+        scanner.setBasedir(baseDir);
+        scanner.setCaseSensitive(false);
+        scanner.scan();
+        String[] paths = scanner.getIncludedFiles();
+        List<File> files = new ArrayList<>();
+        for(String path : paths) {
+            Log.debug("Included:", path);
+            files.add(new File(path));
+        }
+        return files;
     }
 }

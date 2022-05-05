@@ -34,6 +34,9 @@ public class Main {
         Config config = new Config();
         Command.parse(config, args);
         Log.setLogLevel(config.getLogLevel());
+        IO.getIncludedFiles(config.getIncluded());
+
+        Log.log(Log.getLevel());
 
         Horth horth = new Horth();
         Log.log("Compiling...");

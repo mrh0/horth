@@ -9,6 +9,7 @@ import com.mrh0.horth.exceptions.typechecker.UndefinedTypeException;
 import com.mrh0.horth.typechecker.Contract;
 import com.mrh0.horth.typechecker.IContract;
 import com.mrh0.horth.util.IO;
+import com.mrh0.horth.util.Log;
 
 import java.util.List;
 import java.util.Map;
@@ -41,7 +42,7 @@ public interface IType {
 
     default boolean isRedundantCast(Loc location, IType to) {
         if(IType.equals(this, to)) {
-            IO.warn(
+            Log.warn(
                     "Redundant cast from " + AllTypes.stringOf(this) + " to " + AllTypes.stringOf(to) + ".",
                     location);
             return true;

@@ -14,28 +14,25 @@ public class Command {
         Log.debug("Compiling: '", input, "'.");
 
         for(int i = 1; i < args.length; i++) {
-            String arg = fromShorthand(args[i]);
+            String arg = args[i];
             if(arg.length() == 0)
                 continue;
             switch(arg) {
-                case "output":
+                case "-o":
+                case "--output":
                     config.setOutput(args[++i]);
-                    Log.debug(IO.getAbsolutePath(args[i]));
                     break;
-                case "log-level":
+                case "-ll":
+                case "--log-level":
                     config.setLogLevel(args[++i]);
+                    break;
+                case "-i":
+                case "--include":
+                    config.addIncluded(args[++i]);
                     break;
                 default:
                     throw new IllegalArgumentException(arg);
             }
         }
-    }
-
-    public static String fromShorthand(String shorthand) {
-        return switch (shorthand) {
-            case "-o" -> "output";
-            case "-ll" -> "log-level";
-            default -> shorthand.replaceAll("--", "");
-        };
     }
 }
