@@ -1,0 +1,16 @@
+####################   Horth help manual   ####################
+  Show this help screen:
+    $ horth ?
+  Compile file:
+    $ horth -c <file> [flags]
+  Print version:
+    $ horth -v
+   Run compiler tests: (WIP)
+    $ horth -t
+
+  Flags:
+    --compile (-c) <file>, --output (-o) <file>,
+    --log-level (-ll) <all, normal, none>, --debug (-d),
+    --include (-i) <file pattern>, --include-all (-ia),
+    --arch (-a) <elf64, win64>, --format (-f) <nasm, fasm>,
+    --version (-v), --test (-t)

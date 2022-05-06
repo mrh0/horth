@@ -220,18 +220,6 @@ public class HorthBaseListener implements HorthListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInfixPropsAddr(HorthParser.InfixPropsAddrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInfixPropsAddr(HorthParser.InfixPropsAddrContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterInfixAtom(HorthParser.InfixAtomContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -311,18 +299,6 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInfixBinOp(HorthParser.InfixBinOpContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterInfixProps(HorthParser.InfixPropsContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInfixProps(HorthParser.InfixPropsContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

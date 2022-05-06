@@ -2,6 +2,8 @@ package com.mrh0.horth;
 
 import com.mrh0.horth.antlr.HorthLexer;
 import com.mrh0.horth.antlr.HorthParser;
+import com.mrh0.horth.antlr.header.HorthHeaderLexer;
+import com.mrh0.horth.antlr.header.HorthHeaderParser;
 import com.mrh0.horth.ast.Visitor;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.CompileData;
@@ -17,6 +19,7 @@ import com.mrh0.horth.util.Log;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +34,8 @@ public class Horth {
         Arch.register(new ArchElf64nasm());
     }
 
+    public static String version = "20220504a";
+
     public void compile(Config config) throws IOException, URISyntaxException, HorthException {
         var inputFile = Paths.get(Main.class.getResource("/test/dev.hth").toURI()).toFile();
 
@@ -38,7 +43,7 @@ public class Horth {
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
 
         //Select Arch
-        Arch arch = Arch.get(config.getArch() + ':' + config.getTarget());
+        Arch arch = Arch.get(config.getArch() + ':' + config.getFormat());
 
         //Antlr4
         HorthLexer lexer = new HorthLexer(input);
@@ -92,5 +97,16 @@ public class Horth {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }*/
+    }
+
+    public void parseModule(File file) throws IOException {
+        InputStream inputStream = new FileInputStream(file);
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+        HorthHeaderLexer headerLexer = new HorthHeaderLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(headerLexer);
+
+        HorthHeaderParser headerParser = new HorthHeaderParser(tokens);
+
+        var headerTree = headerParser.program();
     }
 }

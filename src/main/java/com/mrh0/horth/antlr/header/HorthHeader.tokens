@@ -1,0 +1,10 @@
+T__0=1
+T__1=2
+T__2=3
+NAME=4
+WHITESPACE=5
+COMMENT=6
+BLOCKCOMMENT=7
+'.'=1
+'include'=2
+'module'=3

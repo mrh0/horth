@@ -202,18 +202,6 @@ public interface HorthListener extends ParseTreeListener {
 	 */
 	void exitInfixChar(HorthParser.InfixCharContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code infixPropsAddr}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 */
-	void enterInfixPropsAddr(HorthParser.InfixPropsAddrContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code infixPropsAddr}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 */
-	void exitInfixPropsAddr(HorthParser.InfixPropsAddrContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code infixAtom}
 	 * labeled alternative in {@link HorthParser#infix}.
 	 * @param ctx the parse tree
@@ -297,18 +285,6 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfixBinOp(HorthParser.InfixBinOpContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code infixProps}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 */
-	void enterInfixProps(HorthParser.InfixPropsContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code infixProps}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 */
-	void exitInfixProps(HorthParser.InfixPropsContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code infixBool}
 	 * labeled alternative in {@link HorthParser#infix}.

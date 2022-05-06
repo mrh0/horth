@@ -5,6 +5,7 @@ import com.mrh0.horth.ast.Loc;
 import org.apache.tools.ant.DirectoryScanner;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
@@ -13,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class IO {
     public static File getResource(String path) {
@@ -32,6 +34,21 @@ public class IO {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String readFile(File file) {
+        StringBuilder sb = new StringBuilder();
+        try {
+            Scanner scanner = new Scanner(file);
+            while (scanner.hasNextLine()) {
+                sb.append(scanner.nextLine());
+                sb.append('\n');
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
     public static File getFile(String file) throws URISyntaxException {

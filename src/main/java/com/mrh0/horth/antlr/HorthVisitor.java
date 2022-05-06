@@ -125,13 +125,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInfixChar(HorthParser.InfixCharContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code infixPropsAddr}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInfixPropsAddr(HorthParser.InfixPropsAddrContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code infixAtom}
 	 * labeled alternative in {@link HorthParser#infix}.
 	 * @param ctx the parse tree
@@ -180,13 +173,6 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInfixBinOp(HorthParser.InfixBinOpContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code infixProps}
-	 * labeled alternative in {@link HorthParser#infix}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInfixProps(HorthParser.InfixPropsContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code infixBool}
 	 * labeled alternative in {@link HorthParser#infix}.

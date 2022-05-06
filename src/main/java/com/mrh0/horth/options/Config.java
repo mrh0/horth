@@ -7,7 +7,7 @@ import java.util.Optional;
 public class Config {
     private List<String> included;
 
-    private Optional<String> target;
+    private Optional<String> format;
     private Optional<String> arch;
     private Optional<String> input;
     private Optional<String> output;
@@ -15,7 +15,7 @@ public class Config {
 
     public Config() {
         included = new ArrayList<>();
-        target = Optional.empty();
+        format = Optional.empty();
         arch = Optional.empty();
         input = Optional.empty();
         output = Optional.empty();
@@ -26,8 +26,8 @@ public class Config {
         return included;
     }
 
-    public String getTarget() {
-        return target.orElse("nasm");
+    public String getFormat() {
+        return format.orElse("nasm");
     }
 
     public String getArch() {
@@ -54,8 +54,8 @@ public class Config {
         this.included.add(include);
     }
 
-    public void setTarget(String target) {
-        this.target = Optional.of(target);
+    public void setFormat(String format) {
+        this.format = Optional.of(format);
     }
 
     public void setArch(String arch) {

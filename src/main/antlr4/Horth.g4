@@ -192,7 +192,7 @@ block:
     ;
 
 include:
-    'include' STRING
+    'include' module
     ;
 
 module:
