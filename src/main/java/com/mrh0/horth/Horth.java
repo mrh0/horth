@@ -98,15 +98,4 @@ public class Horth {
             e.printStackTrace();
         }*/
     }
-
-    public void parseModule(File file) throws IOException {
-        InputStream inputStream = new FileInputStream(file);
-        ANTLRInputStream input = new ANTLRInputStream(inputStream);
-        HorthHeaderLexer headerLexer = new HorthHeaderLexer(input);
-        CommonTokenStream tokens = new CommonTokenStream(headerLexer);
-
-        HorthHeaderParser headerParser = new HorthHeaderParser(tokens);
-
-        var headerTree = headerParser.program();
-    }
 }
