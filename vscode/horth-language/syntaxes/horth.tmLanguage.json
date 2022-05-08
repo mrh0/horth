@@ -1,0 +1,55 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Horth",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"include": "#function"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [{
+				"name": "keyword.control.horth",
+				"match": "\\b(if|while|for|ret|switch|case|break|else|elif|let|syscall)\\b"
+			}]
+		},
+		"function": {
+			"patterns": [{
+				"name": "keyword.function.horth",
+				"begin": "func|(start|extern|inline|rec)[ \t\n\r]+func",
+				"beginCaptures": {
+					"1": {
+						"name": "definition.parameters.begin.horth"
+					}
+				},
+				"end": "[ \t\n\r]+in[ \t\n\r]+",
+				"patterns": [{
+					"match": "[a-zA-Z_][a-zA-Z0-9_]*",
+					"name": "variable.parameter.function.horth"
+				},
+				{
+					"match": "->",
+					"name": "definition.parameters.arrow.horth"
+				}]
+			}]
+		},
+		"strings": {
+			"name": "string.quoted.double.horth",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.horth",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.horth"
+}

@@ -1,0 +1,25 @@
+{
+    "name": "horth-language",
+    "displayName": "horth-language",
+    "description": "horth alngauge support",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.67.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [{
+            "id": "horth",
+            "aliases": ["Horth", "horth"],
+            "extensions": [".horth", ".hth"],
+            "configuration": "./language-configuration.json"
+        }],
+        "grammars": [{
+            "language": "horth",
+            "scopeName": "source.horth",
+            "path": "./syntaxes/horth.tmLanguage.json"
+        }]
+    }
+}

@@ -1,0 +1,40 @@
+
+func leap buf<char> int -> buf<char> in
+    let b i in
+    b as! int i + as! buf<char> ret
+end
+
+func writeLength buf<char> int -> buf<char> in
+    let b v in
+    b as! buf<int> v write
+    b 8 leap ret
+end
+
+func concat string string -> string in
+    let a b in
+
+    a.length b.length +
+    let len in
+
+    len 8 + new buf<char>
+    let buf in
+
+    buf len writeLength drop
+
+    a.length, a.data@, buf 8 leap
+    copy
+
+    b.length, b.data@, buf 8 a.length + leap
+    copy
+
+    buf as! string ret
+end
+
+start func main -> int in
+    "Hello" "World" concat log
+    0 ret
+end
+
+func a in
+
+end

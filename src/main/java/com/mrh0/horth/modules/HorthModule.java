@@ -26,7 +26,7 @@ public class HorthModule {
 
     }
 
-    private static void make(File file, Config config, CompileData compileData) throws HorthException, IOException {
+    private static void load(File file, Config config, CompileData compileData) throws HorthException, IOException {
         InputStream inputStream = new FileInputStream(file);
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
         HorthLexer headerLexer = new HorthLexer(input);
