@@ -9,40 +9,81 @@
 			"include": "#strings"
 		},
 		{
-			"include": "#function"
+			"include": "#chars"
+		},
+		{
+			"include": "#typefuncs"
+		},
+		{
+			"include": "#builtin"
+		},
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#atom"
 		}
 	],
 	"repository": {
 		"keywords": {
 			"patterns": [{
 				"name": "keyword.control.horth",
-				"match": "\\b(if|while|for|ret|switch|case|break|else|elif|let|syscall)\\b"
+				"match": "\\b(if|while|for|ret|switch|case|break|else|elif|let|in|end|do|include|module|\\s->\\s)\\b"
+			},
+			{
+				"name": "keyword.control.function.horth",
+				"match": "((func|(inline|extern|start|rec)[\\s]+func))\\b"
 			}]
 		},
-		"function": {
+		"typefuncs": {
 			"patterns": [{
-				"name": "keyword.function.horth",
-				"begin": "func|(start|extern|inline|rec)[ \t\n\r]+func",
-				"beginCaptures": {
-					"1": {
-						"name": "definition.parameters.begin.horth"
-					}
-				},
-				"end": "[ \t\n\r]+in[ \t\n\r]+",
-				"patterns": [{
-					"match": "[a-zA-Z_][a-zA-Z0-9_]*",
-					"name": "variable.parameter.function.horth"
-				},
-				{
-					"match": "->",
-					"name": "definition.parameters.arrow.horth"
-				}]
+				"name": "keyword.types.horth",
+				"match": "\\b(sizeof|as|unsafe|is|new)\\b"
+			}]
+		},
+		"builtin": {
+			"patterns": [{
+				"name": "keyword.builtin.horth",
+				"match": "\\b(dup|dup2|swap|swap2|drop|drop2|drop3|next|out|log|error|read|write|copy|clone|here|box|void|not|divmod|and|or)\\b"
+			}]
+		},
+		"number": {
+			"patterns": [{
+				"match": "(?<![\\w\\d.])0[xX][0-9A-Fa-f]+(?![pPeE.0-9])",
+				"name": "constant.numeric.integer.hexadecimal.horth"
+			},
+			{
+				"match": "(?<![\\w\\d.])0[bB][0-1]+",
+				"name": "constant.numeric.integer.binary.horth"
+			},
+			{
+				"match": "(?<![\\w\\d.])\\d+(\\.\\d+)?([eE]-?\\d*)?",
+				"name": "constant.numeric.float.horth"
+			},
+			{
+				"match": "(?<![\\w\\d.])\\d+(?![pPeE.0-9])",
+				"name": "constant.numeric.integer.horth"
+			},
+			{
+				"name": "constant.numeric.atom.horth",
+				"match": ":([a-zA-Z0-9][_a-zA-Z0-9]*)\\b"
 			}]
 		},
 		"strings": {
 			"name": "string.quoted.double.horth",
 			"begin": "\"",
 			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.horth",
+					"match": "\\\\."
+				}
+			]
+		},
+		"chars": {
+			"name": "string.quoted.single.horth",
+			"begin": "'",
+			"end": "'",
 			"patterns": [
 				{
 					"name": "constant.character.escape.horth",

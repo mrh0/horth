@@ -60,7 +60,7 @@ keywords:
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
     | 'next'
-    | 'out' | 'log' 'error' | 'log'
+    | 'out' | 'log' 'error'
     | 'read' | 'write' | 'copy' | 'clone'
     //| 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'ret'

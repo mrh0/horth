@@ -34,7 +34,3 @@ start func main -> int in
     "Hello" "World" concat log
     0 ret
 end
-
-func a in
-
-end
