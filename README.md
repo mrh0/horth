@@ -77,13 +77,13 @@ sizeof(type)
 sizeof(type...) //[WIP]
 sizeof type
 
-cast(type)
 as type
-unsafe cast(type)
 as unsafe type
 
 is(type...)
 is type
+
+new type
 ```
 ```
 //UserTypes (structs) [WIP]
@@ -97,7 +97,11 @@ type typename as name type | name type | ... end
 drop    : a, b -> a
 dup     : a, b -> a, b, b
 swap    : a, b -> b, a
-over    : a, b -> a, b, a
+over    : a, b -> a, b, a (deprecated)
+
+drop2
+dup2
+swap2
 
 length  : array | string -> array | string, int
 exit    : int -> 
