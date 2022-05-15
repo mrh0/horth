@@ -22,7 +22,7 @@ public class Main {
         Horth horth = new Horth();
         Log.log("Compiling...");
         horth.compile(config);
-        Log.log("Finished.");
+        Log.log("Done.");
         System.exit(0);
     }
 }

@@ -41,7 +41,7 @@ dataType:
     ;
 
 userDefinedDataType:
-    'type' NAME 'as' (NAME dataType ',')* NAME dataType 'end'
+    'type' NAME '->' (NAME dataType '|')* NAME dataType
     ;
 
 unop:
@@ -69,13 +69,6 @@ keywords:
     | 'box'
     | 'void'
     ;
-
-/*typeConstructor:
-    '{' integer '}'
-    //| '{' typeConstructor+ '}'
-
-    ;
-*/
 
 typeFunc: // _ used as skip type?
     'sizeof' '(' dataType ')'                           #typeFuncSizeof
@@ -149,8 +142,8 @@ general:
     ('elif' conds+=block 'do' doBlock+=block)*
     ('else' elseBlock=block)? 'end'                                                         #genIf
 
-    //| 'switch' inBlock=block 'in'
-    //('case' cases=switchCaseExpr 'do' doBlock+=block)*
+    //| 'switch' condBlock=block 'in'
+    //('case' cases+=switchCaseExpr 'do' doBlock+=block)*
     //('default' 'case' defBlock=block) 'end'                                                          #genSwitch
 
     | 'while' cond=block 'do' doBlock=block ('else' elseBlock=block)? 'end'                 #genWhile

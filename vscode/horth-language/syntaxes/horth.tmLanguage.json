@@ -33,11 +33,9 @@
 			{
 				"name": "keyword.control.function.horth",
 				"match": "((func|(inline|extern|start|rec)[\\s]+func))\\b"
-			}]
-		},
-		"typefuncs": {
-			"patterns": [{
-				"name": "keyword.types.horth",
+			},
+			{
+				"name": "keyword.control.types.horth",
 				"match": "\\b(sizeof|as|unsafe|is|new)\\b"
 			}]
 		},

@@ -1,3 +1,5 @@
+module test.module
+import other.test.module
 
 func leap buf<char> int -> buf<char> in
     let b i in
