@@ -189,7 +189,7 @@ include:
     ;
 
 module:
-    NAME ('.'NAME)*
+    NAME('.'NAME)*
     ;
 
 program:
