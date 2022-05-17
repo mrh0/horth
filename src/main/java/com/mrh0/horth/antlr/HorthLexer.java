@@ -65,7 +65,7 @@ public class HorthLexer extends Lexer {
 			"'('", "')'", "'as'", "'unsafe'", "'is'", "'new'", "','", "'.'", "'['", 
 			"']'", "']^'", "'if'", "'do'", "'elif'", "'else'", "'end'", "'while'", 
 			"'let'", "'in'", "'syscall'", "'inline'", "'extern'", "'start'", "'rec'", 
-			"'throws'", "'include'", "'module'"
+			"'throws'", "'module'", "'include'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -166,7 +166,7 @@ public class HorthLexer extends Lexer {
 		"=\3>\3>\3>\3>\3>\3?\3?\3?\3?\3?\3@\3@\3@\3@\3A\3A\3A\3A\3A\3A\3B\3B\3"+
 		"B\3B\3C\3C\3C\3D\3D\3D\3D\3D\3D\3D\3D\3E\3E\3E\3E\3E\3E\3E\3F\3F\3F\3"+
 		"F\3F\3F\3F\3G\3G\3G\3G\3G\3G\3H\3H\3H\3H\3I\3I\3I\3I\3I\3I\3I\3J\3J\3"+
-		"J\3J\3J\3J\3J\3J\3K\3K\3K\3K\3K\3K\3K\3L\3L\3L\3L\3L\3L\3L\3L\3L\5L\u01e6"+
+		"J\3J\3J\3J\3J\3K\3K\3K\3K\3K\3K\3K\3K\3L\3L\3L\3L\3L\3L\3L\3L\3L\5L\u01e6"+
 		"\nL\3M\3M\7M\u01ea\nM\fM\16M\u01ed\13M\3N\3N\3N\7N\u01f2\nN\fN\16N\u01f5"+
 		"\13N\3O\3O\5O\u01f9\nO\3O\3O\7O\u01fd\nO\fO\16O\u0200\13O\5O\u0202\nO"+
 		"\3P\3P\3P\3P\7P\u0208\nP\fP\16P\u020b\13P\3Q\3Q\3Q\3Q\7Q\u0211\nQ\fQ\16"+
@@ -213,7 +213,7 @@ public class HorthLexer extends Lexer {
 		"\u0195\3\2\2\2\u0081\u0199\3\2\2\2\u0083\u019f\3\2\2\2\u0085\u01a3\3\2"+
 		"\2\2\u0087\u01a6\3\2\2\2\u0089\u01ae\3\2\2\2\u008b\u01b5\3\2\2\2\u008d"+
 		"\u01bc\3\2\2\2\u008f\u01c2\3\2\2\2\u0091\u01c6\3\2\2\2\u0093\u01cd\3\2"+
-		"\2\2\u0095\u01d5\3\2\2\2\u0097\u01e5\3\2\2\2\u0099\u01e7\3\2\2\2\u009b"+
+		"\2\2\u0095\u01d4\3\2\2\2\u0097\u01e5\3\2\2\2\u0099\u01e7\3\2\2\2\u009b"+
 		"\u01ee\3\2\2\2\u009d\u0201\3\2\2\2\u009f\u0203\3\2\2\2\u00a1\u020c\3\2"+
 		"\2\2\u00a3\u021d\3\2\2\2\u00a5\u021f\3\2\2\2\u00a7\u0229\3\2\2\2\u00a9"+
 		"\u022f\3\2\2\2\u00ab\u023a\3\2\2\2\u00ad\u00ae\7B\2\2\u00ae\4\3\2\2\2"+
@@ -291,10 +291,10 @@ public class HorthLexer extends Lexer {
 		"\3\2\2\2\u01c2\u01c3\7t\2\2\u01c3\u01c4\7g\2\2\u01c4\u01c5\7e\2\2\u01c5"+
 		"\u0090\3\2\2\2\u01c6\u01c7\7v\2\2\u01c7\u01c8\7j\2\2\u01c8\u01c9\7t\2"+
 		"\2\u01c9\u01ca\7q\2\2\u01ca\u01cb\7y\2\2\u01cb\u01cc\7u\2\2\u01cc\u0092"+
-		"\3\2\2\2\u01cd\u01ce\7k\2\2\u01ce\u01cf\7p\2\2\u01cf\u01d0\7e\2\2\u01d0"+
-		"\u01d1\7n\2\2\u01d1\u01d2\7w\2\2\u01d2\u01d3\7f\2\2\u01d3\u01d4\7g\2\2"+
-		"\u01d4\u0094\3\2\2\2\u01d5\u01d6\7o\2\2\u01d6\u01d7\7q\2\2\u01d7\u01d8"+
-		"\7f\2\2\u01d8\u01d9\7w\2\2\u01d9\u01da\7n\2\2\u01da\u01db\7g\2\2\u01db"+
+		"\3\2\2\2\u01cd\u01ce\7o\2\2\u01ce\u01cf\7q\2\2\u01cf\u01d0\7f\2\2\u01d0"+
+		"\u01d1\7w\2\2\u01d1\u01d2\7n\2\2\u01d2\u01d3\7g\2\2\u01d3\u0094\3\2\2"+
+		"\2\u01d4\u01d5\7k\2\2\u01d5\u01d6\7p\2\2\u01d6\u01d7\7e\2\2\u01d7\u01d8"+
+		"\7n\2\2\u01d8\u01d9\7w\2\2\u01d9\u01da\7f\2\2\u01da\u01db\7g\2\2\u01db"+
 		"\u0096\3\2\2\2\u01dc\u01dd\7v\2\2\u01dd\u01de\7t\2\2\u01de\u01df\7w\2"+
 		"\2\u01df\u01e6\7g\2\2\u01e0\u01e1\7h\2\2\u01e1\u01e2\7c\2\2\u01e2\u01e3"+
 		"\7n\2\2\u01e3\u01e4\7u\2\2\u01e4\u01e6\7g\2\2\u01e5\u01dc\3\2\2\2\u01e5"+

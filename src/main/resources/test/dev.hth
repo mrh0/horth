@@ -1,4 +1,4 @@
-//module test
+module test.test
 //include other.test.module
 
 func leap buf<char> int -> buf<char> in

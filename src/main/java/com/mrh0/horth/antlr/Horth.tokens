@@ -155,5 +155,5 @@ BLOCKCOMMENT=85
 'start'=70
 'rec'=71
 'throws'=72
-'include'=73
-'module'=74
+'module'=73
+'include'=74

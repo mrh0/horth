@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HorthModule {
+    private String name;
     public HorthModule(File file, Config config, CompileData compileData) {
 
     }
@@ -56,5 +57,13 @@ public class HorthModule {
 
         HLIR = newHLIR;
         Log.debug(HLIR);
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public static String normalizeName(String name) {
+        return name.toLowerCase().replaceAll(" ", "");
     }
 }

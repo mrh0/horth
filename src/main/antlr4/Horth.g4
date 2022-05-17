@@ -60,7 +60,7 @@ keywords:
     | 'swap' | 'swap2'
     | 'drop' | 'drop2' | 'drop3'
     | 'next'
-    | 'out' | 'log' 'error'
+    | 'out' | 'log' | 'error'
     | 'read' | 'write' | 'copy' | 'clone'
     //| 'exit' | 'halt' // | 'ret' //| 'terminate'
     | 'ret'
@@ -184,14 +184,10 @@ block:
     (contents+=general)*
     ;
 
-include:
-    'include' module
-    ;
-
 module:
     NAME('.'NAME)*
     ;
 
 program:
-    ('module' moduleName=module)? (includes+=include)* main+=mainBlock* EOF
+    ('module' moduleName=module)? ('include' includes+=module)* main+=mainBlock* EOF
     ;
