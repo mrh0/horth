@@ -108,6 +108,11 @@ exit    : int ->
 syscall <name> : 0-6 of any type -> int
 log     : string | atom ->
 here    : -> string, int, int //filename line column
+read    : any, buf<any> ->
+write   : any, buf<any> ->
+next    : any@ ->
+copy    : int, buf<any>, buf<any> ->
+clone   : any@ -> any@ [WIP]
 ```
 
 # Functions
@@ -169,7 +174,25 @@ end
 //Type properties are named references to pointers within the datastructure of the type.
 //Some types define properties which can be accessed using the '.' (dot) operator.
 "Hello World".length  //Will return the length of the string which is 11.
-"Hello World".nt@     //Wil return a reference ref<char> (char*) to the first char in the null terminated string.
+"Hello World".data@     //Wil return a reference ref<char> (char*) to the first char in the null terminated string.
+```
+
+# Memory Managment
+
+```
+8 new buf<char> // retuns pointer to 8byte memory allocation
+// Memory allocation is alive until the function in which it was created returns
+
+16 new buf<char>
+let str in
+str as! buf<int> write 4
+str as! int 8 + as! buf<char>
+dup write 'T' next
+dup write 'e' next
+dup write 's' next
+dup write 't' next
+write '\0'
+str log // Logs: "Test"
 ```
 
 # Examples
@@ -201,7 +224,7 @@ elif 1 == do
 else
    3
 end
-exit //Exitcode: 1
+ret // 1
 ```
 
 ```
@@ -210,7 +233,7 @@ exit //Exitcode: 1
 while 10 < do
    1 +
 end
-exit //Exitcode: 10
+ret // 10
 ```
 
 ```
