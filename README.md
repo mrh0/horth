@@ -107,20 +107,26 @@ length  : array | string -> array | string, int
 exit    : int -> 
 syscall <name> : 0-6 of any type -> int
 log     : string | atom ->
-here    : -> string, int int //filename line column
+here    : -> string, int, int //filename line column
+read    : any, buf<any> ->
+write   : any, buf<any> ->
+next    : any@ ->
+copy    : int, buf<any>, buf<any> ->
+clone   : any@ -> any@ [WIP]
 ```
 
 # Functions
 
 ```
 //Syntax
-/*prefix*/ func /*name*/ /*type...*/ -> /*type...*/ in
+/*prefix*/ func name types -> types in
    /*function body*/
 end
 
 //Define
 func add int int -> int in
    +
+   ret
 end
 
 //Call
@@ -128,7 +134,8 @@ end
 
 //Define function overload
 func add string string -> int in
-   let a b in [] [] + end
+   let a b in a.length b.length +
+   ret
 end
 
 //Call with int int
@@ -143,6 +150,7 @@ A function overload must return the same types as the function it is overloading
 //Define inline functions
 inline func inlineAdd int int -> int in
    +
+   ret
 end
 
 //Use
@@ -151,6 +159,7 @@ end
 //Define start functions
 start func main -> int in
    "Hello World" log
+   0 ret
 end
 
 //Start functions can have any name but must return one number (anything castable to byte) which is the exit code.
@@ -165,7 +174,25 @@ end
 //Type properties are named references to pointers within the datastructure of the type.
 //Some types define properties which can be accessed using the '.' (dot) operator.
 "Hello World".length  //Will return the length of the string which is 11.
-"Hello World".nt@     //Wil return a reference ref<char> (char*) to the first char in the null terminated string.
+"Hello World".data@     //Wil return a reference ref<char> (char*) to the first char in the null terminated string.
+```
+
+# Memory Managment
+
+```
+8 new buf<char> // retuns pointer to 8byte memory allocation
+// Memory allocation is alive until the function in which it was created returns
+
+16 new buf<char>
+let str in
+str as! buf<int> write 4
+str as! int 8 + as! buf<char>
+dup write 'T' next
+dup write 'e' next
+dup write 's' next
+dup write 't' next
+write '\0'
+str log // Logs: "Test"
 ```
 
 # Examples
@@ -174,16 +201,16 @@ end
 //Hello World
 start func main -> int in
    "Hello World" log
-   0
+   0 ret
 end
 
 //Hello World (using syscall)
 start func main -> int in
-    1 "Hello World" dup .nt@
+    1 "Hello World" dup .data@
     let fd str len in
     fd, (str as unsafe int + sizeof int), len
     syscall write drop
-    0
+    0 ret
 end
 ```
 
@@ -197,7 +224,7 @@ elif 1 == do
 else
    3
 end
-exit //Exitcode: 1
+ret // 1
 ```
 
 ```
@@ -206,7 +233,7 @@ exit //Exitcode: 1
 while 10 < do
    1 +
 end
-exit //Exitcode: 10
+ret // 10
 ```
 
 ```
