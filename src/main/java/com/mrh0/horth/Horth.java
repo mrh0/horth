@@ -9,6 +9,7 @@ import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.CompileData;
 import com.mrh0.horth.instructions.high.HighInst;
 import com.mrh0.horth.instructions.high.IExpanding;
+import com.mrh0.horth.modules.HorthModule;
 import com.mrh0.horth.options.Config;
 import com.mrh0.horth.output.Arch;
 import com.mrh0.horth.output.x86_64.linux.ArchElf64nasm;
@@ -38,6 +39,10 @@ public class Horth {
 
     public void compile(Config config) throws IOException, URISyntaxException, HorthException {
         var inputFile = Paths.get(Main.class.getResource("/test/dev.hth").toURI()).toFile();
+
+        HorthModule.loadModuleInfo(inputFile, null);
+
+        System.exit(0);
 
         InputStream inputStream = (inputFile == null) ? System.in : new FileInputStream(inputFile);
         ANTLRInputStream input = new ANTLRInputStream(inputStream);

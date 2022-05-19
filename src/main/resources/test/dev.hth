@@ -1,5 +1,5 @@
 module test.test
-//include other.test.module
+include other.test.module end
 
 func leap buf<char> int -> buf<char> in
     let b i in

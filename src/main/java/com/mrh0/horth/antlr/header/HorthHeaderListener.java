@@ -28,16 +28,6 @@ public interface HorthHeaderListener extends ParseTreeListener {
 	 */
 	void exitModule(HorthHeaderParser.ModuleContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HorthHeaderParser#include}.
-	 * @param ctx the parse tree
-	 */
-	void enterInclude(HorthHeaderParser.IncludeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HorthHeaderParser#include}.
-	 * @param ctx the parse tree
-	 */
-	void exitInclude(HorthHeaderParser.IncludeContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HorthHeaderParser#program}.
 	 * @param ctx the parse tree
 	 */

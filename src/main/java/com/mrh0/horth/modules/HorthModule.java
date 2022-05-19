@@ -2,6 +2,9 @@ package com.mrh0.horth.modules;
 
 import com.mrh0.horth.antlr.HorthLexer;
 import com.mrh0.horth.antlr.HorthParser;
+import com.mrh0.horth.antlr.header.HorthHeaderLexer;
+import com.mrh0.horth.antlr.header.HorthHeaderParser;
+import com.mrh0.horth.ast.HeaderVisitor;
 import com.mrh0.horth.ast.Visitor;
 import com.mrh0.horth.exceptions.HorthException;
 import com.mrh0.horth.instructions.high.CompileData;
@@ -25,6 +28,19 @@ public class HorthModule {
     private String name;
     public HorthModule(File file, Config config, CompileData compileData) {
 
+    }
+
+    public static void loadModuleInfo(File file, Config config) throws HorthException, IOException {
+        InputStream inputStream = new FileInputStream(file);
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+        HorthHeaderLexer headerLexer = new HorthHeaderLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(headerLexer);
+
+        HorthHeaderParser parser = new HorthHeaderParser(tokens);
+
+        var tree = parser.program();
+        var t = new HeaderVisitor(file).visitProgram(tree);
+        Log.debug(t.toString());
     }
 
     private static void load(File file, Config config, CompileData compileData) throws HorthException, IOException {

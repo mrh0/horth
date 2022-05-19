@@ -40,18 +40,6 @@ public class HorthHeaderBaseListener implements HorthHeaderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterInclude(HorthHeaderParser.IncludeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitInclude(HorthHeaderParser.IncludeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterProgram(HorthHeaderParser.ProgramContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -28,8 +28,15 @@ public class TProgram extends Tok {
     @Override
     public StringBuilder toString(StringBuilder sb) {
         sb.append("Program(");
-        for(ITok tok : main)
+        sb.append(moduleName);
+        sb.append(", ");
+        for(ITok tok : includes)
             tok.toString(sb);
+        sb.append(", ");
+        if(main != null) {
+            for (ITok tok : main)
+                tok.toString(sb);
+        }
         sb.append(")");
         return sb;
     }

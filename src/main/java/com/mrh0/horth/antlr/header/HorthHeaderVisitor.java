@@ -23,12 +23,6 @@ public interface HorthHeaderVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitModule(HorthHeaderParser.ModuleContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HorthHeaderParser#include}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInclude(HorthHeaderParser.IncludeContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HorthHeaderParser#program}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
