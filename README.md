@@ -107,7 +107,7 @@ length  : array | string -> array | string, int
 exit    : int -> 
 syscall <name> : 0-6 of any type -> int
 log     : string | atom ->
-here    : -> string, int int //filename line column
+here    : -> string, int, int //filename line column
 ```
 
 # Functions
@@ -121,6 +121,7 @@ end
 //Define
 func add int int -> int in
    +
+   ret
 end
 
 //Call
@@ -128,7 +129,8 @@ end
 
 //Define function overload
 func add string string -> int in
-   let a b in [] [] + end
+   let a b in a.length b.length +
+   ret
 end
 
 //Call with int int
@@ -143,6 +145,7 @@ A function overload must return the same types as the function it is overloading
 //Define inline functions
 inline func inlineAdd int int -> int in
    +
+   ret
 end
 
 //Use
@@ -151,6 +154,7 @@ end
 //Define start functions
 start func main -> int in
    "Hello World" log
+   0 ret
 end
 
 //Start functions can have any name but must return one number (anything castable to byte) which is the exit code.
@@ -174,16 +178,16 @@ end
 //Hello World
 start func main -> int in
    "Hello World" log
-   0
+   0 ret
 end
 
 //Hello World (using syscall)
 start func main -> int in
-    1 "Hello World" dup .nt@
+    1 "Hello World" dup .data@
     let fd str len in
     fd, (str as unsafe int + sizeof int), len
     syscall write drop
-    0
+    0 ret
 end
 ```
 
