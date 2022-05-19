@@ -119,7 +119,7 @@ clone   : any@ -> any@ [WIP]
 
 ```
 //Syntax
-/*prefix*/ func /*name*/ /*type...*/ -> /*type...*/ in
+/*prefix*/ func name types -> types in
    /*function body*/
 end
 
