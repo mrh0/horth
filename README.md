@@ -108,7 +108,7 @@ exit    : int ->
 syscall <name> : 0-6 of any type -> int
 log     : string | atom ->
 here    : -> string, int, int //filename line column
-read    : any, buf<any> ->
+read    : buf<any> int -> any
 write   : any, buf<any> ->
 next    : any@ ->
 copy    : int, buf<any>, buf<any> ->
