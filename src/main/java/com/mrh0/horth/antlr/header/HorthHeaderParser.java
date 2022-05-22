@@ -20,10 +20,10 @@ public class HorthHeaderParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, NAME=5, WHITESPACE=6, COMMENT=7, BLOCKCOMMENT=8, 
 		OTHER=9;
 	public static final int
-		RULE_other = 0, RULE_module = 1, RULE_program = 2;
+		RULE_module = 0, RULE_program = 1;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"other", "module", "program"
+			"module", "program"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -91,48 +91,6 @@ public class HorthHeaderParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 
-	public static class OtherContext extends ParserRuleContext {
-		public TerminalNode OTHER() { return getToken(HorthHeaderParser.OTHER, 0); }
-		public OtherContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_other; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthHeaderListener ) ((HorthHeaderListener)listener).enterOther(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HorthHeaderListener ) ((HorthHeaderListener)listener).exitOther(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HorthHeaderVisitor ) return ((HorthHeaderVisitor<? extends T>)visitor).visitOther(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final OtherContext other() throws RecognitionException {
-		OtherContext _localctx = new OtherContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_other);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(6);
-			match(OTHER);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
 	public static class ModuleContext extends ParserRuleContext {
 		public List<TerminalNode> NAME() { return getTokens(HorthHeaderParser.NAME); }
 		public TerminalNode NAME(int i) {
@@ -159,26 +117,26 @@ public class HorthHeaderParser extends Parser {
 
 	public final ModuleContext module() throws RecognitionException {
 		ModuleContext _localctx = new ModuleContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_module);
+		enterRule(_localctx, 0, RULE_module);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(8);
+			setState(4);
 			match(NAME);
-			setState(13);
+			setState(9);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__0) {
 				{
 				{
-				setState(9);
+				setState(5);
 				match(T__0);
-				setState(10);
+				setState(6);
 				match(NAME);
 				}
 				}
-				setState(15);
+				setState(11);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -199,7 +157,6 @@ public class HorthHeaderParser extends Parser {
 		public ModuleContext moduleName;
 		public ModuleContext module;
 		public List<ModuleContext> includes = new ArrayList<ModuleContext>();
-		public TerminalNode OTHER() { return getToken(HorthHeaderParser.OTHER, 0); }
 		public TerminalNode EOF() { return getToken(HorthHeaderParser.EOF, 0); }
 		public List<ModuleContext> module() {
 			return getRuleContexts(ModuleContext.class);
@@ -228,45 +185,43 @@ public class HorthHeaderParser extends Parser {
 
 	public final ProgramContext program() throws RecognitionException {
 		ProgramContext _localctx = new ProgramContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_program);
+		enterRule(_localctx, 2, RULE_program);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(18);
+			setState(14);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__1) {
 				{
-				setState(16);
+				setState(12);
 				match(T__1);
-				setState(17);
+				setState(13);
 				((ProgramContext)_localctx).moduleName = module();
 				}
 			}
 
-			setState(20);
+			setState(16);
 			match(T__2);
-			setState(24);
+			setState(20);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==NAME) {
 				{
 				{
-				setState(21);
+				setState(17);
 				((ProgramContext)_localctx).module = module();
 				((ProgramContext)_localctx).includes.add(((ProgramContext)_localctx).module);
 				}
 				}
-				setState(26);
+				setState(22);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
-			setState(27);
+			setState(23);
 			match(T__3);
-			setState(28);
-			match(OTHER);
-			setState(29);
+			setState(24);
 			match(EOF);
 			}
 		}
@@ -282,16 +237,15 @@ public class HorthHeaderParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13\"\4\2\t\2\4\3"+
-		"\t\3\4\4\t\4\3\2\3\2\3\3\3\3\3\3\7\3\16\n\3\f\3\16\3\21\13\3\3\4\3\4\5"+
-		"\4\25\n\4\3\4\3\4\7\4\31\n\4\f\4\16\4\34\13\4\3\4\3\4\3\4\3\4\3\4\2\2"+
-		"\5\2\4\6\2\2\2!\2\b\3\2\2\2\4\n\3\2\2\2\6\24\3\2\2\2\b\t\7\13\2\2\t\3"+
-		"\3\2\2\2\n\17\7\7\2\2\13\f\7\3\2\2\f\16\7\7\2\2\r\13\3\2\2\2\16\21\3\2"+
-		"\2\2\17\r\3\2\2\2\17\20\3\2\2\2\20\5\3\2\2\2\21\17\3\2\2\2\22\23\7\4\2"+
-		"\2\23\25\5\4\3\2\24\22\3\2\2\2\24\25\3\2\2\2\25\26\3\2\2\2\26\32\7\5\2"+
-		"\2\27\31\5\4\3\2\30\27\3\2\2\2\31\34\3\2\2\2\32\30\3\2\2\2\32\33\3\2\2"+
-		"\2\33\35\3\2\2\2\34\32\3\2\2\2\35\36\7\6\2\2\36\37\7\13\2\2\37 \7\2\2"+
-		"\3 \7\3\2\2\2\5\17\24\32";
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\13\35\4\2\t\2\4\3"+
+		"\t\3\3\2\3\2\3\2\7\2\n\n\2\f\2\16\2\r\13\2\3\3\3\3\5\3\21\n\3\3\3\3\3"+
+		"\7\3\25\n\3\f\3\16\3\30\13\3\3\3\3\3\3\3\3\3\2\2\4\2\4\2\2\2\35\2\6\3"+
+		"\2\2\2\4\20\3\2\2\2\6\13\7\7\2\2\7\b\7\3\2\2\b\n\7\7\2\2\t\7\3\2\2\2\n"+
+		"\r\3\2\2\2\13\t\3\2\2\2\13\f\3\2\2\2\f\3\3\2\2\2\r\13\3\2\2\2\16\17\7"+
+		"\4\2\2\17\21\5\2\2\2\20\16\3\2\2\2\20\21\3\2\2\2\21\22\3\2\2\2\22\26\7"+
+		"\5\2\2\23\25\5\2\2\2\24\23\3\2\2\2\25\30\3\2\2\2\26\24\3\2\2\2\26\27\3"+
+		"\2\2\2\27\31\3\2\2\2\30\26\3\2\2\2\31\32\7\6\2\2\32\33\7\2\2\3\33\5\3"+
+		"\2\2\2\5\13\20\26";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

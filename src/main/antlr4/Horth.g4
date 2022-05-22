@@ -176,7 +176,7 @@ general:
     ;
 
 mainBlock:
-    funcPrefix=('inline' | 'extern' | 'start' | 'rec')? 'func' name=NAME
+    funcPrefix=('inline' | 'ext' | 'start' | 'rec')? 'func' name=NAME //ext, extern, external? rec, recursive?
             (args+=dataType)* ('->' (rets+=dataType)+)? ('throws' thrown=dataType)? 'in' funcBody=block 'end'               #mainFunc
     ;
 
@@ -189,5 +189,5 @@ module:
     ;
 
 program:
-    ('module' moduleName=module)? ('include' includes+=module)* main+=mainBlock* EOF
+    ('module' moduleName=module)? 'include' (includes+=module)* 'end' main+=mainBlock* EOF
     ;

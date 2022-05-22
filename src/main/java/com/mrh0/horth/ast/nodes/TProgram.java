@@ -33,10 +33,8 @@ public class TProgram extends Tok {
         for(ITok tok : includes)
             tok.toString(sb);
         sb.append(", ");
-        if(main != null) {
-            for (ITok tok : main)
-                tok.toString(sb);
-        }
+        for (ITok tok : main)
+            tok.toString(sb);
         sb.append(")");
         return sb;
     }

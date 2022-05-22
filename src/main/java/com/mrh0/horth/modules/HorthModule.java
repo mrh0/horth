@@ -31,7 +31,7 @@ public class HorthModule {
     }
 
     public static void loadModuleInfo(File file, Config config) throws HorthException, IOException {
-        InputStream inputStream = new FileInputStream(file);
+        /*InputStream inputStream = new FileInputStream(file);
         ANTLRInputStream input = new ANTLRInputStream(inputStream);
         HorthHeaderLexer headerLexer = new HorthHeaderLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(headerLexer);
@@ -40,6 +40,17 @@ public class HorthModule {
 
         var tree = parser.program();
         var t = new HeaderVisitor(file).visitProgram(tree);
+        Log.debug(t.toString());*/
+
+        InputStream inputStream = new FileInputStream(file);
+        ANTLRInputStream input = new ANTLRInputStream(inputStream);
+        HorthLexer headerLexer = new HorthLexer(input);
+        CommonTokenStream tokens = new CommonTokenStream(headerLexer);
+
+        HorthParser parser = new HorthParser(tokens);
+
+        var tree = parser.program();
+        var t = new Visitor(file, null).visitProgram(tree);
         Log.debug(t.toString());
     }
 

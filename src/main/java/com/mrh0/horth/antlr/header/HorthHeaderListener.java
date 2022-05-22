@@ -8,16 +8,6 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface HorthHeaderListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link HorthHeaderParser#other}.
-	 * @param ctx the parse tree
-	 */
-	void enterOther(HorthHeaderParser.OtherContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HorthHeaderParser#other}.
-	 * @param ctx the parse tree
-	 */
-	void exitOther(HorthHeaderParser.OtherContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HorthHeaderParser#module}.
 	 * @param ctx the parse tree
 	 */

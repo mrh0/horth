@@ -11,12 +11,6 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface HorthHeaderVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link HorthHeaderParser#other}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitOther(HorthHeaderParser.OtherContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HorthHeaderParser#module}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

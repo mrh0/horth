@@ -16,18 +16,6 @@ public class HorthHeaderBaseListener implements HorthHeaderListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterOther(HorthHeaderParser.OtherContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitOther(HorthHeaderParser.OtherContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterModule(HorthHeaderParser.ModuleContext ctx) { }
 	/**
 	 * {@inheritDoc}
