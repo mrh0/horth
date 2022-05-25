@@ -115,3 +115,11 @@ end
 
 functions cannot return pointers to items on the local stack, ie ref<int> ref<char> etc.
 (Maybe prevent them from ever being created?)
+
+Infix functions:
+// Exactly 1 argument and 1 returned value
+func add int -> int in
+    + ret
+end
+// This function can now be used in infix syntax
+(5 add 4) // = 9

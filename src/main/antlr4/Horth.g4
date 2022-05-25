@@ -96,6 +96,7 @@ infix:
     | CHAR                      #infixChar
     | infix binop infix         #infixBinOp
     | unop infix                #infixUnOp
+    | infix identifier infix    #infixFunc
 
     | '(' infix ')'             #infixInfix
     ;
