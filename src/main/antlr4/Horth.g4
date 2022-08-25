@@ -190,5 +190,5 @@ module:
     ;
 
 program:
-    ('module' moduleName=module)? 'include' (includes+=module)* 'end' main+=mainBlock* EOF
+    ('module' moduleName=module)? ('include' (includes+=module)* 'end')? main+=mainBlock* EOF
     ;

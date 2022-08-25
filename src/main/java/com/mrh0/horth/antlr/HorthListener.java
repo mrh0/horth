@@ -1,4 +1,4 @@
-// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.9.2
+// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.10.1
 package com.mrh0.horth.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
@@ -201,6 +201,18 @@ public interface HorthListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitInfixChar(HorthParser.InfixCharContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code infixFunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void enterInfixFunc(HorthParser.InfixFuncContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code infixFunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 */
+	void exitInfixFunc(HorthParser.InfixFuncContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code infixAtom}
 	 * labeled alternative in {@link HorthParser#infix}.

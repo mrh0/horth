@@ -1,4 +1,4 @@
-// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.9.2
+// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.10.1
 package com.mrh0.horth.antlr;
 import org.antlr.v4.runtime.tree.AbstractParseTreeVisitor;
 
@@ -130,6 +130,13 @@ public class HorthBaseVisitor<T> extends AbstractParseTreeVisitor<T> implements 
 	 * {@link #visitChildren} on {@code ctx}.</p>
 	 */
 	@Override public T visitInfixChar(HorthParser.InfixCharContext ctx) { return visitChildren(ctx); }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation returns the result of calling
+	 * {@link #visitChildren} on {@code ctx}.</p>
+	 */
+	@Override public T visitInfixFunc(HorthParser.InfixFuncContext ctx) { return visitChildren(ctx); }
 	/**
 	 * {@inheritDoc}
 	 *

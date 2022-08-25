@@ -1,4 +1,4 @@
-// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.9.2
+// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.10.1
 package com.mrh0.horth.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -215,6 +215,18 @@ public class HorthBaseListener implements HorthListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitInfixChar(HorthParser.InfixCharContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterInfixFunc(HorthParser.InfixFuncContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitInfixFunc(HorthParser.InfixFuncContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

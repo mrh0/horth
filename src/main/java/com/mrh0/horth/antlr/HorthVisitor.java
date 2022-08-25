@@ -1,4 +1,4 @@
-// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.9.2
+// Generated from W:/Development/horth/src/main/antlr4\Horth.g4 by ANTLR 4.10.1
 package com.mrh0.horth.antlr;
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
@@ -124,6 +124,13 @@ public interface HorthVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitInfixChar(HorthParser.InfixCharContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code infixFunc}
+	 * labeled alternative in {@link HorthParser#infix}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInfixFunc(HorthParser.InfixFuncContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code infixAtom}
 	 * labeled alternative in {@link HorthParser#infix}.
