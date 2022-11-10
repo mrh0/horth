@@ -226,7 +226,7 @@ ret // 1
 
 //Simplefied
 0 let a in
-if (a == 0)= do
+if (a == 0) do
    1
 elif (a == 1) do
    2
