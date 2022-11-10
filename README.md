@@ -224,7 +224,7 @@ else
 end
 ret // 1
 
-//Simplefied syntax
+//Simplefied
 0 let a in
 if (a == 0)= do
    1
