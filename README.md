@@ -206,7 +206,7 @@ end
 
 //Hello World (using syscall)
 start func main -> int in
-    1 "Hello World" dup .data@
+    1 "Hello World" dup .data@ swap .length
     syscall write drop
     0 ret
 end
