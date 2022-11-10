@@ -207,8 +207,6 @@ end
 //Hello World (using syscall)
 start func main -> int in
     1 "Hello World" dup .data@
-    let fd str len in
-    fd, (str as unsafe int + sizeof int), len
     syscall write drop
     0 ret
 end
